@@ -117,3 +117,5 @@ for (const sid of [...scenarios.keys()].sort()) {
 }
 writeFileSync(join(results, 'summary.md'), lines.join('\n') + '\n');
 console.log(lines.slice(0, 30).join('\n'));
+// 担当ごとの CSV も、読む人向けの形(シナリオ、回、判定、Bedrock の金額を足したもの)に作り直す
+await import('./agent-detail.mjs');

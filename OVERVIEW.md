@@ -158,7 +158,9 @@ SAP Commerce Cloud の案件で、AI(Claude Opus 5.5)に開発とバグ修正を
 |---|---|
 | `bench/results/report-2026-10-21.md` | 朝の報告(45 本) |
 | `bench/results/summary.md` | シナリオごとの真ん中の値 / 最大値、1 ストーリー、回ごとの記録(Bedrock 単価) |
-| `bench/results/cost-by-agent.csv` | 本会話と担当 1 回ごとの 4 種のトークン・秒・金額(公式単価) |
+| `bench/results/cost-by-agent-detail.csv` | **担当ごとの記録はまずこれを見る。** 1 回ごと・本会話と担当ごとの行に、シナリオ、回、モデル、判定、やり直し、日本時間、金額 3 種(公式単価 / Bedrock 地域指定 / Bedrock Global)を足したもの |
+| `bench/results/cost-by-agent-summary.csv` | シナリオ × 区分 × 担当ごとの平均・真ん中の値・最大値(4 種のトークン、秒、金額)。上の担当ごとの表の元 |
+| `bench/results/cost-by-agent.csv` | cs-cost が書いた元の記録(列が少ない。上の 2 つはここから `node bench/agent-detail.mjs` で作る。計測のたびに自動で作り直す) |
 | `bench/results/runs.csv` | 回ごとの判定、やり直しの回数、秒 |
 | `bench/results/run-all.log` | 夜間の連続実行の記録 |
 | `bench/scenarios/` | シナリオ 1 本 1 ファイル(依頼文、やり直しの文、判定)。一覧は `README.md` |
@@ -169,7 +171,9 @@ SAP Commerce Cloud の案件で、AI(Claude Opus 5.5)に開発とバグ修正を
 | `storefront/` | 画面(Angular 21 SSR) |
 | `core-customize/` | バックエンド(疑似プラットフォームと自社の拡張) |
 | `kit/.claude/` | 計測で使うキット(計測の作業ツリーにだけ置く) |
-| `.build-log/cost-log.csv` | 計測台を作る作業のコスト |
+| `.build-log/cost-by-step.csv` | 計測台を作る作業の、段ごとの 4 種のトークンと金額(差分)と累計 |
+| `.build-log/cost-log.csv` | 計測台を作る作業のコスト(cs-cost の元の記録。トークンの列は会話の累計) |
+| `.build-log/cost-by-agent.csv` | 同じく元の記録。「本会話」の行は会話の累計、「担当」の行はサブエージェント 1 回ごと |
 | `CLAUDE.md` | 計測台を作るときの決まり |
 
 ## 10. 会議で言える 3 文
