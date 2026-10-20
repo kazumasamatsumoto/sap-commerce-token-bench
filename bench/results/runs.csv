@@ -1,0 +1,2 @@
+日時,ラベル,会話ID,秒,判定,やり直し,作業ツリー,claudeの版,モデル,引数
+2026-10-20T15:06:32Z,B04/cs-backend/0回目,0b0cdf81-f79d-48e6-b5b3-d0e03c88b3f6,542,通過,0,B04-r0,2.1.304,既定,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"

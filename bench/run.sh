@@ -9,7 +9,7 @@
 # 変えられる値(環境変数):
 #   BENCH_BASE         計測の前の状態のコミット(既定: bench/BASE_COMMIT に書いたもの。無ければ HEAD)
 #   BENCH_CLAUDE       claude コマンド(既定: claude)
-#   BENCH_MODEL        モデル(既定: 空 = 設定のまま。Bedrock なら人が ~/.claude/settings.json で決める)
+#   BENCH_MODEL        モデル(既定: claude-opus-5-5。担当は model: inherit なので同じモデルになる。Bedrock の ID にするときは人が決める)
 #   BENCH_CLAUDE_FLAGS claude に渡す追加の引数(既定: 下の DEFAULT_FLAGS。人がいなくても止まらないよう、ツールは許し、
 #                      キットの deny と ask は残す。ask に当たった操作は断られる。MCP は読ませない)
 #   BENCH_MAX_RETRY    やり直しの文を送る回数の上限(既定: シナリオに書いた数)
@@ -24,6 +24,7 @@ RESULTS="$ROOT/bench/results"
 # 作業ツリーはリポジトリの外に作る(中に作ると、Claude Code が親のフォルダの CLAUDE.md(計測台の指示)まで読んでしまうため)
 RUNS_DIR="${BENCH_RUNS_DIR:-$(dirname "$ROOT")/$(basename "$ROOT")-runs}"
 CLAUDE_BIN="${BENCH_CLAUDE:-claude}"
+BENCH_MODEL="${BENCH_MODEL:-claude-opus-5-5}"
 DEFAULT_FLAGS="--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
 CLAUDE_FLAGS="${BENCH_CLAUDE_FLAGS:-$DEFAULT_FLAGS}"
 mkdir -p "$RESULTS" "$RUNS_DIR"
