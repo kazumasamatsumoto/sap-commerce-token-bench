@@ -1,0 +1,6 @@
+@if ((product$ | async)?.material; as material) {
+  <dl class="xyz-material-info">
+    <dt>{{ 'xyzProductInfo.material' | cxTranslate }}</dt>
+    <dd data-testid="xyz-material">{{ material }}</dd>
+  </dl>
+}

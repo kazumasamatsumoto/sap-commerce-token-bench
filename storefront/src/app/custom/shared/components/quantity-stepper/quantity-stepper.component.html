@@ -1,0 +1,6 @@
+<div class="xyz-quantity-stepper">
+  <label [for]="inputId">{{ 'xyzShared.quantity' | cxTranslate }}</label>
+  <button type="button" (click)="decrement()" [disabled]="value() <= min()" [attr.aria-label]="'xyzShared.decrease' | cxTranslate">−</button>
+  <input [id]="inputId" type="number" [min]="min()" [max]="max()" [value]="value()" (change)="onInput($any($event.target).value)" />
+  <button type="button" (click)="increment()" [disabled]="value() >= max()" [attr.aria-label]="'xyzShared.increase' | cxTranslate">+</button>
+</div>

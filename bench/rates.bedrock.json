@@ -1,0 +1,6 @@
+{
+  "note": "Claude Opus 5.5 on Amazon Bedrock の単価(USD / 100 万トークン)。二次情報(typingmind)の値で、AWS の料金ページで確かめるまでは使わない(未確認)。地域指定は Global の 1.1 倍(公式 Pricing にも記載)。",
+  "checked": "未確認",
+  "global": { "input": 4.0, "cache_write": 5.0, "cache_read": 0.2, "output": 20.0 },
+  "regional": { "input": 4.4, "cache_write": 5.5, "cache_read": 0.22, "output": 22.0 }
+}

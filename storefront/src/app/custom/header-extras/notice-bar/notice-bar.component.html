@@ -1,0 +1,6 @@
+@if (!dismissed()) {
+  <div class="xyz-notice-bar" role="region" [attr.aria-label]="'xyzHeader.noticeLabel' | cxTranslate" data-testid="xyz-notice-bar">
+    <p>{{ 'xyzHeader.notice' | cxTranslate }}</p>
+    <button type="button" class="close" (click)="dismiss()" [attr.aria-label]="'xyzHeader.closeNotice' | cxTranslate">×</button>
+  </div>
+}

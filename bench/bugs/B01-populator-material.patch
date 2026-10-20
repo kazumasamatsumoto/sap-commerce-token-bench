@@ -1,0 +1,12 @@
+diff --git a/core-customize/hybris/bin/custom/xyzfacades/src/com/xyz/facades/product/populators/XyzProductBrandPopulator.java b/core-customize/hybris/bin/custom/xyzfacades/src/com/xyz/facades/product/populators/XyzProductBrandPopulator.java
+index 450618a..250a09e 100644
+--- a/core-customize/hybris/bin/custom/xyzfacades/src/com/xyz/facades/product/populators/XyzProductBrandPopulator.java
++++ b/core-customize/hybris/bin/custom/xyzfacades/src/com/xyz/facades/product/populators/XyzProductBrandPopulator.java
+@@ -20,7 +20,6 @@ public class XyzProductBrandPopulator implements Populator<ProductModel, Product
+ 			target.setBrand(brandConverter.convert(source.getBrand()));
+ 		}
+ 		target.setNewArrival(source.getXyzNewArrival());
+-		target.setMaterial(source.getXyzMaterial());
+ 	}
+ 
+ 	public void setBrandConverter(final Converter<BrandModel, BrandData> brandConverter)

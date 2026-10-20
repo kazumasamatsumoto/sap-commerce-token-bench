@@ -1,0 +1,14 @@
+.xyz-product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 140px;
+  color: inherit;
+  text-decoration: none;
+}
+.name {
+  font-size: 0.85rem;
+}
+.price {
+  font-weight: bold;
+}

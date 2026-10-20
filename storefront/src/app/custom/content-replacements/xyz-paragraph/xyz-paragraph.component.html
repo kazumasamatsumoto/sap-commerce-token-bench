@@ -1,0 +1,9 @@
+@if (view$ | async; as view) {
+  <!-- 標準と同じ cx-paragraph の class も残す(既存の CSS とテストのため) -->
+  <p
+    class="cx-paragraph xyz-paragraph"
+    [class.xyz-paragraph--notice]="view.notice"
+    [attr.role]="view.notice ? 'note' : null"
+    [innerHTML]="view.content"
+  ></p>
+}

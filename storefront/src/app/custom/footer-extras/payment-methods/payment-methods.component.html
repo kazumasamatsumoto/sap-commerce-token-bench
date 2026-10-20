@@ -1,0 +1,8 @@
+<div class="xyz-payment-methods">
+  <h2 id="xyz-payment-methods-heading">{{ 'xyzFooter.paymentTitle' | cxTranslate }}</h2>
+  <ul aria-labelledby="xyz-payment-methods-heading">
+    @for (method of methods; track method) {
+      <li>{{ 'xyzFooter.payment.' + method | cxTranslate }}</li>
+    }
+  </ul>
+</div>

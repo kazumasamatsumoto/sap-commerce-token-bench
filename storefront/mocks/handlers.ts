@@ -76,6 +76,12 @@ function cartWsDTO(cart: MockCart) {
   };
 }
 
+const mockBrands = [
+  { code: 'brand-01', name: 'アルテア', tier: 'STANDARD', logo: { url: '/medias/brand-logo-01.svg', altText: 'アルテア', format: 'logo' } },
+  { code: 'brand-03', name: 'カイロ', tier: 'PREMIUM', logo: { url: '/medias/brand-logo-03.svg', altText: 'カイロ', format: 'logo' } },
+  { code: 'brand-10', name: 'ジェネス', tier: 'OUTLET', logo: { url: '/medias/brand-logo-10.svg', altText: 'ジェネス', format: 'logo' } },
+];
+
 function cartOr400(guid: string) {
   const cart = carts.get(guid);
   return cart ?? HttpResponse.json({ errors: [{ type: 'CartError', reason: 'notFound', message: 'Cart not found.' }] }, { status: 400 });
@@ -106,6 +112,25 @@ export const handlers = [
     return product
       ? HttpResponse.json(product)
       : HttpResponse.json({ errors: [{ type: 'UnknownIdentifierError', message: `Product with code '${params['productCode']}' not found!` }] }, { status: 400 });
+  }),
+
+  // 自社の部品(src/app/custom)が呼ぶ端点。中身は手で書いた少しの例
+  http.get(`${OCC}/products/:productCode/reviews`, () =>
+    HttpResponse.json({
+      reviews: [
+        { id: 'mock-1', headline: '良い', comment: '満足です', rating: 5, date: '2026-10-01T10:00:00+0000', alias: '山田 太郎' },
+        { id: 'mock-2', headline: 'ふつう', comment: '可もなく不可もなくです。', rating: 3, date: '2026-09-20T10:00:00+0000', alias: '加藤さん' },
+      ],
+    }),
+  ),
+
+  http.get(`${OCC}/brands`, () => HttpResponse.json({ brands: mockBrands })),
+
+  http.get(`${OCC}/brands/:brandCode`, ({ params }) => {
+    const brand = mockBrands.find((b) => b.code === params['brandCode']);
+    return brand
+      ? HttpResponse.json({ ...brand, description: `${brand.name}の製品です。` })
+      : HttpResponse.json({ errors: [{ type: 'UnknownIdentifierError', message: 'Brand not found' }] }, { status: 400 });
   }),
 
   http.post(`${OCC}/users/:userId/carts`, () => {

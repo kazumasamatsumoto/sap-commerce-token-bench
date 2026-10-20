@@ -1,0 +1,21 @@
+@if (view$ | async; as view) {
+  <div class="xyz-free-shipping-progress" data-testid="xyz-free-shipping-progress">
+    <p role="status">
+      @if (view.reached) {
+        {{ 'xyzCart.freeShippingReached' | cxTranslate }}
+      } @else {
+        {{ 'xyzCart.freeShippingRemaining' | cxTranslate: { amount: view.remainingText } }}
+      }
+    </p>
+    <div
+      class="bar"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [attr.aria-valuenow]="view.percent"
+      [attr.aria-label]="'xyzCart.freeShippingLabel' | cxTranslate"
+    >
+      <span class="fill" [style.width.%]="view.percent"></span>
+    </div>
+  </div>
+}

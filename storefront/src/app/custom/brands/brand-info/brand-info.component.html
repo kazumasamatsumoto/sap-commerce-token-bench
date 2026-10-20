@@ -1,0 +1,9 @@
+@if (brand$ | async; as brand) {
+  <aside class="xyz-brand-info" aria-labelledby="xyz-brand-info-heading" data-testid="xyz-brand-info">
+    <xyz-section-heading headingId="xyz-brand-info-heading" [heading]="'xyzBrands.about' | cxTranslate: { name: brand.name }"></xyz-section-heading>
+    <div class="body">
+      <xyz-brand-logo [brand]="brand"></xyz-brand-logo>
+      <p>{{ brand.description }}</p>
+    </div>
+  </aside>
+}

@@ -1,0 +1,12 @@
+@if (brands$ | async; as brands) {
+  @if (brands.length) {
+    <section class="xyz-brand-strip" aria-labelledby="xyz-brand-strip-heading" data-testid="xyz-brand-strip">
+      <xyz-section-heading headingId="xyz-brand-strip-heading" [heading]="'xyzBrands.title' | cxTranslate"></xyz-section-heading>
+      <ul>
+        @for (brand of brands; track brand.code) {
+          <li><xyz-brand-logo [brand]="brand"></xyz-brand-logo></li>
+        }
+      </ul>
+    </section>
+  }
+}

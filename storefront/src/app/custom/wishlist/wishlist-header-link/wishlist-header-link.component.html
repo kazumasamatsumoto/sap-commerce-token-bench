@@ -1,0 +1,8 @@
+<div class="xyz-wishlist-header-link">
+  <button type="button" [attr.aria-expanded]="open()" aria-controls="xyz-wishlist-panel" (click)="toggle()" data-testid="xyz-wishlist-toggle">
+    {{ 'xyzWishlist.title' | cxTranslate }} <span class="count">{{ count() }}</span>
+  </button>
+  @if (open()) {
+    <xyz-wishlist-panel id="xyz-wishlist-panel" [codes]="codes()" (closed)="open.set(false)"></xyz-wishlist-panel>
+  }
+</div>

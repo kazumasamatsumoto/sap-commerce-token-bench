@@ -1,0 +1,9 @@
+<div class="xyz-review-sort">
+  <!-- 「並べ替え」は商品一覧で使っているので、別の文言にする -->
+  <label for="xyz-review-sort">{{ 'xyzReviews.sortLabel' | cxTranslate }}</label>
+  <select id="xyz-review-sort" (change)="onChange($any($event.target).value)">
+    @for (option of options; track option) {
+      <option [value]="option" [selected]="option === sort()">{{ 'xyzReviews.sort.' + option | cxTranslate }}</option>
+    }
+  </select>
+</div>

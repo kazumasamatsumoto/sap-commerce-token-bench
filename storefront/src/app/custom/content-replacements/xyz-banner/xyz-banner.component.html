@@ -1,0 +1,17 @@
+@if (data$ | async; as data) {
+  <ng-template #body>
+    <cx-media [src]="data.media?.url" [alt]="data.media?.altText ?? data.headline" [width]="600"></cx-media>
+    <span class="caption">
+      @if (data.headline) {
+        <span class="headline">{{ data.headline }}</span>
+      }
+      <!-- 読み上げは見出しで足りるので、飾りの文言は隠す -->
+      <span class="cta" aria-hidden="true">{{ 'xyzContent.bannerCta' | cxTranslate }}</span>
+    </span>
+  </ng-template>
+  @if (isExternal(data.urlLink)) {
+    <a class="xyz-banner" [href]="data.urlLink" rel="noopener" data-testid="xyz-banner"><ng-container [ngTemplateOutlet]="body"></ng-container></a>
+  } @else {
+    <a class="xyz-banner" [routerLink]="data.urlLink ?? '/'" data-testid="xyz-banner"><ng-container [ngTemplateOutlet]="body"></ng-container></a>
+  }
+}

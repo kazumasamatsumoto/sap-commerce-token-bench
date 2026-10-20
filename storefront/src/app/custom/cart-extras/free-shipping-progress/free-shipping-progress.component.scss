@@ -1,0 +1,20 @@
+.xyz-free-shipping-progress {
+  margin: 12px 0;
+  padding: 12px;
+  background: #f3f8f4;
+  border-radius: 4px;
+}
+p {
+  margin: 0 0 6px;
+}
+.bar {
+  height: 8px;
+  background: #dde;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.fill {
+  display: block;
+  height: 100%;
+  background: #146c2e;
+}

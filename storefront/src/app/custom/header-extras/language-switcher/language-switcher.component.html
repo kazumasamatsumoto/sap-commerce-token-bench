@@ -1,0 +1,8 @@
+<div class="xyz-language-switcher">
+  <label for="xyz-language-switcher">{{ 'xyzHeader.language' | cxTranslate }}</label>
+  <select id="xyz-language-switcher" (change)="change($any($event.target).value)">
+    @for (lang of languages; track lang) {
+      <option [value]="lang" [selected]="lang === current()">{{ 'xyzHeader.languages.' + lang | cxTranslate }}</option>
+    }
+  </select>
+</div>

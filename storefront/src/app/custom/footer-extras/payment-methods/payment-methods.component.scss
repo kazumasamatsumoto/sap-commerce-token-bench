@@ -1,0 +1,20 @@
+.xyz-payment-methods {
+  padding: 8px 0;
+}
+h2 {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+}
+ul {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  padding: 2px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}

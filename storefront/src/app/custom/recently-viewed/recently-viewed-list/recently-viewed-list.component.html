@@ -1,0 +1,13 @@
+@if (products$ | async; as products) {
+  @if (products.length) {
+    <section class="xyz-recently-viewed" aria-labelledby="xyz-recently-viewed-heading" data-testid="xyz-recently-viewed">
+      <xyz-section-heading headingId="xyz-recently-viewed-heading" [heading]="'xyzRecentlyViewed.title' | cxTranslate"></xyz-section-heading>
+      <ul>
+        @for (product of products; track product.code) {
+          <li><xyz-product-card [product]="product"></xyz-product-card></li>
+        }
+      </ul>
+      <button type="button" class="clear" (click)="clear()">{{ 'xyzRecentlyViewed.clear' | cxTranslate }}</button>
+    </section>
+  }
+}

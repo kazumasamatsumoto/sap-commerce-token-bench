@@ -1,0 +1,13 @@
+.xyz-rating-stars {
+  display: inline-flex;
+  gap: 1px;
+  color: #c9c9c9;
+}
+.star[data-state='full'] {
+  color: #e8a400;
+}
+.star[data-state='half'] {
+  background: linear-gradient(90deg, #e8a400 50%, #c9c9c9 50%);
+  background-clip: text;
+  color: transparent;
+}

@@ -1,0 +1,9 @@
+.xyz-wishlist-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0;
+}
+[aria-pressed='true'] {
+  color: #a1251b;
+}

@@ -1,0 +1,5 @@
+@if (stock()?.stockLevelStatus === 'lowStock') {
+  <span class="xyz-stock-badge">
+    <xyz-price-badge variant="warning" [label]="'xyzBadges.lowStock' | cxTranslate"></xyz-price-badge>
+  </span>
+}

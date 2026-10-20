@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
+import { CustomFeaturesModule } from '../custom/custom-features.module';
 
 /**
  * 機能ごとのモジュールを並べる場所。Spartacus の spartacus-features.module.ts と同じ置き場所。
- * 商品一覧・詳細・カート・チェックアウトの部品は 2 段目で足す。
+ * 標準の部品は疑似ライブラリ(StorefrontModule)に入っている。自社の部品は CustomFeaturesModule にまとめた。
  */
 @NgModule({
-  imports: [],
+  imports: [CustomFeaturesModule],
 })
 export class SpartacusFeaturesModule {}

@@ -1,0 +1,28 @@
+.xyz-banner {
+  position: relative;
+  display: block;
+  max-width: 600px;
+  color: #fff;
+  text-decoration: none;
+}
+.caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.55);
+}
+.headline {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.cta {
+  padding: 4px 10px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}

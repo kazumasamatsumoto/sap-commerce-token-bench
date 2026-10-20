@@ -1,0 +1,13 @@
+diff --git a/core-customize/hybris/bin/custom/xyzcore/resources/xyzcore/import/sampledata/04-brands.impex b/core-customize/hybris/bin/custom/xyzcore/resources/xyzcore/import/sampledata/04-brands.impex
+index cf67033..269e87d 100644
+--- a/core-customize/hybris/bin/custom/xyzcore/resources/xyzcore/import/sampledata/04-brands.impex
++++ b/core-customize/hybris/bin/custom/xyzcore/resources/xyzcore/import/sampledata/04-brands.impex
+@@ -7,7 +7,7 @@ $ccv=catalogVersion(catalog(id),version)[unique=true,default=electronicsContentC
+ INSERT_UPDATE Brand;code[unique=true];name[lang=ja];name[lang=en];description[lang=ja];description[lang=en];logo(code,catalogVersion(catalog(id),version));tier(code);active
+ ;brand-01;アルテア;Altea;アルテアの製品です。;Products by Altea.;brand-logo-01:electronicsProductCatalog:Online;STANDARD;true
+ ;brand-02;ベルクス;Belx;ベルクスの製品です。;Products by Belx.;brand-logo-02:electronicsProductCatalog:Online;STANDARD;true
+-;brand-03;カイロ;Kairo;カイロの製品です。;Products by Kairo.;brand-logo-03:electronicsProductCatalog:Online;PREMIUM;true
++;brand-03;カイロ;Kairo;カイロの製品です。;Products by Kairo.;brand-logo-03:electronicsProductCatalog:Online;PREMUIM;true
+ ;brand-04;ドーマ;Doma;ドーマの製品です。;Products by Doma.;brand-logo-04:electronicsProductCatalog:Online;STANDARD;true
+ ;brand-05;エルナ;Elna;エルナの製品です。;Products by Elna.;brand-logo-05:electronicsProductCatalog:Online;STANDARD;true
+ ;brand-06;フォルテ;Forte;フォルテの製品です。;Products by Forte.;brand-logo-06:electronicsProductCatalog:Online;STANDARD;true

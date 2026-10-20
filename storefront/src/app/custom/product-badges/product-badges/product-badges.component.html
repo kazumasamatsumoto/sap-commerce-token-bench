@@ -1,0 +1,7 @@
+@if (product$ | async; as product) {
+  <div class="xyz-product-badges" data-testid="xyz-product-badges">
+    <xyz-brand-badge [brand]="product.brand"></xyz-brand-badge>
+    <xyz-new-arrival-badge [newArrival]="product.newArrival"></xyz-new-arrival-badge>
+    <xyz-stock-badge [stock]="product.stock"></xyz-stock-badge>
+  </div>
+}

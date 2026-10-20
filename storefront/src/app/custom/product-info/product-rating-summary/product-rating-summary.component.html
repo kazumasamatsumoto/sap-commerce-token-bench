@@ -1,0 +1,9 @@
+@if (product$ | async; as product) {
+  <div class="xyz-product-rating-summary" data-testid="xyz-rating-summary">
+    <xyz-rating-stars [rating]="product.averageRating"></xyz-rating-stars>
+    <span class="average">{{ (product.averageRating ?? 0).toFixed(1) }}</span>
+    <button type="button" class="link" (click)="goToReviews()">
+      {{ 'xyzProductInfo.reviewCount' | cxTranslate: { count: product.numberOfReviews ?? 0 } }}
+    </button>
+  </div>
+}

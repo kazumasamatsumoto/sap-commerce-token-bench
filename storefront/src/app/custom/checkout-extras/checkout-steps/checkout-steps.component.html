@@ -1,0 +1,7 @@
+<nav class="xyz-checkout-steps" [attr.aria-label]="'xyzCheckout.stepsLabel' | cxTranslate" data-testid="xyz-checkout-steps">
+  <ol>
+    @for (step of steps; track step; let i = $index) {
+      <li><span class="num" aria-hidden="true">{{ i + 1 }}</span>{{ 'xyzCheckout.steps.' + step | cxTranslate }}</li>
+    }
+  </ol>
+</nav>

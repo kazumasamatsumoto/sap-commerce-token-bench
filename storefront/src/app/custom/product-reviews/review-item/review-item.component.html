@@ -1,0 +1,12 @@
+<article class="xyz-review-item" data-testid="xyz-review-item">
+  <h3>{{ review().headline }}</h3>
+  <xyz-rating-stars [rating]="review().rating"></xyz-rating-stars>
+  <p class="meta">
+    {{ review().alias ?? review().principal?.name }}
+    @if (review().date) {
+      <!-- 日付は日本時間で出す(SSR とブラウザで同じ文字にするため) -->
+      <time [attr.datetime]="review().date">{{ review().date | date: 'yyyy/MM/dd' : '+0900' }}</time>
+    }
+  </p>
+  <p class="comment">{{ review().comment }}</p>
+</article>

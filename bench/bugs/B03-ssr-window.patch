@@ -1,0 +1,19 @@
+diff --git a/storefront/src/app/custom/recently-viewed/recently-viewed.service.ts b/storefront/src/app/custom/recently-viewed/recently-viewed.service.ts
+index 6a1bd6f..e1705ad 100644
+--- a/storefront/src/app/custom/recently-viewed/recently-viewed.service.ts
++++ b/storefront/src/app/custom/recently-viewed/recently-viewed.service.ts
+@@ -41,11 +41,12 @@ export class RecentlyViewedService {
+   }
+ 
+   private load(): void {
+-    if (this.loaded || !this.storage.isBrowser) {
++    if (this.loaded) {
+       return;
+     }
+     this.loaded = true;
+-    const saved = this.storage.readJson<unknown>(RECENTLY_VIEWED_KEY, []);
++    // localStorage から直接読む(BrowserStorageService を通さなくてよいので)
++    const saved: unknown = JSON.parse(window.localStorage.getItem(RECENTLY_VIEWED_KEY) ?? '[]');
+     this.codes.set(Array.isArray(saved) ? saved.filter((c): c is string => typeof c === 'string').slice(0, RECENTLY_VIEWED_MAX) : []);
+   }
+ }

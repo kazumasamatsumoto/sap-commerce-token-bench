@@ -1,0 +1,6 @@
+@if (code()) {
+  <button type="button" class="xyz-wishlist-button" [attr.aria-pressed]="saved()" (click)="toggle()" data-testid="xyz-wishlist-button">
+    <span aria-hidden="true">{{ saved() ? '♥' : '♡' }}</span>
+    {{ (saved() ? 'xyzWishlist.remove' : 'xyzWishlist.add') | cxTranslate }}
+  </button>
+}

@@ -1,0 +1,28 @@
+<div class="xyz-wishlist-panel" role="region" [attr.aria-label]="'xyzWishlist.title' | cxTranslate" data-testid="xyz-wishlist-panel">
+  @if (products$ | async; as products) {
+    @if (products.length) {
+      <ul>
+        @for (product of products; track product.code) {
+          <li>
+            <xyz-product-card [product]="product"></xyz-product-card>
+            <div class="actions">
+              <xyz-quantity-stepper [value]="quantity(product.code)" (valueChange)="setQuantity(product.code, $event)"></xyz-quantity-stepper>
+              <button type="button" (click)="addToCart(product)" [disabled]="product.stock?.stockLevelStatus === 'outOfStock'">
+                {{ 'xyzWishlist.addToCart' | cxTranslate }}
+              </button>
+              <button type="button" (click)="remove(product.code)">{{ 'xyzWishlist.removeShort' | cxTranslate }}</button>
+            </div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <xyz-empty-state [message]="'xyzWishlist.empty' | cxTranslate"></xyz-empty-state>
+    }
+  }
+  <p class="status" role="status">
+    @if (lastAdded(); as name) {
+      {{ 'xyzWishlist.added' | cxTranslate: { name: name } }}
+    }
+  </p>
+  <button type="button" class="close" (click)="closed.emit()">{{ 'xyzWishlist.close' | cxTranslate }}</button>
+</div>

@@ -1,0 +1,9 @@
+@if (visible()) {
+  <section class="xyz-cookie-consent" role="region" [attr.aria-label]="'xyzFooter.cookie.label' | cxTranslate" data-testid="xyz-cookie-consent">
+    <p>{{ 'xyzFooter.cookie.text' | cxTranslate }}</p>
+    <div class="actions">
+      <button type="button" (click)="choose('all')">{{ 'xyzFooter.cookie.acceptAll' | cxTranslate }}</button>
+      <button type="button" (click)="choose('necessary')">{{ 'xyzFooter.cookie.necessaryOnly' | cxTranslate }}</button>
+    </div>
+  </section>
+}

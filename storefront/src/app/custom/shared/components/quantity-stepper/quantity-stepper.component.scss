@@ -1,0 +1,12 @@
+.xyz-quantity-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+input {
+  width: 3.5em;
+  text-align: center;
+}
+button {
+  min-width: 2em;
+}

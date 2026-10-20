@@ -1,0 +1,8 @@
+<a class="xyz-product-card" [routerLink]="['/product', product().code]">
+  <cx-media [src]="product().images?.[0]?.url" [alt]="product().name" [width]="120"></cx-media>
+  <span class="name">{{ product().name }}</span>
+  <span class="price">{{ product().price?.formattedValue }}</span>
+  @if (product().averageRating) {
+    <xyz-rating-stars [rating]="product().averageRating"></xyz-rating-stars>
+  }
+</a>

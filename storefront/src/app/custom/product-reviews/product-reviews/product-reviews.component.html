@@ -1,0 +1,21 @@
+@if (code()) {
+  <section id="xyz-reviews" class="xyz-product-reviews" tabindex="-1" aria-labelledby="xyz-reviews-heading" data-testid="xyz-product-reviews">
+    <xyz-section-heading headingId="xyz-reviews-heading" [heading]="'xyzReviews.title' | cxTranslate"></xyz-section-heading>
+    @if (reviews().length) {
+      <xyz-review-summary [reviews]="reviews()"></xyz-review-summary>
+      <xyz-review-sort [(sort)]="sort"></xyz-review-sort>
+      <ul class="list">
+        @for (review of visible(); track $index) {
+          <li><xyz-review-item [review]="review"></xyz-review-item></li>
+        }
+      </ul>
+      @if (hiddenCount() > 0) {
+        <button type="button" class="more" (click)="showAll.set(true)">
+          {{ 'xyzReviews.showMore' | cxTranslate: { count: hiddenCount() } }}
+        </button>
+      }
+    } @else {
+      <xyz-empty-state [message]="'xyzReviews.empty' | cxTranslate"></xyz-empty-state>
+    }
+  </section>
+}

@@ -1,0 +1,5 @@
+<span class="xyz-rating-stars" role="img" [attr.aria-label]="'xyzShared.ratingLabel' | cxTranslate: { rating: label(), max: max() }">
+  @for (star of stars(); track $index) {
+    <span class="star" [attr.data-state]="star" aria-hidden="true">★</span>
+  }
+</span>

@@ -1,0 +1,25 @@
+.xyz-price-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  background: #e6eef8;
+  color: #1d4f91;
+}
+[data-variant='new'] {
+  background: #e3f6e8;
+  color: #146c2e;
+}
+[data-variant='premium'] {
+  background: #2b2b2b;
+  color: #f5d77a;
+}
+[data-variant='outlet'] {
+  background: #fdeaea;
+  color: #a1251b;
+}
+[data-variant='warning'] {
+  background: #fff4d6;
+  color: #7a5200;
+}

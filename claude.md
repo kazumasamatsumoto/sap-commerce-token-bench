@@ -126,7 +126,7 @@ composable-storefront-claude-code-kit の担当(サブエージェント)に決�
 | B01 | cs-backend | Populator で項目を写し忘れ、OCC の応答から値が消える |
 | B02 | cs-backend | ImpEx の書き間違いで `ant initialize` が途中で落ちる |
 | B03 | cs-frontend | SSR のときだけ `window` を触って落ちる画面 |
-| B04 | cs-backend | `@Secured` の付け間違いで、ログインしていない人がカートを見られない |
+| B04 | cs-backend | `@Secured` の付け間違いで、ログインしていない人がブランド一覧を見られない(カートの Controller は標準のソースで担当が直さない場所なので、自社の端点にした) |
 | B05 | cs-frontend | OCC の fields の指定漏れで、画面の値が出ない |
 
 - 各ファイルに、最初の依頼文と、やり直しの文(「テストが落ちたので直して」「レビューの指摘を直して」)を 1〜2 本、**一字一句固定**して書く。バグ修正の依頼文は、利用者からの報告の形(症状だけ)にし、原因は書かない。

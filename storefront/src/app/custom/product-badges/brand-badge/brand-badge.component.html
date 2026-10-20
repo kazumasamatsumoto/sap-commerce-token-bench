@@ -1,0 +1,9 @@
+@if (brand(); as brand) {
+  <span class="xyz-brand-badge" data-testid="xyz-brand-badge">
+    <cx-media [src]="brand.logo?.url" [alt]="''" [width]="24"></cx-media>
+    <span class="name">{{ brand.name }}</span>
+    @if (tierVariant(); as variant) {
+      <xyz-price-badge [variant]="variant" [label]="'xyzBadges.tier.' + brand.tier | cxTranslate"></xyz-price-badge>
+    }
+  </span>
+}

@@ -1,0 +1,15 @@
+<div class="xyz-review-summary">
+  <p class="average">
+    <xyz-rating-stars [rating]="summary().average"></xyz-rating-stars>
+    {{ 'xyzReviews.average' | cxTranslate: { average: summary().average.toFixed(1), count: summary().count } }}
+  </p>
+  <ul class="rows">
+    @for (row of summary().rows; track row.stars) {
+      <li [attr.aria-label]="'xyzReviews.row' | cxTranslate: { stars: row.stars, count: row.count }">
+        <span class="stars" aria-hidden="true">{{ row.stars }}★</span>
+        <span class="bar" aria-hidden="true"><span class="fill" [style.width.%]="row.percent"></span></span>
+        <span class="count" aria-hidden="true">{{ row.count }}</span>
+      </li>
+    }
+  </ul>
+</div>

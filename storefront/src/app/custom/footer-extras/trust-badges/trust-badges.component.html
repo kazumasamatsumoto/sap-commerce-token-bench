@@ -1,0 +1,8 @@
+<ul class="xyz-trust-badges" [attr.aria-label]="'xyzFooter.trustLabel' | cxTranslate" data-testid="xyz-trust-badges">
+  @for (badge of badges; track badge) {
+    <li>
+      <strong>{{ 'xyzFooter.trust.' + badge + '.title' | cxTranslate: { threshold: threshold } }}</strong>
+      <span>{{ 'xyzFooter.trust.' + badge + '.text' | cxTranslate }}</span>
+    </li>
+  }
+</ul>

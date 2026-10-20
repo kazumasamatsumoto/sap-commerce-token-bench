@@ -1,0 +1,13 @@
+<nav class="xyz-footer" [attr.aria-label]="'xyzFooter.label' | cxTranslate" data-testid="xyz-footer">
+  @for (column of columns; track column.key) {
+    <section class="column" [attr.aria-labelledby]="'xyz-footer-' + column.key">
+      <h2 [id]="'xyz-footer-' + column.key">{{ 'xyzFooter.columns.' + column.key | cxTranslate }}</h2>
+      <ul>
+        @for (link of column.links; track link.key) {
+          <li><a [routerLink]="link.url">{{ 'xyzFooter.links.' + link.key | cxTranslate }}</a></li>
+        }
+      </ul>
+    </section>
+  }
+</nav>
+<p class="cx-footer">© XYZ Store</p>

@@ -1,0 +1,13 @@
+<div class="xyz-share-link">
+  <button type="button" (click)="copy()">{{ 'xyzProductInfo.copyLink' | cxTranslate }}</button>
+  <span class="status" role="status">
+    @switch (status()) {
+      @case ('copied') {
+        {{ 'xyzProductInfo.copied' | cxTranslate }}
+      }
+      @case ('failed') {
+        {{ 'xyzProductInfo.copyFailed' | cxTranslate }}
+      }
+    }
+  </span>
+</div>

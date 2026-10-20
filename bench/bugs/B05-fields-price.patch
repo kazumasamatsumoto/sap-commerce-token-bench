@@ -1,0 +1,13 @@
+diff --git a/storefront/src/app/custom/config/xyz-occ-config.module.ts b/storefront/src/app/custom/config/xyz-occ-config.module.ts
+index 59b005d..5c73b65 100644
+--- a/storefront/src/app/custom/config/xyz-occ-config.module.ts
++++ b/storefront/src/app/custom/config/xyz-occ-config.module.ts
+@@ -13,7 +13,7 @@ import { provideConfig } from '@xyz/storefront';
+         occ: {
+           endpoints: {
+             productSearchList:
+-              'products/search?fields=products(code,name,summary,price(FULL),images(DEFAULT),stock(FULL),averageRating,numberOfReviews,brand(BASIC),newArrival),facets,breadcrumbs,pagination(DEFAULT),sorts(DEFAULT),freeTextSearch,currentQuery',
++              'products/search?fields=products(code,name,summary,images(DEFAULT),stock(FULL),averageRating,numberOfReviews,brand(BASIC),newArrival),facets,breadcrumbs,pagination(DEFAULT),sorts(DEFAULT),freeTextSearch,currentQuery',
+           },
+         },
+       },

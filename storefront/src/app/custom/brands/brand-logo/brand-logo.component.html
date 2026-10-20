@@ -1,0 +1,4 @@
+<a class="xyz-brand-logo" routerLink="/search" [queryParams]="{ query: brand().name }">
+  <cx-media [src]="brand().logo?.url" [alt]="''" [width]="64"></cx-media>
+  <span class="name">{{ brand().name }}</span>
+</a>
