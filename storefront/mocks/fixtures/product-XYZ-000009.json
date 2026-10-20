@@ -1,0 +1,67 @@
+{
+  "code": "XYZ-000009",
+  "name": "ドーマ プラスカメラバッグ W209",
+  "summary": "カメラバッグ。かんたん設定。",
+  "description": "ドーマ プラスカメラバッグ W209はシリコンを使ったカメラバッグです。特長は、かんたん設定、長時間使えるバッテリーです。",
+  "url": "/product/XYZ-000009",
+  "manufacturer": "Doma Corporation",
+  "ean": "4900000000092",
+  "purchasable": true,
+  "price": {
+    "currencyIso": "JPY",
+    "value": 76300,
+    "formattedValue": "¥76,300",
+    "priceType": "BUY"
+  },
+  "images": [
+    {
+      "url": "/medias/img-0009-product.svg",
+      "altText": "商品画像 9",
+      "format": "product",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0009-thumbnail.svg",
+      "altText": "商品サムネイル 9",
+      "format": "thumbnail",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0046-product.svg",
+      "altText": "商品画像 46",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 0
+    }
+  ],
+  "stock": {
+    "stockLevel": 244,
+    "stockLevelStatus": "inStock"
+  },
+  "averageRating": 3.3,
+  "numberOfReviews": 3,
+  "categories": [
+    {
+      "code": "cat-01-07",
+      "name": "カメラバッグ",
+      "url": "/category/cat-01-07",
+      "image": {
+        "url": "/medias/cat-01-07-pic.svg",
+        "altText": "カメラバッグ",
+        "format": "thumbnail"
+      }
+    }
+  ],
+  "brand": {
+    "code": "brand-04",
+    "name": "ドーマ",
+    "tier": "STANDARD",
+    "logo": {
+      "url": "/medias/brand-logo-04.svg",
+      "altText": "ドーマ",
+      "format": "logo"
+    }
+  },
+  "newArrival": false,
+  "material": "シリコン"
+}

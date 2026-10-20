@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xyzocc の WsDTO。標準の WsDTO に項目を足すときも、ここに同じ class の bean を書く。 -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+    <bean class="com.xyz.occ.dto.brand.BrandWsDTO">
+        <description>ブランド</description>
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+        <property name="description" type="String"/>
+        <property name="tier" type="String"/>
+        <property name="logo" type="de.hybris.platform.commercewebservicescommons.dto.product.ImageWsDTO"/>
+    </bean>
+
+    <bean class="com.xyz.occ.dto.brand.BrandListWsDTO">
+        <property name="brands" type="java.util.List&lt;com.xyz.occ.dto.brand.BrandWsDTO&gt;"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.product.ProductWsDTO">
+        <property name="brand" type="com.xyz.occ.dto.brand.BrandWsDTO"/>
+        <property name="newArrival" type="Boolean"/>
+        <property name="material" type="String"/>
+    </bean>
+</beans>

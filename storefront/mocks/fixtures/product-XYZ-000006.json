@@ -1,0 +1,67 @@
+{
+  "code": "XYZ-000006",
+  "name": "ウィスプ ウルトラ掃除機 U861",
+  "summary": "掃除機。すっきりしたデザイン。",
+  "description": "ウィスプ ウルトラ掃除機 U861はアルミニウムを使った掃除機です。特長は、すっきりしたデザイン、防水防じんです。",
+  "url": "/product/XYZ-000006",
+  "manufacturer": "Wisp Corporation",
+  "ean": "4900000000061",
+  "purchasable": true,
+  "price": {
+    "currencyIso": "JPY",
+    "value": 73780,
+    "formattedValue": "¥73,780",
+    "priceType": "BUY"
+  },
+  "images": [
+    {
+      "url": "/medias/img-0006-product.svg",
+      "altText": "商品画像 6",
+      "format": "product",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0006-thumbnail.svg",
+      "altText": "商品サムネイル 6",
+      "format": "thumbnail",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0043-product.svg",
+      "altText": "商品画像 43",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 0
+    }
+  ],
+  "stock": {
+    "stockLevel": 0,
+    "stockLevelStatus": "outOfStock"
+  },
+  "averageRating": 4,
+  "numberOfReviews": 1,
+  "categories": [
+    {
+      "code": "cat-06-01",
+      "name": "掃除機",
+      "url": "/category/cat-06-01",
+      "image": {
+        "url": "/medias/cat-06-01-pic.svg",
+        "altText": "掃除機",
+        "format": "thumbnail"
+      }
+    }
+  ],
+  "brand": {
+    "code": "brand-23",
+    "name": "ウィスプ",
+    "tier": "STANDARD",
+    "logo": {
+      "url": "/medias/brand-logo-23.svg",
+      "altText": "ウィスプ",
+      "format": "logo"
+    }
+  },
+  "newArrival": false,
+  "material": "アルミニウム"
+}

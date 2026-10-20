@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  疑似プラットフォームの型。本物の core / catalog / europe1 / basecommerce / commerceservices / cms2 / b2bcommerce の型のうち、
+  計測台で使うものだけを、名前と主な属性を本物に合わせて書き直したもの(本物の定義の写しではない)。
+  拡張(xyzcore など)から属性を足すときは、本物と同じく autocreate="false" generate="false" で同じ code の itemtype を書く。
+-->
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+    <collectiontypes>
+        <collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false" type="list"/>
+    </collectiontypes>
+
+    <enumtypes>
+        <enumtype code="ArticleApprovalStatus" package="de.hybris.platform.catalog.enums" autocreate="true" generate="true">
+            <value code="check"/>
+            <value code="approved"/>
+            <value code="unapproved"/>
+        </enumtype>
+        <enumtype code="OrderStatus" package="de.hybris.platform.core.enums" autocreate="true" generate="true" dynamic="true">
+            <value code="CREATED"/>
+            <value code="ON_VALIDATION"/>
+            <value code="COMPLETED"/>
+            <value code="CANCELLED"/>
+            <value code="PENDING_APPROVAL"/>
+            <value code="APPROVED"/>
+            <value code="REJECTED"/>
+        </enumtype>
+        <enumtype code="InStockStatus" package="de.hybris.platform.basecommerce.enums" autocreate="true" generate="true">
+            <value code="forceInStock"/>
+            <value code="forceOutOfStock"/>
+            <value code="notSpecified"/>
+        </enumtype>
+        <enumtype code="StockLevelStatus" package="de.hybris.platform.basecommerce.enums" autocreate="true" generate="true">
+            <value code="inStock"/>
+            <value code="outOfStock"/>
+            <value code="lowStock"/>
+        </enumtype>
+        <enumtype code="CmsApprovalStatus" package="de.hybris.platform.cms2.enums" autocreate="true" generate="true">
+            <value code="check"/>
+            <value code="approved"/>
+            <value code="unapproved"/>
+        </enumtype>
+        <enumtype code="Gender" package="de.hybris.platform.core.enums" autocreate="true" generate="true">
+            <value code="MALE"/>
+            <value code="FEMALE"/>
+        </enumtype>
+        <enumtype code="SiteChannel" package="de.hybris.platform.commerceservices.enums" autocreate="true" generate="true">
+            <value code="B2C"/>
+            <value code="B2B"/>
+        </enumtype>
+    </enumtypes>
+
+    <relations>
+        <relation code="CategoryCategoryRelation" localized="false" autocreate="true" generate="true">
+            <deployment table="Cat2CatRel" typecode="144"/>
+            <sourceElement qualifier="supercategories" type="Category" cardinality="many"/>
+            <targetElement qualifier="categories" type="Category" cardinality="many" collectiontype="list" ordered="true"/>
+        </relation>
+        <relation code="CategoryProductRelation" localized="false" autocreate="true" generate="true">
+            <deployment table="Cat2ProdRel" typecode="143"/>
+            <sourceElement qualifier="supercategories" type="Category" cardinality="many"/>
+            <targetElement qualifier="products" type="Product" cardinality="many" collectiontype="list" ordered="true"/>
+        </relation>
+        <relation code="PrincipalGroupRelation" localized="false" autocreate="true" generate="true">
+            <deployment table="PGRels" typecode="201"/>
+            <sourceElement qualifier="members" type="Principal" cardinality="many"/>
+            <targetElement qualifier="groups" type="PrincipalGroup" cardinality="many" collectiontype="set"/>
+        </relation>
+        <relation code="User2Addresses" localized="false" autocreate="true" generate="true">
+            <sourceElement qualifier="owner" type="User" cardinality="one"/>
+            <targetElement qualifier="addresses" type="Address" cardinality="many" collectiontype="list"/>
+        </relation>
+        <relation code="AbstractOrder2AbstractOrderEntry" localized="false" autocreate="true" generate="true">
+            <sourceElement qualifier="order" type="AbstractOrder" cardinality="one"/>
+            <targetElement qualifier="entries" type="AbstractOrderEntry" cardinality="many" collectiontype="list" ordered="true"/>
+        </relation>
+        <relation code="User2Orders" localized="false" autocreate="true" generate="true">
+            <sourceElement qualifier="user" type="User" cardinality="one"/>
+            <targetElement qualifier="orders" type="Order" cardinality="many" collectiontype="list"/>
+        </relation>
+        <relation code="User2Carts" localized="false" autocreate="true" generate="true">
+            <sourceElement qualifier="user" type="User" cardinality="one"/>
+            <targetElement qualifier="carts" type="Cart" cardinality="many" collectiontype="list"/>
+        </relation>
+        <relation code="Product2PriceRows" localized="false" autocreate="true" generate="true">
+            <sourceElement qualifier="product" type="Product" cardinality="one"/>
+            <targetElement qualifier="europe1Prices" type="PriceRow" cardinality="many" collectiontype="list"/>
+        </relation>
+        <relation code="Product2Reviews" localized="false" autocreate="true" generate="true">
+            <sourceElement qualifier="product" type="Product" cardinality="one"/>
+            <targetElement qualifier="productReviews" type="CustomerReview" cardinality="many" collectiontype="list"/>
+        </relation>
+        <relation code="Product2GalleryImages" localized="false" autocreate="true" generate="true">
+            <deployment table="Prod2GalleryRel" typecode="145"/>
+            <sourceElement qualifier="galleryOf" type="Product" cardinality="many"/>
+            <targetElement qualifier="galleryImages" type="Media" cardinality="many" collectiontype="list" ordered="true"/>
+        </relation>
+        <relation code="BaseSite2BaseStore" localized="false" autocreate="true" generate="true">
+            <sourceElement qualifier="cmsSite" type="BaseSite" cardinality="one"/>
+            <targetElement qualifier="stores" type="BaseStore" cardinality="many" collectiontype="list"/>
+        </relation>
+        <relation code="BaseStore2DeliveryMode" localized="false" autocreate="true" generate="true">
+            <deployment table="Store2DelModeRel" typecode="146"/>
+            <sourceElement qualifier="stores" type="BaseStore" cardinality="many"/>
+            <targetElement qualifier="deliveryModes" type="DeliveryMode" cardinality="many" collectiontype="set"/>
+        </relation>
+        <relation code="ContentSlot2Components" localized="false" autocreate="true" generate="true">
+            <deployment table="ElementsForSlot" typecode="1080"/>
+            <sourceElement qualifier="slots" type="ContentSlot" cardinality="many"/>
+            <targetElement qualifier="cmsComponents" type="AbstractCMSComponent" cardinality="many" collectiontype="list" ordered="true"/>
+        </relation>
+        <relation code="B2BUnit2Customer" localized="false" autocreate="true" generate="true">
+            <sourceElement qualifier="defaultB2BUnit" type="B2BUnit" cardinality="one"/>
+            <targetElement qualifier="b2bCustomers" type="Customer" cardinality="many" collectiontype="list"/>
+        </relation>
+    </relations>
+
+    <itemtypes>
+        <itemtype code="Item" autocreate="true" generate="false" abstract="true" jaloclass="de.hybris.platform.jalo.Item">
+            <attributes>
+                <attribute qualifier="pk" type="java.lang.Long"><persistence type="property"/><modifiers write="false"/></attribute>
+                <attribute qualifier="creationtime" type="java.util.Date"><persistence type="property"/><modifiers write="false"/></attribute>
+                <attribute qualifier="modifiedtime" type="java.util.Date"><persistence type="property"/></attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="GenericItem" extends="Item" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.GenericItem">
+            <deployment table="GenericItems" typecode="99"/>
+        </itemtype>
+
+        <typegroup name="i18n">
+            <itemtype code="Language" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.c2l.Language">
+                <deployment table="Languages" typecode="32"/>
+                <attributes>
+                    <attribute qualifier="isocode" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="active" type="java.lang.Boolean"><persistence type="property"/><defaultvalue>Boolean.TRUE</defaultvalue></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Currency" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.c2l.Currency">
+                <deployment table="Currencies" typecode="33"/>
+                <attributes>
+                    <attribute qualifier="isocode" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="symbol" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="digits" type="java.lang.Integer"><persistence type="property"/></attribute>
+                    <attribute qualifier="active" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Country" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.c2l.Country">
+                <deployment table="Countries" typecode="34"/>
+                <attributes>
+                    <attribute qualifier="isocode" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="active" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+        <typegroup name="catalog">
+            <itemtype code="Catalog" autocreate="true" generate="true" jaloclass="de.hybris.platform.catalog.jalo.Catalog">
+                <deployment table="Catalogs" typecode="600"/>
+                <attributes>
+                    <attribute qualifier="id" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="CatalogVersion" autocreate="true" generate="true" jaloclass="de.hybris.platform.catalog.jalo.CatalogVersion">
+                <deployment table="CatalogVersions" typecode="601"/>
+                <attributes>
+                    <attribute qualifier="catalog" type="Catalog"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="version" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="active" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Media" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.media.Media">
+                <deployment table="Medias" typecode="30"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="catalogVersion" type="CatalogVersion"><persistence type="property"/><modifiers unique="true"/></attribute>
+                    <attribute qualifier="URL" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="mime" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="altText" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="mediaFormat" type="java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Category" autocreate="true" generate="true" jaloclass="de.hybris.platform.category.jalo.Category">
+                <deployment table="Categories" typecode="142"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="catalogVersion" type="CatalogVersion"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="description" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="picture" type="Media"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Product" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.product.Product">
+                <deployment table="Products" typecode="1"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="catalogVersion" type="CatalogVersion"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="summary" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="description" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="manufacturerName" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="ean" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="approvalStatus" type="ArticleApprovalStatus"><persistence type="property"/></attribute>
+                    <attribute qualifier="picture" type="Media"><persistence type="property"/></attribute>
+                    <attribute qualifier="thumbnail" type="Media"><persistence type="property"/></attribute>
+                    <attribute qualifier="unit" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="averageRating" type="java.lang.Double"><persistence type="property"/></attribute>
+                    <attribute qualifier="keywords" type="StringCollection"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="PriceRow" autocreate="true" generate="true" jaloclass="de.hybris.platform.europe1.jalo.PriceRow">
+                <deployment table="PriceRows" typecode="1055"/>
+                <attributes>
+                    <attribute qualifier="price" type="java.lang.Double"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="currency" type="Currency"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="minqtd" type="java.lang.Long"><persistence type="property"/></attribute>
+                    <attribute qualifier="net" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                    <attribute qualifier="unit" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="catalogVersion" type="CatalogVersion"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="StockLevel" autocreate="true" generate="true" jaloclass="de.hybris.platform.ordersplitting.jalo.StockLevel">
+                <deployment table="StockLevels" typecode="1001"/>
+                <attributes>
+                    <attribute qualifier="productCode" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="warehouse" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="available" type="int"><persistence type="property"/></attribute>
+                    <attribute qualifier="reserved" type="int"><persistence type="property"/></attribute>
+                    <attribute qualifier="inStockStatus" type="InStockStatus"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="CustomerReview" autocreate="true" generate="true" jaloclass="de.hybris.platform.customerreview.jalo.CustomerReview">
+                <deployment table="CustomerReviews" typecode="1600"/>
+                <attributes>
+                    <attribute qualifier="rating" type="java.lang.Double"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="headline" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="comment" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="alias" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="user" type="User"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+        <typegroup name="user">
+            <itemtype code="Principal" autocreate="true" generate="true" abstract="true" jaloclass="de.hybris.platform.jalo.security.Principal">
+                <deployment table="Users" typecode="4"/>
+                <attributes>
+                    <attribute qualifier="uid" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="PrincipalGroup" extends="Principal" autocreate="true" generate="true" abstract="true" jaloclass="de.hybris.platform.jalo.security.PrincipalGroup"/>
+            <itemtype code="UserGroup" extends="PrincipalGroup" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.user.UserGroup"/>
+            <itemtype code="User" extends="Principal" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.user.User">
+                <attributes>
+                    <attribute qualifier="encodedPassword" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="loginDisabled" type="boolean"><persistence type="property"/></attribute>
+                    <attribute qualifier="sessionLanguage" type="Language"><persistence type="property"/></attribute>
+                    <attribute qualifier="sessionCurrency" type="Currency"><persistence type="property"/></attribute>
+                    <attribute qualifier="defaultShipmentAddress" type="Address"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Employee" extends="User" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.user.Employee"/>
+            <itemtype code="Customer" extends="User" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.user.Customer">
+                <attributes>
+                    <attribute qualifier="customerID" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="title" type="Title"><persistence type="property"/></attribute>
+                    <attribute qualifier="gender" type="Gender"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Title" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.user.Title">
+                <deployment table="Titles" typecode="24"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Address" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.user.Address">
+                <deployment table="Addresses" typecode="23"/>
+                <attributes>
+                    <attribute qualifier="title" type="Title"><persistence type="property"/></attribute>
+                    <attribute qualifier="firstname" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="lastname" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="line1" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="line2" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="town" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="postalcode" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="phone1" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="email" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="country" type="Country"><persistence type="property"/></attribute>
+                    <attribute qualifier="shippingAddress" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                    <attribute qualifier="billingAddress" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="B2BUnit" extends="UserGroup" autocreate="true" generate="true" jaloclass="de.hybris.platform.b2b.jalo.B2BUnit">
+                <attributes>
+                    <attribute qualifier="active" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                    <attribute qualifier="locName" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+        <typegroup name="store">
+            <itemtype code="BaseSite" autocreate="true" generate="true" jaloclass="de.hybris.platform.basecommerce.jalo.site.BaseSite">
+                <deployment table="BaseSites" typecode="1010"/>
+                <attributes>
+                    <attribute qualifier="uid" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="channel" type="SiteChannel"><persistence type="property"/></attribute>
+                    <attribute qualifier="contentCatalog" type="Catalog"><persistence type="property"/></attribute>
+                    <attribute qualifier="defaultLanguage" type="Language"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="BaseStore" autocreate="true" generate="true" jaloclass="de.hybris.platform.store.jalo.BaseStore">
+                <deployment table="BaseStores" typecode="1011"/>
+                <attributes>
+                    <attribute qualifier="uid" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="productCatalog" type="Catalog"><persistence type="property"/></attribute>
+                    <attribute qualifier="defaultCurrency" type="Currency"><persistence type="property"/></attribute>
+                    <attribute qualifier="net" type="boolean"><persistence type="property"/></attribute>
+                    <attribute qualifier="warehouse" type="java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="DeliveryMode" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.order.delivery.DeliveryMode">
+                <deployment table="DeliveryModes" typecode="1012"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="description" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="cost" type="java.lang.Double"><persistence type="property"/></attribute>
+                    <attribute qualifier="active" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+        <typegroup name="order">
+            <itemtype code="AbstractOrder" autocreate="true" generate="true" abstract="true" jaloclass="de.hybris.platform.jalo.order.AbstractOrder">
+                <deployment table="Orders" typecode="45"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="guid" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="date" type="java.util.Date"><persistence type="property"/></attribute>
+                    <attribute qualifier="currency" type="Currency"><persistence type="property"/></attribute>
+                    <attribute qualifier="site" type="BaseSite"><persistence type="property"/></attribute>
+                    <attribute qualifier="store" type="BaseStore"><persistence type="property"/></attribute>
+                    <attribute qualifier="status" type="OrderStatus"><persistence type="property"/></attribute>
+                    <attribute qualifier="net" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                    <attribute qualifier="calculated" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                    <attribute qualifier="subtotal" type="java.lang.Double"><persistence type="property"/></attribute>
+                    <attribute qualifier="deliveryCost" type="java.lang.Double"><persistence type="property"/></attribute>
+                    <attribute qualifier="totalTax" type="java.lang.Double"><persistence type="property"/></attribute>
+                    <attribute qualifier="totalPrice" type="java.lang.Double"><persistence type="property"/></attribute>
+                    <attribute qualifier="deliveryAddress" type="Address"><persistence type="property"/></attribute>
+                    <attribute qualifier="paymentAddress" type="Address"><persistence type="property"/></attribute>
+                    <attribute qualifier="deliveryMode" type="DeliveryMode"><persistence type="property"/></attribute>
+                    <attribute qualifier="paymentInfoCode" type="java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Cart" extends="AbstractOrder" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.order.Cart">
+                <attributes>
+                    <attribute qualifier="saveTime" type="java.util.Date"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="Order" extends="AbstractOrder" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.order.Order">
+                <attributes>
+                    <attribute qualifier="versionID" type="java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="AbstractOrderEntry" autocreate="true" generate="true" abstract="true" jaloclass="de.hybris.platform.jalo.order.AbstractOrderEntry">
+                <deployment table="OrderEntries" typecode="46"/>
+                <attributes>
+                    <attribute qualifier="entryNumber" type="java.lang.Integer"><persistence type="property"/></attribute>
+                    <attribute qualifier="product" type="Product"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="quantity" type="java.lang.Long"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="basePrice" type="java.lang.Double"><persistence type="property"/></attribute>
+                    <attribute qualifier="totalPrice" type="java.lang.Double"><persistence type="property"/></attribute>
+                    <attribute qualifier="unit" type="java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="CartEntry" extends="AbstractOrderEntry" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.order.CartEntry"/>
+            <itemtype code="OrderEntry" extends="AbstractOrderEntry" autocreate="true" generate="true" jaloclass="de.hybris.platform.jalo.order.OrderEntry"/>
+        </typegroup>
+
+        <typegroup name="cms">
+            <itemtype code="CMSItem" autocreate="true" generate="true" abstract="true" jaloclass="de.hybris.platform.cms2.jalo.contents.CMSItem">
+                <attributes>
+                    <attribute qualifier="uid" type="java.lang.String"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                    <attribute qualifier="name" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="catalogVersion" type="CatalogVersion"><persistence type="property"/><modifiers optional="false" unique="true"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="PageTemplate" extends="CMSItem" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.pages.PageTemplate">
+                <deployment table="CMSPageTemplates" typecode="1081"/>
+                <attributes>
+                    <attribute qualifier="frontendTemplateName" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="active" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="AbstractPage" extends="CMSItem" autocreate="true" generate="true" abstract="true" jaloclass="de.hybris.platform.cms2.jalo.pages.AbstractPage">
+                <deployment table="CMSPage" typecode="1082"/>
+                <attributes>
+                    <attribute qualifier="title" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="masterTemplate" type="PageTemplate"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="defaultPage" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                    <attribute qualifier="approvalStatus" type="CmsApprovalStatus"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="ContentPage" extends="AbstractPage" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.pages.ContentPage">
+                <attributes>
+                    <attribute qualifier="label" type="java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="homepage" type="boolean"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="ProductPage" extends="AbstractPage" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.pages.ProductPage"/>
+            <itemtype code="CategoryPage" extends="AbstractPage" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.pages.CategoryPage"/>
+            <itemtype code="ContentSlot" extends="CMSItem" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.contents.contentslot.ContentSlot">
+                <deployment table="CMSContentSlots" typecode="1083"/>
+                <attributes>
+                    <attribute qualifier="active" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="ContentSlotForPage" extends="CMSItem" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.relations.ContentSlotForPage">
+                <deployment table="CMSCnstSlotsForPage" typecode="1084"/>
+                <attributes>
+                    <attribute qualifier="position" type="java.lang.String"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="page" type="AbstractPage"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="contentSlot" type="ContentSlot"><persistence type="property"/><modifiers optional="false"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="ContentSlotForTemplate" extends="CMSItem" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.relations.ContentSlotForTemplate">
+                <deployment table="CMSCnstSlotsForTpl" typecode="1085"/>
+                <attributes>
+                    <attribute qualifier="position" type="java.lang.String"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="pageTemplate" type="PageTemplate"><persistence type="property"/><modifiers optional="false"/></attribute>
+                    <attribute qualifier="contentSlot" type="ContentSlot"><persistence type="property"/><modifiers optional="false"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="AbstractCMSComponent" extends="CMSItem" autocreate="true" generate="true" abstract="true" jaloclass="de.hybris.platform.cms2.jalo.contents.components.AbstractCMSComponent">
+                <deployment table="CMSComponent" typecode="1086"/>
+                <attributes>
+                    <attribute qualifier="visible" type="java.lang.Boolean"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="SimpleCMSComponent" extends="AbstractCMSComponent" autocreate="true" generate="true" abstract="true" jaloclass="de.hybris.platform.cms2.jalo.contents.components.SimpleCMSComponent"/>
+            <itemtype code="CMSParagraphComponent" extends="SimpleCMSComponent" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.contents.components.CMSParagraphComponent">
+                <attributes>
+                    <attribute qualifier="content" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="CMSLinkComponent" extends="SimpleCMSComponent" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.contents.components.CMSLinkComponent">
+                <attributes>
+                    <attribute qualifier="linkName" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="url" type="java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="SimpleBannerComponent" extends="SimpleCMSComponent" autocreate="true" generate="true" jaloclass="de.hybris.platform.acceleratorcms.jalo.components.SimpleBannerComponent">
+                <attributes>
+                    <attribute qualifier="headline" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="media" type="Media"><persistence type="property"/></attribute>
+                    <attribute qualifier="urlLink" type="java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="ProductCarouselComponent" extends="SimpleCMSComponent" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2lib.jalo.components.ProductCarouselComponent">
+                <attributes>
+                    <attribute qualifier="title" type="localized:java.lang.String"><persistence type="property"/></attribute>
+                    <attribute qualifier="productCodes" type="StringCollection"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="CMSFlexComponent" extends="SimpleCMSComponent" autocreate="true" generate="true" jaloclass="de.hybris.platform.cms2.jalo.contents.components.CMSFlexComponent">
+                <attributes>
+                    <attribute qualifier="flexType" type="java.lang.String"><persistence type="property"/></attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+    </itemtypes>
+</items>

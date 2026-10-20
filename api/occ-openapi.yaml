@@ -1,0 +1,2462 @@
+openapi: 3.0.3
+info:
+  title: Pseudo SAP Commerce OCC API (platform-lite + xyzocc)
+  version: "2.0-lite"
+  description: |
+    トークン計測ベンチで使う、SAP Commerce OCC v2 を真似た擬似 API です。
+    コードは `core-customize/hybris/bin/platform-lite` (標準の OCC 相当) と
+    `core-customize/hybris/bin/custom/xyzocc` (自社のブランド API) にあります。
+
+    - サーバー: `http://localhost:9002/occ/v2` (下のパスはすべてこの後ろに付きます)
+    - ベースサイト: `electronics-spa` (`{baseSiteId}` に入れます。無いサイトは 400 InvalidResourceError)
+    - テスト用ユーザー: `taro@example.com` / `hanako@example.com` (パスワードはどちらも `Test1234!`)
+    - OAuth クライアント: `mobile_android` / `secret`
+
+    ## トークンの取り方
+    トークンは `/occ/v2` の外にある `POST http://localhost:9002/authorizationserver/oauth/token` で取ります
+    (`application/x-www-form-urlencoded`、client_id と client_secret は本文に入れます)。
+    - `grant_type=password` + `client_id=mobile_android` + `client_secret=secret` + `username` + `password`
+      … 顧客のトークン (ROLE_CLIENT と、ユーザーのグループに応じた ROLE_CUSTOMERGROUP / ROLE_B2BCUSTOMERGROUP など)
+    - `grant_type=client_credentials` + `client_id=trusted_client` + `client_secret=secret`
+      … 信頼されたクライアントのトークン (ROLE_CLIENT, ROLE_TRUSTED_CLIENT)。`mobile_android` で取ると ROLE_CLIENT だけ
+    - 成功時: `{"access_token":"...","token_type":"bearer","expires_in":...,"scope":"basic openid"}`
+    - 失敗時: 401 `{"error":"invalid_client"}` / 400 `{"error":"invalid_grant"}` / 400 `{"error":"unsupported_grant_type"}`
+
+    取ったトークンは `Authorization: Bearer <access_token>` で送ります。トークンなしの呼び出しは ROLE_ANONYMOUS 扱いです。
+
+    ## {userId} の決まり
+    - `current` … トークンの本人 (トークンが無いと 401 UnauthorizedError)
+    - `anonymous` … ゲスト。カートの `{cartId}` にはカートの guid を使います
+    - それ以外の uid … 本人か ROLE_TRUSTED_CLIENT だけ (他人なら 403 ForbiddenError)
+
+    ## エラーの形
+    エラーはすべて `ErrorListWsDTO` (`{"errors":[{"type":"...Error","message":"...","subject":"...","reason":"..."}]}`) で返ります。
+    主な type: 400 = UnknownIdentifierError / InvalidResourceError / CartError / InvalidCartError / DuplicateUidError /
+    CMSItemNotFoundError / ValidationError / MissingServletRequestParameterError、401 = UnauthorizedError、
+    403 = ForbiddenError、404 = NotFoundError、405 = HttpRequestMethodNotSupportedError、500 = その他。
+servers:
+  - url: http://localhost:9002/occ/v2
+    description: ローカルの platform-lite
+
+tags:
+  - name: Address
+  - name: BaseSites
+  - name: Carts
+  - name: Catalogs
+  - name: CmsPages
+  - name: Miscs
+  - name: Orders
+  - name: OrgUnits
+  - name: Products
+  - name: Users
+  - name: Brands
+
+paths:
+  # ===================================================================== BaseSites
+  /basesites:
+    get:
+      tags: [BaseSites]
+      operationId: getBaseSites
+      summary: List base sites
+      description: すべてのベースサイトの一覧を返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseSiteListWsDTO"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  # ===================================================================== Address
+  /{baseSiteId}/users/{userId}/addresses:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Address]
+      operationId: getAddresses
+      summary: Get the user's address book
+      description: ユーザーの住所録を返します。使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddressListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    post:
+      tags: [Address]
+      operationId: createAddress
+      summary: Create an address
+      description: 住所録に住所を足します。firstName・lastName・line1・town・postalCode (123-4567 の形)・country.isocode が必須で、使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddressWsDTO"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddressWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/addresses/{addressId}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/addressId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Address]
+      operationId: getAddress
+      summary: Get an address
+      description: 住所録の住所を 1 件返します。使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddressWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    patch:
+      tags: [Address]
+      operationId: updateAddress
+      summary: Partially update an address
+      description: 送った項目だけ住所を書き換えます (本文は返りません)。使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddressWsDTO"
+      responses:
+        "200":
+          description: OK (本文なし)
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    delete:
+      tags: [Address]
+      operationId: deleteAddress
+      summary: Delete an address
+      description: 住所録から住所を消します。使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      responses:
+        "200":
+          description: OK (本文なし)
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  # ===================================================================== Carts
+  /{baseSiteId}/users/{userId}/carts:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Carts]
+      operationId: getCarts
+      summary: Get the user's carts
+      description: ユーザーのカートの一覧を返します。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます (トークンなしでも可)。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    post:
+      tags: [Carts]
+      operationId: createCart
+      summary: Create a cart
+      description: 新しいカートを作ります。ゲスト (userId=anonymous) は返った guid を以後の cartId に使います。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/carts/{cartId}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/cartId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Carts]
+      operationId: getCart
+      summary: Get a cart
+      description: カートを 1 つ返します。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    delete:
+      tags: [Carts]
+      operationId: deleteCart
+      summary: Delete a cart
+      description: カートを消します。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      responses:
+        "200":
+          description: OK (本文なし)
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/carts/{cartId}/entries:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/cartId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Carts]
+      operationId: getCartEntries
+      summary: Get cart entries
+      description: カートの明細 (商品の行) の一覧を返します。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderEntryListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    post:
+      tags: [Carts]
+      operationId: addCartEntry
+      summary: Add a product to the cart
+      description: 商品をカートに入れます。本文は {"product":{"code":"..."},"quantity":1} で、quantity を省くと 1 です。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderEntryWsDTO"
+            example:
+              product:
+                code: XYZ-000001
+              quantity: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartModificationWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/carts/{cartId}/entries/{entryNumber}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/cartId"
+      - $ref: "#/components/parameters/entryNumber"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    patch:
+      tags: [Carts]
+      operationId: updateCartEntry
+      summary: Update the quantity of a cart entry
+      description: 明細の数量を変えます。本文は {"quantity":2} で、0 なら明細を消し、負の数は 400 です。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderEntryWsDTO"
+            example:
+              quantity: 2
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartModificationWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    delete:
+      tags: [Carts]
+      operationId: removeCartEntry
+      summary: Remove a cart entry
+      description: 明細をカートから消します (数量を 0 にするのと同じ)。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      responses:
+        "200":
+          description: OK (本文なし)
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/carts/{cartId}/addresses/delivery:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/cartId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    put:
+      tags: [Carts]
+      operationId: setDeliveryAddress
+      summary: Set the delivery address of the cart
+      description: カートの配送先を決めます。住所録の住所なら addressId を、新しい住所なら本文に住所を入れます (どちらも無いと 400)。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: addressId
+          in: query
+          required: false
+          description: 住所録の住所の ID。指定すると本文は使いません。
+          schema:
+            type: string
+      requestBody:
+        required: false
+        description: addressId を指定しないときの新しい住所 (createAddress と同じ必須項目)。
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddressWsDTO"
+      responses:
+        "200":
+          description: OK (本文なし)
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    delete:
+      tags: [Carts]
+      operationId: removeDeliveryAddress
+      summary: Remove the delivery address from the cart
+      description: カートの配送先を外します。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      responses:
+        "200":
+          description: OK (本文なし)
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/carts/{cartId}/deliverymodes:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/cartId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Carts]
+      operationId: getSupportedDeliveryModes
+      summary: Get supported delivery modes
+      description: このカートで選べる配送方法の一覧を返します。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeliveryModeListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/carts/{cartId}/deliverymode:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/cartId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    put:
+      tags: [Carts]
+      operationId: setDeliveryMode
+      summary: Set the delivery mode of the cart
+      description: カートの配送方法を deliveryModeId で決めます。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: deliveryModeId
+          in: query
+          required: true
+          description: 配送方法のコード (getSupportedDeliveryModes の code)。
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK (本文なし)
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    get:
+      tags: [Carts]
+      operationId: getDeliveryMode
+      summary: Get the delivery mode of the cart
+      description: カートで選ばれている配送方法を返します (未選択なら空のオブジェクト)。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeliveryModeWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/carts/{cartId}/paymentdetails:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/cartId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    post:
+      tags: [Carts]
+      operationId: addPaymentDetails
+      summary: Add payment details to the cart
+      description: カートに支払い情報 (カード) を付けます。使うのは accountHolderName・cardNumber・expiryMonth・expiryYear です。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentDetailsWsDTO"
+            example:
+              accountHolderName: Taro Yamada
+              cardNumber: "4111111111111111"
+              expiryMonth: "12"
+              expiryYear: "2030"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentDetailsWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/carts/{cartId}/email:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/cartId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    put:
+      tags: [Carts]
+      operationId: setCartEmail
+      summary: Set the guest email of the cart
+      description: ゲストのカートにメールアドレスを付けます (ゲストの注文に必要)。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: ゲストのメールアドレス。形が正しくないと 400 ValidationError。
+          schema:
+            type: string
+            format: email
+      responses:
+        "200":
+          description: OK (本文なし)
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  # ===================================================================== Catalogs
+  /{baseSiteId}/catalogs:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Catalogs]
+      operationId: getCatalogs
+      summary: List catalogs with category tree
+      description: サイトの商品カタログと、カテゴリの木 (2 段まで) を返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CatalogListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/catalogs/{catalogId}/{catalogVersionId}/categories/{categoryId}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - name: catalogId
+        in: path
+        required: true
+        description: カタログの ID。
+        schema:
+          type: string
+      - name: catalogVersionId
+        in: path
+        required: true
+        description: カタログのバージョン (例 Online)。
+        schema:
+          type: string
+      - $ref: "#/components/parameters/categoryId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Catalogs]
+      operationId: getCategory
+      summary: Get a category with subcategories
+      description: カテゴリと、その下のカテゴリ (2 段まで) を返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryHierarchyWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/categories/{categoryId}/products:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/categoryId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Catalogs]
+      operationId: searchByCategory
+      summary: List products of a category
+      description: カテゴリに入っている商品を、商品検索と同じ形でページごとに返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/currentPage"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductSearchPageWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  # ===================================================================== CmsPages
+  /{baseSiteId}/cms/pages:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [CmsPages]
+      operationId: getPage
+      summary: Get a CMS page by type and label or code
+      description: CMS ページを、種類とラベル (例 ContentPage と /cart) か商品コード (ProductPage と code) で返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: pageType
+          in: query
+          required: false
+          description: ページの種類 (ContentPage, ProductPage, CategoryPage など)。
+          schema:
+            type: string
+            default: ContentPage
+        - name: pageLabelOrId
+          in: query
+          required: false
+          description: ContentPage のラベル (例 /cart) か ページ ID。
+          schema:
+            type: string
+        - name: code
+          in: query
+          required: false
+          description: ProductPage なら商品コード、CategoryPage ならカテゴリコード。
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CMSPageWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/cms/pages/{pageId}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - name: pageId
+        in: path
+        required: true
+        description: ContentPage の ID (ラベルでも可)。
+        schema:
+          type: string
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [CmsPages]
+      operationId: getPageById
+      summary: Get a content page by id
+      description: ContentPage を ID で返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CMSPageWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/cms/components:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [CmsPages]
+      operationId: getComponents
+      summary: Get CMS components by ids
+      description: カンマ区切りで指定した CMS コンポーネントをまとめて返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: componentIds
+          in: query
+          required: true
+          description: コンポーネントの uid をカンマで区切ったもの (例 a,b,c)。
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListComponentWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/cms/components/{componentId}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - name: componentId
+        in: path
+        required: true
+        description: コンポーネントの uid。
+        schema:
+          type: string
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [CmsPages]
+      operationId: getComponent
+      summary: Get a CMS component
+      description: CMS コンポーネントを 1 つ返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComponentWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  # ===================================================================== Miscs
+  /{baseSiteId}/languages:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Miscs]
+      operationId: getLanguages
+      summary: List languages
+      description: 使える言語の一覧を返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LanguageListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/currencies:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Miscs]
+      operationId: getCurrencies
+      summary: List currencies
+      description: 使える通貨の一覧を返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrencyListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/countries:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Miscs]
+      operationId: getCountries
+      summary: List countries
+      description: 国の一覧を返します。type (SHIPPING / BILLING) はどちらでも同じ一覧です。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: type
+          in: query
+          required: false
+          description: SHIPPING か BILLING (この実装では結果は変わりません)。
+          schema:
+            type: string
+            enum: [SHIPPING, BILLING]
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountryListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/titles:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Miscs]
+      operationId: getTitles
+      summary: List personal titles
+      description: 敬称 (Mr. など) の一覧を返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TitleListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/cardtypes:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Miscs]
+      operationId: getCardTypes
+      summary: List card types
+      description: 使えるカードの種類 (visa, master, jcb, amex) を返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cardTypes:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CardTypeWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  # ===================================================================== Orders
+  /{baseSiteId}/users/{userId}/orders:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    post:
+      tags: [Orders]
+      operationId: placeOrder
+      summary: Place an order from a cart
+      description: cartId のカートで注文を確定します。ROLE_CUSTOMERGROUP・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS・ROLE_CLIENT が使えます (ゲストは先にメールアドレスが必要)。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: cartId
+          in: query
+          required: true
+          description: 注文にするカートのコード (ゲストは guid)。
+          schema:
+            type: string
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    get:
+      tags: [Orders]
+      operationId: getOrders
+      summary: Get the user's order history
+      description: ユーザーの注文履歴をページごとに返します。使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/currentPage"
+        - $ref: "#/components/parameters/pageSize"
+        - name: sort
+          in: query
+          required: false
+          description: 並び順 (byDate か byOrderNumber)。
+          schema:
+            type: string
+            default: byDate
+            enum: [byDate, byOrderNumber]
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderHistoryListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}/orders/{code}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - name: code
+        in: path
+        required: true
+        description: 注文番号。
+        schema:
+          type: string
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Orders]
+      operationId: getOrder
+      summary: Get an order of the user
+      description: ユーザーの注文を注文番号で 1 件返します。使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/orders/{guid}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - name: guid
+        in: path
+        required: true
+        description: 注文の guid (ゲスト注文の確認用)。
+        schema:
+          type: string
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Orders]
+      operationId: getGuestOrder
+      summary: Get a guest order by guid
+      description: ゲストの注文を guid で返します。guid を知っていれば誰でも見られます (ロール制限なし)。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  # ===================================================================== OrgUnits
+  /{baseSiteId}/orgUnits:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [OrgUnits]
+      operationId: getUnits
+      summary: List B2B units
+      description: B2B の組織 (ユニット) の一覧を返します。使えるのは ROLE_B2BCUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/B2BUnitListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/orgUnits/{orgUnitId}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - name: orgUnitId
+        in: path
+        required: true
+        description: B2B ユニットの uid。
+        schema:
+          type: string
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [OrgUnits]
+      operationId: getUnit
+      summary: Get a B2B unit
+      description: B2B の組織 (ユニット) を 1 つ返します。使えるのは ROLE_B2BCUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/B2BUnitWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  # ===================================================================== Products
+  /{baseSiteId}/products/search:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Products]
+      operationId: searchProducts
+      summary: Search products
+      description: キーワードなどで商品を検索し、ページごとに返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: query
+          in: query
+          required: false
+          description: 検索の文字列。OCC の形 (例 `camera:relevance:category:575`) も使えます。
+          schema:
+            type: string
+        - $ref: "#/components/parameters/currentPage"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductSearchPageWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/products/suggestions:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Products]
+      operationId: getSuggestions
+      summary: Get search suggestions
+      description: 入力途中の言葉から、検索語の候補を返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: term
+          in: query
+          required: true
+          description: 入力途中の言葉。
+          schema:
+            type: string
+        - name: max
+          in: query
+          required: false
+          description: 候補の最大数。
+          schema:
+            type: integer
+            format: int32
+            default: 10
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuggestionListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/products/{productCode}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/productCode"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Products]
+      operationId: getProductByCode
+      summary: Get product details
+      description: 商品の詳しい情報を商品コードで返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/products/{productCode}/stock:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/productCode"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Products]
+      operationId: getStockData
+      summary: Get product stock
+      description: 商品の在庫数と在庫の状態を返します。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StockWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/products/{productCode}/reviews:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/productCode"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Products]
+      operationId: getProductReviews
+      summary: Get product reviews
+      description: 商品のレビューの一覧を返します (maxCount で件数を絞れます)。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - name: maxCount
+          in: query
+          required: false
+          description: 返すレビューの最大数。省くと全件。
+          schema:
+            type: integer
+            format: int32
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+    post:
+      tags: [Products]
+      operationId: createProductReview
+      summary: Post a product review
+      description: 商品にレビューを書きます。rating は 1〜5、headline は必須です。使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewWsDTO"
+            example:
+              headline: Great camera
+              comment: 軽くて使いやすいです。
+              rating: 5
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  # ===================================================================== Users
+  /{baseSiteId}/users:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    post:
+      tags: [Users]
+      operationId: createUser
+      summary: Register a customer
+      description: 会員登録をします。uid はメールアドレス、password は 8 文字以上で、同じ uid があると 400 DuplicateUidError です。ROLE_CLIENT・ROLE_TRUSTED_CLIENT・ROLE_ANONYMOUS が使えます (トークンなしでも可)。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSignUpWsDTO"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /{baseSiteId}/users/{userId}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Users]
+      operationId: getUser
+      summary: Get the user profile
+      description: ログインしているユーザーのプロフィールを返します。使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    patch:
+      tags: [Users]
+      operationId: updateUser
+      summary: Update the user's name and title
+      description: ユーザーの名前 (firstName, lastName) と敬称 (titleCode) を変えます (本文は返りません)。使えるのは ROLE_CUSTOMERGROUP か ROLE_TRUSTED_CLIENT だけです。
+      security:
+        - oauth2: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserWsDTO"
+            example:
+              firstName: Taro
+              lastName: Yamada
+              titleCode: mr
+      responses:
+        "200":
+          description: OK (本文なし)
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  # ===================================================================== Brands (xyzocc)
+  /{baseSiteId}/brands:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Brands]
+      operationId: getBrands
+      summary: List active brands
+      description: 有効なブランドの一覧を返します (自社拡張 xyzocc)。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BrandListWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /{baseSiteId}/brands/{brandCode}:
+    parameters:
+      - $ref: "#/components/parameters/baseSiteId"
+      - name: brandCode
+        in: path
+        required: true
+        description: ブランドのコード。
+        schema:
+          type: string
+      - $ref: "#/components/parameters/lang"
+      - $ref: "#/components/parameters/curr"
+    get:
+      tags: [Brands]
+      operationId: getBrand
+      summary: Get a brand
+      description: ブランドを 1 つコードで返します (自社拡張 xyzocc)。ログインは要りません。
+      security:
+        - {}
+        - oauth2: []
+      parameters:
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BrandWsDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: |
+        `POST http://localhost:9002/authorizationserver/oauth/token` (form 形式、client_id / client_secret は本文に入れる) で取ったトークンを
+        `Authorization: Bearer <token>` で送ります。
+        password: client_id=mobile_android, client_secret=secret, username=taro@example.com, password=Test1234! → 顧客のロール。
+        clientCredentials: client_id=trusted_client, client_secret=secret → ROLE_TRUSTED_CLIENT。
+      flows:
+        password:
+          tokenUrl: http://localhost:9002/authorizationserver/oauth/token
+          scopes:
+            basic: 基本のスコープ
+            openid: OpenID
+        clientCredentials:
+          tokenUrl: http://localhost:9002/authorizationserver/oauth/token
+          scopes:
+            basic: 基本のスコープ
+            openid: OpenID
+
+  parameters:
+    baseSiteId:
+      name: baseSiteId
+      in: path
+      required: true
+      description: ベースサイトの ID。無いサイトは 400 InvalidResourceError。
+      schema:
+        type: string
+        example: electronics-spa
+    userId:
+      name: userId
+      in: path
+      required: true
+      description: "`current` (トークンの本人)、`anonymous` (ゲスト)、または uid (本人か ROLE_TRUSTED_CLIENT のみ)。"
+      schema:
+        type: string
+        example: current
+    cartId:
+      name: cartId
+      in: path
+      required: true
+      description: カートのコード。ゲスト (userId=anonymous) はカートの guid。
+      schema:
+        type: string
+    addressId:
+      name: addressId
+      in: path
+      required: true
+      description: 住所の ID。
+      schema:
+        type: string
+    entryNumber:
+      name: entryNumber
+      in: path
+      required: true
+      description: カートの明細の番号 (0 から)。
+      schema:
+        type: integer
+        format: int32
+    productCode:
+      name: productCode
+      in: path
+      required: true
+      description: 商品コード。
+      schema:
+        type: string
+        example: XYZ-000001
+    categoryId:
+      name: categoryId
+      in: path
+      required: true
+      description: カテゴリのコード。
+      schema:
+        type: string
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: |
+        返す項目の絞り込み。BASIC / DEFAULT / FULL のレベルか、`code,name,price(FULL)` のような項目の指定。
+      schema:
+        type: string
+        default: DEFAULT
+        example: DEFAULT
+    lang:
+      name: lang
+      in: query
+      required: false
+      description: 言語の isocode (例 ja, en)。省くとサイトの既定の言語。
+      schema:
+        type: string
+    curr:
+      name: curr
+      in: query
+      required: false
+      description: 通貨の isocode (例 JPY, USD)。省くとストアの既定の通貨。
+      schema:
+        type: string
+    currentPage:
+      name: currentPage
+      in: query
+      required: false
+      description: ページの番号 (0 から)。
+      schema:
+        type: integer
+        format: int32
+        default: 0
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      description: 1 ページの件数 (1〜100 に丸められます)。
+      schema:
+        type: integer
+        format: int32
+        default: 20
+        minimum: 1
+        maximum: 100
+    sort:
+      name: sort
+      in: query
+      required: false
+      description: 並び順のコード (例 relevance, topRated, name-asc, price-asc)。
+      schema:
+        type: string
+
+  responses:
+    BadRequest:
+      description: |
+        入力の誤り。type は UnknownIdentifierError / InvalidResourceError / CartError / InvalidCartError /
+        DuplicateUidError / CMSItemNotFoundError / ValidationError / MissingServletRequestParameterError のいずれか。
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorListWsDTO"
+          example:
+            errors:
+              - type: ValidationError
+                message: quantity must not be negative
+                subject: quantity
+    Unauthorized:
+      description: ログインが必要 (UnauthorizedError)。
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorListWsDTO"
+          example:
+            errors:
+              - type: UnauthorizedError
+                message: Full authentication is required to access this resource
+    Forbidden:
+      description: 権限が足りない (ForbiddenError)。
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorListWsDTO"
+          example:
+            errors:
+              - type: ForbiddenError
+                message: Access is denied
+    InternalError:
+      description: サーバーの中のエラー。
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorListWsDTO"
+
+  schemas:
+    # ------------------------------------------------------------ error
+    ErrorWsDTO:
+      type: object
+      properties:
+        type:
+          type: string
+          example: UnknownIdentifierError
+        reason:
+          type: string
+        message:
+          type: string
+        subject:
+          type: string
+        subjectType:
+          type: string
+    ErrorListWsDTO:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ErrorWsDTO"
+
+    # ------------------------------------------------------------ product
+    PriceWsDTO:
+      type: object
+      properties:
+        currencyIso:
+          type: string
+        value:
+          type: number
+        formattedValue:
+          type: string
+        priceType:
+          type: string
+    ImageWsDTO:
+      type: object
+      properties:
+        url:
+          type: string
+        altText:
+          type: string
+        format:
+          type: string
+        imageType:
+          type: string
+        galleryIndex:
+          type: integer
+          format: int32
+    StockWsDTO:
+      type: object
+      properties:
+        stockLevel:
+          type: integer
+          format: int64
+        stockLevelStatus:
+          type: string
+    CategoryWsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        image:
+          $ref: "#/components/schemas/ImageWsDTO"
+    PrincipalWsDTO:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+    ReviewWsDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        headline:
+          type: string
+        comment:
+          type: string
+        rating:
+          type: number
+          format: double
+        date:
+          type: string
+          format: date-time
+        alias:
+          type: string
+        principal:
+          $ref: "#/components/schemas/PrincipalWsDTO"
+    ReviewListWsDTO:
+      type: object
+      properties:
+        reviews:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReviewWsDTO"
+    ProductWsDTO:
+      type: object
+      description: 商品。brand / newArrival / material は自社拡張 (xyzocc-beans.xml) で足した項目。
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        manufacturer:
+          type: string
+        ean:
+          type: string
+        purchasable:
+          type: boolean
+        price:
+          $ref: "#/components/schemas/PriceWsDTO"
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageWsDTO"
+        stock:
+          $ref: "#/components/schemas/StockWsDTO"
+        averageRating:
+          type: number
+          format: double
+        numberOfReviews:
+          type: integer
+          format: int32
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryWsDTO"
+        reviews:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReviewWsDTO"
+        brand:
+          $ref: "#/components/schemas/BrandWsDTO"
+        newArrival:
+          type: boolean
+        material:
+          type: string
+
+    # ------------------------------------------------------------ search
+    PaginationWsDTO:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        totalResults:
+          type: integer
+          format: int64
+        sort:
+          type: string
+    SortWsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        selected:
+          type: boolean
+    SearchQueryWsDTO:
+      type: object
+      properties:
+        value:
+          type: string
+    SearchStateWsDTO:
+      type: object
+      properties:
+        url:
+          type: string
+        query:
+          $ref: "#/components/schemas/SearchQueryWsDTO"
+    FacetValueWsDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        count:
+          type: integer
+          format: int64
+        selected:
+          type: boolean
+        query:
+          $ref: "#/components/schemas/SearchStateWsDTO"
+    FacetWsDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: boolean
+        multiSelect:
+          type: boolean
+        visible:
+          type: boolean
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/FacetValueWsDTO"
+    ProductSearchPageWsDTO:
+      type: object
+      properties:
+        freeTextSearch:
+          type: string
+        currentQuery:
+          $ref: "#/components/schemas/SearchStateWsDTO"
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductWsDTO"
+        facets:
+          type: array
+          items:
+            $ref: "#/components/schemas/FacetWsDTO"
+        pagination:
+          $ref: "#/components/schemas/PaginationWsDTO"
+        sorts:
+          type: array
+          items:
+            $ref: "#/components/schemas/SortWsDTO"
+    SuggestionWsDTO:
+      type: object
+      properties:
+        value:
+          type: string
+    SuggestionListWsDTO:
+      type: object
+      properties:
+        suggestions:
+          type: array
+          items:
+            $ref: "#/components/schemas/SuggestionWsDTO"
+
+    # ------------------------------------------------------------ store session / user
+    LanguageWsDTO:
+      type: object
+      properties:
+        isocode:
+          type: string
+        name:
+          type: string
+        nativeName:
+          type: string
+        active:
+          type: boolean
+    LanguageListWsDTO:
+      type: object
+      properties:
+        languages:
+          type: array
+          items:
+            $ref: "#/components/schemas/LanguageWsDTO"
+    CurrencyWsDTO:
+      type: object
+      properties:
+        isocode:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
+        active:
+          type: boolean
+    CurrencyListWsDTO:
+      type: object
+      properties:
+        currencies:
+          type: array
+          items:
+            $ref: "#/components/schemas/CurrencyWsDTO"
+    CountryWsDTO:
+      type: object
+      properties:
+        isocode:
+          type: string
+        name:
+          type: string
+    CountryListWsDTO:
+      type: object
+      properties:
+        countries:
+          type: array
+          items:
+            $ref: "#/components/schemas/CountryWsDTO"
+    TitleWsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+    TitleListWsDTO:
+      type: object
+      properties:
+        titles:
+          type: array
+          items:
+            $ref: "#/components/schemas/TitleWsDTO"
+    AddressWsDTO:
+      type: object
+      description: 住所。作るときは firstName, lastName, line1, town, postalCode (123-4567), country.isocode が必須。
+      properties:
+        id:
+          type: string
+        titleCode:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        line1:
+          type: string
+        line2:
+          type: string
+        town:
+          type: string
+        postalCode:
+          type: string
+          pattern: '^\d{3}-?\d{4}$'
+        phone:
+          type: string
+        email:
+          type: string
+        country:
+          $ref: "#/components/schemas/CountryWsDTO"
+        shippingAddress:
+          type: boolean
+        billingAddress:
+          type: boolean
+        defaultAddress:
+          type: boolean
+        visibleInAddressBook:
+          type: boolean
+        formattedAddress:
+          type: string
+    AddressListWsDTO:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/AddressWsDTO"
+    B2BUnitWsDTO:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        active:
+          type: boolean
+    B2BUnitListWsDTO:
+      type: object
+      properties:
+        units:
+          type: array
+          items:
+            $ref: "#/components/schemas/B2BUnitWsDTO"
+    UserWsDTO:
+      allOf:
+        - $ref: "#/components/schemas/PrincipalWsDTO"
+        - type: object
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+            titleCode:
+              type: string
+            displayUid:
+              type: string
+            customerId:
+              type: string
+            currency:
+              $ref: "#/components/schemas/CurrencyWsDTO"
+            language:
+              $ref: "#/components/schemas/LanguageWsDTO"
+            defaultAddress:
+              $ref: "#/components/schemas/AddressWsDTO"
+            orgUnit:
+              $ref: "#/components/schemas/B2BUnitWsDTO"
+    UserSignUpWsDTO:
+      type: object
+      required: [uid, password]
+      properties:
+        uid:
+          type: string
+          format: email
+          description: ログイン ID (メールアドレス)。
+        password:
+          type: string
+          minLength: 8
+        firstName:
+          type: string
+        lastName:
+          type: string
+        titleCode:
+          type: string
+
+    # ------------------------------------------------------------ order / cart
+    DeliveryModeWsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        deliveryCost:
+          $ref: "#/components/schemas/PriceWsDTO"
+    DeliveryModeListWsDTO:
+      type: object
+      properties:
+        deliveryModes:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeliveryModeWsDTO"
+    CardTypeWsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+    PaymentDetailsWsDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        accountHolderName:
+          type: string
+        cardNumber:
+          type: string
+        cardType:
+          $ref: "#/components/schemas/CardTypeWsDTO"
+        expiryMonth:
+          type: string
+        expiryYear:
+          type: string
+        defaultPayment:
+          type: boolean
+        billingAddress:
+          $ref: "#/components/schemas/AddressWsDTO"
+    OrderEntryWsDTO:
+      type: object
+      properties:
+        entryNumber:
+          type: integer
+          format: int32
+        quantity:
+          type: integer
+          format: int64
+        basePrice:
+          $ref: "#/components/schemas/PriceWsDTO"
+        totalPrice:
+          $ref: "#/components/schemas/PriceWsDTO"
+        product:
+          $ref: "#/components/schemas/ProductWsDTO"
+        updateable:
+          type: boolean
+    OrderEntryListWsDTO:
+      type: object
+      properties:
+        orderEntries:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderEntryWsDTO"
+    AbstractOrderWsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        guid:
+          type: string
+        net:
+          type: boolean
+        calculated:
+          type: boolean
+        site:
+          type: string
+        store:
+          type: string
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderEntryWsDTO"
+        totalItems:
+          type: integer
+          format: int32
+        totalUnitCount:
+          type: integer
+          format: int32
+        subTotal:
+          $ref: "#/components/schemas/PriceWsDTO"
+        deliveryCost:
+          $ref: "#/components/schemas/PriceWsDTO"
+        totalTax:
+          $ref: "#/components/schemas/PriceWsDTO"
+        totalPrice:
+          $ref: "#/components/schemas/PriceWsDTO"
+        totalPriceWithTax:
+          $ref: "#/components/schemas/PriceWsDTO"
+        deliveryAddress:
+          $ref: "#/components/schemas/AddressWsDTO"
+        deliveryMode:
+          $ref: "#/components/schemas/DeliveryModeWsDTO"
+        paymentInfo:
+          $ref: "#/components/schemas/PaymentDetailsWsDTO"
+        user:
+          $ref: "#/components/schemas/PrincipalWsDTO"
+    CartWsDTO:
+      allOf:
+        - $ref: "#/components/schemas/AbstractOrderWsDTO"
+        - type: object
+          properties:
+            saveTime:
+              type: string
+              format: date-time
+    CartListWsDTO:
+      type: object
+      properties:
+        carts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartWsDTO"
+    OrderWsDTO:
+      allOf:
+        - $ref: "#/components/schemas/AbstractOrderWsDTO"
+        - type: object
+          properties:
+            created:
+              type: string
+              format: date-time
+            status:
+              type: string
+            statusDisplay:
+              type: string
+            guestCustomer:
+              type: boolean
+    CartModificationWsDTO:
+      type: object
+      properties:
+        statusCode:
+          type: string
+        statusMessage:
+          type: string
+        quantityAdded:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int64
+        entry:
+          $ref: "#/components/schemas/OrderEntryWsDTO"
+    OrderHistoryWsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        guid:
+          type: string
+        status:
+          type: string
+        statusDisplay:
+          type: string
+        placed:
+          type: string
+          format: date-time
+        total:
+          $ref: "#/components/schemas/PriceWsDTO"
+    OrderHistoryListWsDTO:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderHistoryWsDTO"
+        pagination:
+          $ref: "#/components/schemas/PaginationWsDTO"
+        sorts:
+          type: array
+          items:
+            $ref: "#/components/schemas/SortWsDTO"
+
+    # ------------------------------------------------------------ base site / catalog
+    BaseSiteWsDTO:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        channel:
+          type: string
+        defaultLanguage:
+          $ref: "#/components/schemas/LanguageWsDTO"
+        stores:
+          type: array
+          items:
+            type: string
+    BaseSiteListWsDTO:
+      type: object
+      properties:
+        baseSites:
+          type: array
+          items:
+            $ref: "#/components/schemas/BaseSiteWsDTO"
+    CategoryHierarchyWsDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        subcategories:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryHierarchyWsDTO"
+    CatalogVersionWsDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryHierarchyWsDTO"
+    CatalogWsDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        catalogVersions:
+          type: array
+          items:
+            $ref: "#/components/schemas/CatalogVersionWsDTO"
+    CatalogListWsDTO:
+      type: object
+      properties:
+        catalogs:
+          type: array
+          items:
+            $ref: "#/components/schemas/CatalogWsDTO"
+
+    # ------------------------------------------------------------ CMS
+    ComponentWsDTO:
+      type: object
+      description: |
+        CMS コンポーネント。Java 側の otherProperties (Map<String,Object>) は @JsonAnyGetter で
+        コンポーネントの項目として平たく出力されるため、`otherProperties` というキーは現れず、
+        種類ごとの項目 (例 headline, media, urlLink など) が直接並びます。
+      properties:
+        uid:
+          type: string
+        uuid:
+          type: string
+        typeCode:
+          type: string
+        name:
+          type: string
+        modifiedtime:
+          type: string
+          format: date-time
+      additionalProperties: true
+    ComponentListWsDTO:
+      type: object
+      properties:
+        component:
+          type: array
+          items:
+            $ref: "#/components/schemas/ComponentWsDTO"
+    ContentSlotWsDTO:
+      type: object
+      properties:
+        slotId:
+          type: string
+        position:
+          type: string
+        name:
+          type: string
+        components:
+          $ref: "#/components/schemas/ComponentListWsDTO"
+    ContentSlotListWsDTO:
+      type: object
+      properties:
+        contentSlot:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentSlotWsDTO"
+    CMSPageWsDTO:
+      type: object
+      properties:
+        uid:
+          type: string
+        uuid:
+          type: string
+        title:
+          type: string
+        template:
+          type: string
+        typeCode:
+          type: string
+        name:
+          type: string
+        label:
+          type: string
+        contentSlots:
+          $ref: "#/components/schemas/ContentSlotListWsDTO"
+    ListComponentWsDTO:
+      type: object
+      properties:
+        component:
+          type: array
+          items:
+            $ref: "#/components/schemas/ComponentWsDTO"
+        pagination:
+          $ref: "#/components/schemas/PaginationWsDTO"
+
+    # ------------------------------------------------------------ xyzocc (brand)
+    BrandWsDTO:
+      type: object
+      description: ブランド (自社拡張 xyzocc)。
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        tier:
+          type: string
+        logo:
+          $ref: "#/components/schemas/ImageWsDTO"
+    BrandListWsDTO:
+      type: object
+      properties:
+        brands:
+          type: array
+          items:
+            $ref: "#/components/schemas/BrandWsDTO"

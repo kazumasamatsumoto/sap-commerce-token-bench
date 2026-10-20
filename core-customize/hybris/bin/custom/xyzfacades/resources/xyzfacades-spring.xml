@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xyzfacades の bean。標準の Converter に Populator を足すときは modifyPopulatorList を使う。 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="xyzBrandPopulator" class="com.xyz.facades.brand.populators.BrandPopulator"/>
+    <bean id="xyzBrandConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="com.xyz.facades.brand.data.BrandData"/>
+        <property name="populators"><list><ref bean="xyzBrandPopulator"/></list></property>
+    </bean>
+
+    <alias name="defaultBrandFacade" alias="brandFacade"/>
+    <bean id="defaultBrandFacade" class="com.xyz.facades.brand.impl.DefaultBrandFacade">
+        <property name="brandService" ref="brandService"/>
+        <property name="brandConverter" ref="xyzBrandConverter"/>
+    </bean>
+
+    <!-- 商品の Data にブランドなどを足す(詳細と一覧の両方) -->
+    <bean id="xyzProductBrandPopulator" class="com.xyz.facades.product.populators.XyzProductBrandPopulator">
+        <property name="brandConverter" ref="xyzBrandConverter"/>
+    </bean>
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="productConverter"/>
+        <property name="add" ref="xyzProductBrandPopulator"/>
+    </bean>
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="productSearchResultConverter"/>
+        <property name="add" ref="xyzProductBrandPopulator"/>
+    </bean>
+</beans>

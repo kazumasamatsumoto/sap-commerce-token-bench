@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.angular/
+*.log
+.npmrc
+.env
+test-results/
+playwright-report/
+core-customize/hybris/bin/platform/bootstrap/gensrc/
+core-customize/hybris/bin/platform/build/
+core-customize/hybris/bin/platform/.gradle/
+.build-log/*.tmp
+storefront/test-results/
+storefront/playwright-report/
+storefront/.angular/

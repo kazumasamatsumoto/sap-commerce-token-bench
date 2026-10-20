@@ -1,0 +1,77 @@
+{
+  "code": "XYZ-000001",
+  "name": "アルテア マックスゲームソフト P493",
+  "summary": "ゲームソフト。かんたん設定。",
+  "description": "アルテア マックスゲームソフト P493は再生プラスチックを使ったゲームソフトです。特長は、かんたん設定、長時間使えるバッテリーです。",
+  "url": "/product/XYZ-000001",
+  "manufacturer": "Altea Corporation",
+  "ean": "4900000000016",
+  "purchasable": true,
+  "price": {
+    "currencyIso": "JPY",
+    "value": 16480,
+    "formattedValue": "¥16,480",
+    "priceType": "BUY"
+  },
+  "images": [
+    {
+      "url": "/medias/img-0001-product.svg",
+      "altText": "商品画像 1",
+      "format": "product",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0001-thumbnail.svg",
+      "altText": "商品サムネイル 1",
+      "format": "thumbnail",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0038-product.svg",
+      "altText": "商品画像 38",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 0
+    }
+  ],
+  "stock": {
+    "stockLevel": 182,
+    "stockLevelStatus": "inStock"
+  },
+  "averageRating": 1,
+  "numberOfReviews": 3,
+  "categories": [
+    {
+      "code": "cat-07-08",
+      "name": "ゲームソフト",
+      "url": "/category/cat-07-08",
+      "image": {
+        "url": "/medias/cat-07-08-pic.svg",
+        "altText": "ゲームソフト",
+        "format": "thumbnail"
+      }
+    },
+    {
+      "code": "cat-05-09",
+      "name": "スクリーン",
+      "url": "/category/cat-05-09",
+      "image": {
+        "url": "/medias/cat-05-09-pic.svg",
+        "altText": "スクリーン",
+        "format": "thumbnail"
+      }
+    }
+  ],
+  "brand": {
+    "code": "brand-01",
+    "name": "アルテア",
+    "tier": "STANDARD",
+    "logo": {
+      "url": "/medias/brand-logo-01.svg",
+      "altText": "アルテア",
+      "format": "logo"
+    }
+  },
+  "newArrival": false,
+  "material": "再生プラスチック"
+}

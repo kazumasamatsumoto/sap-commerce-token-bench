@@ -1,0 +1,67 @@
+{
+  "code": "XYZ-000010",
+  "name": "ミラス ライト外付けHDD I235",
+  "summary": "外付けHDD。静かな動作音。",
+  "description": "ミラス ライト外付けHDD I235はABS樹脂を使った外付けHDDです。特長は、静かな動作音、省エネ設計です。",
+  "url": "/product/XYZ-000010",
+  "manufacturer": "Miras Corporation",
+  "ean": "4900000000108",
+  "purchasable": true,
+  "price": {
+    "currencyIso": "JPY",
+    "value": 176900,
+    "formattedValue": "¥176,900",
+    "priceType": "BUY"
+  },
+  "images": [
+    {
+      "url": "/medias/img-0010-product.svg",
+      "altText": "商品画像 10",
+      "format": "product",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0010-thumbnail.svg",
+      "altText": "商品サムネイル 10",
+      "format": "thumbnail",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0047-product.svg",
+      "altText": "商品画像 47",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 0
+    }
+  ],
+  "stock": {
+    "stockLevel": 267,
+    "stockLevelStatus": "inStock"
+  },
+  "averageRating": 4,
+  "numberOfReviews": 1,
+  "categories": [
+    {
+      "code": "cat-10-03",
+      "name": "外付けHDD",
+      "url": "/category/cat-10-03",
+      "image": {
+        "url": "/medias/cat-10-03-pic.svg",
+        "altText": "外付けHDD",
+        "format": "thumbnail"
+      }
+    }
+  ],
+  "brand": {
+    "code": "brand-13",
+    "name": "ミラス",
+    "tier": "PREMIUM",
+    "logo": {
+      "url": "/medias/brand-logo-13.svg",
+      "altText": "ミラス",
+      "format": "logo"
+    }
+  },
+  "newArrival": false,
+  "material": "ABS樹脂"
+}

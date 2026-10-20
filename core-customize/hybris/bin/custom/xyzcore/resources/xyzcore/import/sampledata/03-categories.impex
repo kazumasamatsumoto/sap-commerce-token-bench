@@ -1,0 +1,109 @@
+# カテゴリ。上位 10 件のあとに下位 90 件
+# tools/generate-sampledata.mjs で生成。手で直さないこと。
+
+$cv=catalogVersion(catalog(id),version)[unique=true,default=electronicsProductCatalog:Online]
+$ccv=catalogVersion(catalog(id),version)[unique=true,default=electronicsContentCatalog:Online]
+
+INSERT_UPDATE Category;code[unique=true];$cv;name[lang=ja];name[lang=en];description[lang=ja];description[lang=en];picture(code,catalogVersion(catalog(id),version))
+;cat-01;;カメラ;Cameras;カメラの商品一覧です。;Browse our Cameras range.;cat-01-pic:electronicsProductCatalog:Online
+;cat-02;;オーディオ;Audio;オーディオの商品一覧です。;Browse our Audio range.;cat-02-pic:electronicsProductCatalog:Online
+;cat-03;;パソコン;Computers;パソコンの商品一覧です。;Browse our Computers range.;cat-03-pic:electronicsProductCatalog:Online
+;cat-04;;スマートフォン;Smartphones;スマートフォンの商品一覧です。;Browse our Smartphones range.;cat-04-pic:electronicsProductCatalog:Online
+;cat-05;;テレビ;TVs;テレビの商品一覧です。;Browse our TVs range.;cat-05-pic:electronicsProductCatalog:Online
+;cat-06;;生活家電;Home Appliances;生活家電の商品一覧です。;Browse our Home Appliances range.;cat-06-pic:electronicsProductCatalog:Online
+;cat-07;;ゲーム;Gaming;ゲームの商品一覧です。;Browse our Gaming range.;cat-07-pic:electronicsProductCatalog:Online
+;cat-08;;ウェアラブル;Wearables;ウェアラブルの商品一覧です。;Browse our Wearables range.;cat-08-pic:electronicsProductCatalog:Online
+;cat-09;;ネットワーク;Networking;ネットワークの商品一覧です。;Browse our Networking range.;cat-09-pic:electronicsProductCatalog:Online
+;cat-10;;アクセサリ;Accessories;アクセサリの商品一覧です。;Browse our Accessories range.;cat-10-pic:electronicsProductCatalog:Online
+
+INSERT_UPDATE Category;code[unique=true];$cv;name[lang=ja];name[lang=en];description[lang=ja];description[lang=en];picture(code,catalogVersion(catalog(id),version));supercategories(code,catalogVersion(catalog(id),version))
+;cat-01-01;;デジタル一眼;DSLR Camera;デジタル一眼の商品一覧です。;Browse our DSLR Camera range.;cat-01-01-pic:electronicsProductCatalog:Online;cat-01:electronicsProductCatalog:Online
+;cat-01-02;;ミラーレス;Mirrorless Camera;ミラーレスの商品一覧です。;Browse our Mirrorless Camera range.;cat-01-02-pic:electronicsProductCatalog:Online;cat-01:electronicsProductCatalog:Online
+;cat-01-03;;コンパクトカメラ;Compact Camera;コンパクトカメラの商品一覧です。;Browse our Compact Camera range.;cat-01-03-pic:electronicsProductCatalog:Online;cat-01:electronicsProductCatalog:Online
+;cat-01-04;;アクションカメラ;Action Camera;アクションカメラの商品一覧です。;Browse our Action Camera range.;cat-01-04-pic:electronicsProductCatalog:Online;cat-01:electronicsProductCatalog:Online
+;cat-01-05;;交換レンズ;Interchangeable Lens;交換レンズの商品一覧です。;Browse our Interchangeable Lens range.;cat-01-05-pic:electronicsProductCatalog:Online;cat-01:electronicsProductCatalog:Online
+;cat-01-06;;三脚;Tripod;三脚の商品一覧です。;Browse our Tripod range.;cat-01-06-pic:electronicsProductCatalog:Online;cat-01:electronicsProductCatalog:Online
+;cat-01-07;;カメラバッグ;Camera Bag;カメラバッグの商品一覧です。;Browse our Camera Bag range.;cat-01-07-pic:electronicsProductCatalog:Online;cat-01:electronicsProductCatalog:Online
+;cat-01-08;;ストロボ;Flash;ストロボの商品一覧です。;Browse our Flash range.;cat-01-08-pic:electronicsProductCatalog:Online;cat-01:electronicsProductCatalog:Online
+;cat-01-09;;フィルムカメラ;Film Camera;フィルムカメラの商品一覧です。;Browse our Film Camera range.;cat-01-09-pic:electronicsProductCatalog:Online;cat-01:electronicsProductCatalog:Online
+;cat-02-01;;ワイヤレスイヤホン;Wireless Earbuds;ワイヤレスイヤホンの商品一覧です。;Browse our Wireless Earbuds range.;cat-02-01-pic:electronicsProductCatalog:Online;cat-02:electronicsProductCatalog:Online
+;cat-02-02;;ヘッドホン;Headphones;ヘッドホンの商品一覧です。;Browse our Headphones range.;cat-02-02-pic:electronicsProductCatalog:Online;cat-02:electronicsProductCatalog:Online
+;cat-02-03;;スピーカー;Speaker;スピーカーの商品一覧です。;Browse our Speaker range.;cat-02-03-pic:electronicsProductCatalog:Online;cat-02:electronicsProductCatalog:Online
+;cat-02-04;;サウンドバー;Soundbar;サウンドバーの商品一覧です。;Browse our Soundbar range.;cat-02-04-pic:electronicsProductCatalog:Online;cat-02:electronicsProductCatalog:Online
+;cat-02-05;;アンプ;Amplifier;アンプの商品一覧です。;Browse our Amplifier range.;cat-02-05-pic:electronicsProductCatalog:Online;cat-02:electronicsProductCatalog:Online
+;cat-02-06;;ターンテーブル;Turntable;ターンテーブルの商品一覧です。;Browse our Turntable range.;cat-02-06-pic:electronicsProductCatalog:Online;cat-02:electronicsProductCatalog:Online
+;cat-02-07;;マイク;Microphone;マイクの商品一覧です。;Browse our Microphone range.;cat-02-07-pic:electronicsProductCatalog:Online;cat-02:electronicsProductCatalog:Online
+;cat-02-08;;DAC;DAC;DACの商品一覧です。;Browse our DAC range.;cat-02-08-pic:electronicsProductCatalog:Online;cat-02:electronicsProductCatalog:Online
+;cat-02-09;;ポータブルプレーヤー;Portable Player;ポータブルプレーヤーの商品一覧です。;Browse our Portable Player range.;cat-02-09-pic:electronicsProductCatalog:Online;cat-02:electronicsProductCatalog:Online
+;cat-03-01;;ノートPC;Laptop;ノートPCの商品一覧です。;Browse our Laptop range.;cat-03-01-pic:electronicsProductCatalog:Online;cat-03:electronicsProductCatalog:Online
+;cat-03-02;;デスクトップPC;Desktop PC;デスクトップPCの商品一覧です。;Browse our Desktop PC range.;cat-03-02-pic:electronicsProductCatalog:Online;cat-03:electronicsProductCatalog:Online
+;cat-03-03;;モニター;Monitor;モニターの商品一覧です。;Browse our Monitor range.;cat-03-03-pic:electronicsProductCatalog:Online;cat-03:electronicsProductCatalog:Online
+;cat-03-04;;キーボード;Keyboard;キーボードの商品一覧です。;Browse our Keyboard range.;cat-03-04-pic:electronicsProductCatalog:Online;cat-03:electronicsProductCatalog:Online
+;cat-03-05;;マウス;Mouse;マウスの商品一覧です。;Browse our Mouse range.;cat-03-05-pic:electronicsProductCatalog:Online;cat-03:electronicsProductCatalog:Online
+;cat-03-06;;SSD;SSD;SSDの商品一覧です。;Browse our SSD range.;cat-03-06-pic:electronicsProductCatalog:Online;cat-03:electronicsProductCatalog:Online
+;cat-03-07;;メモリ;Memory Module;メモリの商品一覧です。;Browse our Memory Module range.;cat-03-07-pic:electronicsProductCatalog:Online;cat-03:electronicsProductCatalog:Online
+;cat-03-08;;グラフィックボード;Graphics Card;グラフィックボードの商品一覧です。;Browse our Graphics Card range.;cat-03-08-pic:electronicsProductCatalog:Online;cat-03:electronicsProductCatalog:Online
+;cat-03-09;;Webカメラ;Webcam;Webカメラの商品一覧です。;Browse our Webcam range.;cat-03-09-pic:electronicsProductCatalog:Online;cat-03:electronicsProductCatalog:Online
+;cat-04-01;;スマートフォン;Smartphone;スマートフォンの商品一覧です。;Browse our Smartphone range.;cat-04-01-pic:electronicsProductCatalog:Online;cat-04:electronicsProductCatalog:Online
+;cat-04-02;;タブレット;Tablet;タブレットの商品一覧です。;Browse our Tablet range.;cat-04-02-pic:electronicsProductCatalog:Online;cat-04:electronicsProductCatalog:Online
+;cat-04-03;;スマホケース;Phone Case;スマホケースの商品一覧です。;Browse our Phone Case range.;cat-04-03-pic:electronicsProductCatalog:Online;cat-04:electronicsProductCatalog:Online
+;cat-04-04;;保護フィルム;Screen Protector;保護フィルムの商品一覧です。;Browse our Screen Protector range.;cat-04-04-pic:electronicsProductCatalog:Online;cat-04:electronicsProductCatalog:Online
+;cat-04-05;;充電器;Charger;充電器の商品一覧です。;Browse our Charger range.;cat-04-05-pic:electronicsProductCatalog:Online;cat-04:electronicsProductCatalog:Online
+;cat-04-06;;モバイルバッテリー;Power Bank;モバイルバッテリーの商品一覧です。;Browse our Power Bank range.;cat-04-06-pic:electronicsProductCatalog:Online;cat-04:electronicsProductCatalog:Online
+;cat-04-07;;ケーブル;Cable;ケーブルの商品一覧です。;Browse our Cable range.;cat-04-07-pic:electronicsProductCatalog:Online;cat-04:electronicsProductCatalog:Online
+;cat-04-08;;スタンド;Stand;スタンドの商品一覧です。;Browse our Stand range.;cat-04-08-pic:electronicsProductCatalog:Online;cat-04:electronicsProductCatalog:Online
+;cat-04-09;;電子書籍リーダー;E-Reader;電子書籍リーダーの商品一覧です。;Browse our E-Reader range.;cat-04-09-pic:electronicsProductCatalog:Online;cat-04:electronicsProductCatalog:Online
+;cat-05-01;;有機ELテレビ;OLED TV;有機ELテレビの商品一覧です。;Browse our OLED TV range.;cat-05-01-pic:electronicsProductCatalog:Online;cat-05:electronicsProductCatalog:Online
+;cat-05-02;;液晶テレビ;LCD TV;液晶テレビの商品一覧です。;Browse our LCD TV range.;cat-05-02-pic:electronicsProductCatalog:Online;cat-05:electronicsProductCatalog:Online
+;cat-05-03;;プロジェクター;Projector;プロジェクターの商品一覧です。;Browse our Projector range.;cat-05-03-pic:electronicsProductCatalog:Online;cat-05:electronicsProductCatalog:Online
+;cat-05-04;;レコーダー;Recorder;レコーダーの商品一覧です。;Browse our Recorder range.;cat-05-04-pic:electronicsProductCatalog:Online;cat-05:electronicsProductCatalog:Online
+;cat-05-05;;ストリーミング端末;Streaming Device;ストリーミング端末の商品一覧です。;Browse our Streaming Device range.;cat-05-05-pic:electronicsProductCatalog:Online;cat-05:electronicsProductCatalog:Online
+;cat-05-06;;アンテナ;Antenna;アンテナの商品一覧です。;Browse our Antenna range.;cat-05-06-pic:electronicsProductCatalog:Online;cat-05:electronicsProductCatalog:Online
+;cat-05-07;;テレビ台;TV Stand;テレビ台の商品一覧です。;Browse our TV Stand range.;cat-05-07-pic:electronicsProductCatalog:Online;cat-05:electronicsProductCatalog:Online
+;cat-05-08;;リモコン;Remote Control;リモコンの商品一覧です。;Browse our Remote Control range.;cat-05-08-pic:electronicsProductCatalog:Online;cat-05:electronicsProductCatalog:Online
+;cat-05-09;;スクリーン;Screen;スクリーンの商品一覧です。;Browse our Screen range.;cat-05-09-pic:electronicsProductCatalog:Online;cat-05:electronicsProductCatalog:Online
+;cat-06-01;;掃除機;Vacuum Cleaner;掃除機の商品一覧です。;Browse our Vacuum Cleaner range.;cat-06-01-pic:electronicsProductCatalog:Online;cat-06:electronicsProductCatalog:Online
+;cat-06-02;;空気清浄機;Air Purifier;空気清浄機の商品一覧です。;Browse our Air Purifier range.;cat-06-02-pic:electronicsProductCatalog:Online;cat-06:electronicsProductCatalog:Online
+;cat-06-03;;加湿器;Humidifier;加湿器の商品一覧です。;Browse our Humidifier range.;cat-06-03-pic:electronicsProductCatalog:Online;cat-06:electronicsProductCatalog:Online
+;cat-06-04;;扇風機;Fan;扇風機の商品一覧です。;Browse our Fan range.;cat-06-04-pic:electronicsProductCatalog:Online;cat-06:electronicsProductCatalog:Online
+;cat-06-05;;電気ケトル;Electric Kettle;電気ケトルの商品一覧です。;Browse our Electric Kettle range.;cat-06-05-pic:electronicsProductCatalog:Online;cat-06:electronicsProductCatalog:Online
+;cat-06-06;;炊飯器;Rice Cooker;炊飯器の商品一覧です。;Browse our Rice Cooker range.;cat-06-06-pic:electronicsProductCatalog:Online;cat-06:electronicsProductCatalog:Online
+;cat-06-07;;電子レンジ;Microwave;電子レンジの商品一覧です。;Browse our Microwave range.;cat-06-07-pic:electronicsProductCatalog:Online;cat-06:electronicsProductCatalog:Online
+;cat-06-08;;ドライヤー;Hair Dryer;ドライヤーの商品一覧です。;Browse our Hair Dryer range.;cat-06-08-pic:electronicsProductCatalog:Online;cat-06:electronicsProductCatalog:Online
+;cat-06-09;;電動歯ブラシ;Electric Toothbrush;電動歯ブラシの商品一覧です。;Browse our Electric Toothbrush range.;cat-06-09-pic:electronicsProductCatalog:Online;cat-06:electronicsProductCatalog:Online
+;cat-07-01;;ゲーム機;Game Console;ゲーム機の商品一覧です。;Browse our Game Console range.;cat-07-01-pic:electronicsProductCatalog:Online;cat-07:electronicsProductCatalog:Online
+;cat-07-02;;コントローラー;Controller;コントローラーの商品一覧です。;Browse our Controller range.;cat-07-02-pic:electronicsProductCatalog:Online;cat-07:electronicsProductCatalog:Online
+;cat-07-03;;ゲーミングヘッドセット;Gaming Headset;ゲーミングヘッドセットの商品一覧です。;Browse our Gaming Headset range.;cat-07-03-pic:electronicsProductCatalog:Online;cat-07:electronicsProductCatalog:Online
+;cat-07-04;;ゲーミングチェア;Gaming Chair;ゲーミングチェアの商品一覧です。;Browse our Gaming Chair range.;cat-07-04-pic:electronicsProductCatalog:Online;cat-07:electronicsProductCatalog:Online
+;cat-07-05;;VRゴーグル;VR Headset;VRゴーグルの商品一覧です。;Browse our VR Headset range.;cat-07-05-pic:electronicsProductCatalog:Online;cat-07:electronicsProductCatalog:Online
+;cat-07-06;;ゲーミングマウス;Gaming Mouse;ゲーミングマウスの商品一覧です。;Browse our Gaming Mouse range.;cat-07-06-pic:electronicsProductCatalog:Online;cat-07:electronicsProductCatalog:Online
+;cat-07-07;;キャプチャーボード;Capture Card;キャプチャーボードの商品一覧です。;Browse our Capture Card range.;cat-07-07-pic:electronicsProductCatalog:Online;cat-07:electronicsProductCatalog:Online
+;cat-07-08;;ゲームソフト;Game Software;ゲームソフトの商品一覧です。;Browse our Game Software range.;cat-07-08-pic:electronicsProductCatalog:Online;cat-07:electronicsProductCatalog:Online
+;cat-07-09;;携帯ゲーム機;Handheld Console;携帯ゲーム機の商品一覧です。;Browse our Handheld Console range.;cat-07-09-pic:electronicsProductCatalog:Online;cat-07:electronicsProductCatalog:Online
+;cat-08-01;;スマートウォッチ;Smartwatch;スマートウォッチの商品一覧です。;Browse our Smartwatch range.;cat-08-01-pic:electronicsProductCatalog:Online;cat-08:electronicsProductCatalog:Online
+;cat-08-02;;活動量計;Fitness Tracker;活動量計の商品一覧です。;Browse our Fitness Tracker range.;cat-08-02-pic:electronicsProductCatalog:Online;cat-08:electronicsProductCatalog:Online
+;cat-08-03;;スマートリング;Smart Ring;スマートリングの商品一覧です。;Browse our Smart Ring range.;cat-08-03-pic:electronicsProductCatalog:Online;cat-08:electronicsProductCatalog:Online
+;cat-08-04;;スマートグラス;Smart Glasses;スマートグラスの商品一覧です。;Browse our Smart Glasses range.;cat-08-04-pic:electronicsProductCatalog:Online;cat-08:electronicsProductCatalog:Online
+;cat-08-05;;ウォッチバンド;Watch Band;ウォッチバンドの商品一覧です。;Browse our Watch Band range.;cat-08-05-pic:electronicsProductCatalog:Online;cat-08:electronicsProductCatalog:Online
+;cat-08-06;;GPSウォッチ;GPS Watch;GPSウォッチの商品一覧です。;Browse our GPS Watch range.;cat-08-06-pic:electronicsProductCatalog:Online;cat-08:electronicsProductCatalog:Online
+;cat-08-07;;睡眠トラッカー;Sleep Tracker;睡眠トラッカーの商品一覧です。;Browse our Sleep Tracker range.;cat-08-07-pic:electronicsProductCatalog:Online;cat-08:electronicsProductCatalog:Online
+;cat-08-08;;心拍センサー;Heart Rate Sensor;心拍センサーの商品一覧です。;Browse our Heart Rate Sensor range.;cat-08-08-pic:electronicsProductCatalog:Online;cat-08:electronicsProductCatalog:Online
+;cat-08-09;;子ども用ウォッチ;Kids Watch;子ども用ウォッチの商品一覧です。;Browse our Kids Watch range.;cat-08-09-pic:electronicsProductCatalog:Online;cat-08:electronicsProductCatalog:Online
+;cat-09-01;;Wi-Fiルーター;Wi-Fi Router;Wi-Fiルーターの商品一覧です。;Browse our Wi-Fi Router range.;cat-09-01-pic:electronicsProductCatalog:Online;cat-09:electronicsProductCatalog:Online
+;cat-09-02;;メッシュWi-Fi;Mesh Wi-Fi;メッシュWi-Fiの商品一覧です。;Browse our Mesh Wi-Fi range.;cat-09-02-pic:electronicsProductCatalog:Online;cat-09:electronicsProductCatalog:Online
+;cat-09-03;;中継器;Range Extender;中継器の商品一覧です。;Browse our Range Extender range.;cat-09-03-pic:electronicsProductCatalog:Online;cat-09:electronicsProductCatalog:Online
+;cat-09-04;;スイッチングハブ;Network Switch;スイッチングハブの商品一覧です。;Browse our Network Switch range.;cat-09-04-pic:electronicsProductCatalog:Online;cat-09:electronicsProductCatalog:Online
+;cat-09-05;;LANケーブル;LAN Cable;LANケーブルの商品一覧です。;Browse our LAN Cable range.;cat-09-05-pic:electronicsProductCatalog:Online;cat-09:electronicsProductCatalog:Online
+;cat-09-06;;NAS;NAS;NASの商品一覧です。;Browse our NAS range.;cat-09-06-pic:electronicsProductCatalog:Online;cat-09:electronicsProductCatalog:Online
+;cat-09-07;;モバイルルーター;Mobile Router;モバイルルーターの商品一覧です。;Browse our Mobile Router range.;cat-09-07-pic:electronicsProductCatalog:Online;cat-09:electronicsProductCatalog:Online
+;cat-09-08;;ネットワークカメラ;Network Camera;ネットワークカメラの商品一覧です。;Browse our Network Camera range.;cat-09-08-pic:electronicsProductCatalog:Online;cat-09:electronicsProductCatalog:Online
+;cat-09-09;;USBアダプター;USB Adapter;USBアダプターの商品一覧です。;Browse our USB Adapter range.;cat-09-09-pic:electronicsProductCatalog:Online;cat-09:electronicsProductCatalog:Online
+;cat-10-01;;メモリーカード;Memory Card;メモリーカードの商品一覧です。;Browse our Memory Card range.;cat-10-01-pic:electronicsProductCatalog:Online;cat-10:electronicsProductCatalog:Online
+;cat-10-02;;USBメモリ;USB Flash Drive;USBメモリの商品一覧です。;Browse our USB Flash Drive range.;cat-10-02-pic:electronicsProductCatalog:Online;cat-10:electronicsProductCatalog:Online
+;cat-10-03;;外付けHDD;External HDD;外付けHDDの商品一覧です。;Browse our External HDD range.;cat-10-03-pic:electronicsProductCatalog:Online;cat-10:electronicsProductCatalog:Online
+;cat-10-04;;ドッキングステーション;Docking Station;ドッキングステーションの商品一覧です。;Browse our Docking Station range.;cat-10-04-pic:electronicsProductCatalog:Online;cat-10:electronicsProductCatalog:Online
+;cat-10-05;;電源タップ;Power Strip;電源タップの商品一覧です。;Browse our Power Strip range.;cat-10-05-pic:electronicsProductCatalog:Online;cat-10:electronicsProductCatalog:Online
+;cat-10-06;;乾電池;Battery;乾電池の商品一覧です。;Browse our Battery range.;cat-10-06-pic:electronicsProductCatalog:Online;cat-10:electronicsProductCatalog:Online
+;cat-10-07;;クリーナー;Cleaning Kit;クリーナーの商品一覧です。;Browse our Cleaning Kit range.;cat-10-07-pic:electronicsProductCatalog:Online;cat-10:electronicsProductCatalog:Online
+;cat-10-08;;収納ケース;Storage Case;収納ケースの商品一覧です。;Browse our Storage Case range.;cat-10-08-pic:electronicsProductCatalog:Online;cat-10:electronicsProductCatalog:Online
+;cat-10-09;;変換アダプター;Converter;変換アダプターの商品一覧です。;Browse our Converter range.;cat-10-09-pic:electronicsProductCatalog:Online;cat-10:electronicsProductCatalog:Online

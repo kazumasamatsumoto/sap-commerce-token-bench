@@ -1,0 +1,37 @@
+# ブランド(独自の型)
+# tools/generate-sampledata.mjs で生成。手で直さないこと。
+
+$cv=catalogVersion(catalog(id),version)[unique=true,default=electronicsProductCatalog:Online]
+$ccv=catalogVersion(catalog(id),version)[unique=true,default=electronicsContentCatalog:Online]
+
+INSERT_UPDATE Brand;code[unique=true];name[lang=ja];name[lang=en];description[lang=ja];description[lang=en];logo(code,catalogVersion(catalog(id),version));tier(code);active
+;brand-01;アルテア;Altea;アルテアの製品です。;Products by Altea.;brand-logo-01:electronicsProductCatalog:Online;STANDARD;true
+;brand-02;ベルクス;Belx;ベルクスの製品です。;Products by Belx.;brand-logo-02:electronicsProductCatalog:Online;STANDARD;true
+;brand-03;カイロ;Kairo;カイロの製品です。;Products by Kairo.;brand-logo-03:electronicsProductCatalog:Online;PREMIUM;true
+;brand-04;ドーマ;Doma;ドーマの製品です。;Products by Doma.;brand-logo-04:electronicsProductCatalog:Online;STANDARD;true
+;brand-05;エルナ;Elna;エルナの製品です。;Products by Elna.;brand-logo-05:electronicsProductCatalog:Online;STANDARD;true
+;brand-06;フォルテ;Forte;フォルテの製品です。;Products by Forte.;brand-logo-06:electronicsProductCatalog:Online;STANDARD;true
+;brand-07;ギルダ;Gilda;ギルダの製品です。;Products by Gilda.;brand-logo-07:electronicsProductCatalog:Online;STANDARD;true
+;brand-08;ハルモ;Harmo;ハルモの製品です。;Products by Harmo.;brand-logo-08:electronicsProductCatalog:Online;STANDARD;true
+;brand-09;イオタ;Iota;イオタの製品です。;Products by Iota.;brand-logo-09:electronicsProductCatalog:Online;STANDARD;true
+;brand-10;ジェネス;Jenes;ジェネスの製品です。;Products by Jenes.;brand-logo-10:electronicsProductCatalog:Online;OUTLET;true
+;brand-11;コルト;Kolt;コルトの製品です。;Products by Kolt.;brand-logo-11:electronicsProductCatalog:Online;PREMIUM;true
+;brand-12;ルミナ;Lumina;ルミナの製品です。;Products by Lumina.;brand-logo-12:electronicsProductCatalog:Online;OUTLET;true
+;brand-13;ミラス;Miras;ミラスの製品です。;Products by Miras.;brand-logo-13:electronicsProductCatalog:Online;PREMIUM;true
+;brand-14;ノヴァ;Nova;ノヴァの製品です。;Products by Nova.;brand-logo-14:electronicsProductCatalog:Online;STANDARD;true
+;brand-15;オルカ;Orca;オルカの製品です。;Products by Orca.;brand-logo-15:electronicsProductCatalog:Online;STANDARD;true
+;brand-16;ピクセラ;Pixela;ピクセラの製品です。;Products by Pixela.;brand-logo-16:electronicsProductCatalog:Online;STANDARD;true
+;brand-17;クオラ;Quora;クオラの製品です。;Products by Quora.;brand-logo-17:electronicsProductCatalog:Online;STANDARD;true
+;brand-18;ラディア;Radia;ラディアの製品です。;Products by Radia.;brand-logo-18:electronicsProductCatalog:Online;STANDARD;true
+;brand-19;ソレイユ;Soleil;ソレイユの製品です。;Products by Soleil.;brand-logo-19:electronicsProductCatalog:Online;STANDARD;true
+;brand-20;テクナ;Tekna;テクナの製品です。;Products by Tekna.;brand-logo-20:electronicsProductCatalog:Online;PREMIUM;true
+;brand-21;ウルス;Urus;ウルスの製品です。;Products by Urus.;brand-logo-21:electronicsProductCatalog:Online;PREMIUM;true
+;brand-22;ヴェガ;Vega;ヴェガの製品です。;Products by Vega.;brand-logo-22:electronicsProductCatalog:Online;PREMIUM;true
+;brand-23;ウィスプ;Wisp;ウィスプの製品です。;Products by Wisp.;brand-logo-23:electronicsProductCatalog:Online;STANDARD;true
+;brand-24;ゼノ;Xeno;ゼノの製品です。;Products by Xeno.;brand-logo-24:electronicsProductCatalog:Online;STANDARD;true
+;brand-25;ユーラ;Yura;ユーラの製品です。;Products by Yura.;brand-logo-25:electronicsProductCatalog:Online;STANDARD;true
+;brand-26;ゼファ;Zepha;ゼファの製品です。;Products by Zepha.;brand-logo-26:electronicsProductCatalog:Online;PREMIUM;true
+;brand-27;アオバ;Aoba;アオバの製品です。;Products by Aoba.;brand-logo-27:electronicsProductCatalog:Online;OUTLET;true
+;brand-28;サクラ電機;Sakura Denki;サクラ電機の製品です。;Products by Sakura Denki.;brand-logo-28:electronicsProductCatalog:Online;PREMIUM;true
+;brand-29;ミナト;Minato;ミナトの製品です。;Products by Minato.;brand-logo-29:electronicsProductCatalog:Online;OUTLET;true
+;brand-30;ヒカリ;Hikari;ヒカリの製品です。;Products by Hikari.;brand-logo-30:electronicsProductCatalog:Online;OUTLET;true

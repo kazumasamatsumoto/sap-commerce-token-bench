@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  OCC の fields の段階(BASIC / DEFAULT / FULL)。本物の commercewebservices の dto-level-mappings-v2-spring.xml に当たる。
+  拡張から項目を足すときは、同じ dtoClass の fieldSetLevelMapping を自分の *-web-spring.xml に書く(値は足される)。
+  ここに無い WsDTO は、どの段階でも全部の項目を返す。
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="fieldSetLevelMapping" class="de.hybris.platform.webservicescommons.mapping.config.FieldSetLevelMapping" abstract="true"/>
+
+    <bean parent="fieldSetLevelMapping" id="productWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.product.ProductWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,name,url,purchasable"/>
+                <entry key="DEFAULT" value="BASIC,summary,manufacturer,price(DEFAULT),images(DEFAULT),stock(DEFAULT),averageRating,numberOfReviews"/>
+                <entry key="FULL" value="DEFAULT,description,ean,categories(FULL),reviews(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="priceWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="currencyIso,value,priceType"/>
+                <entry key="DEFAULT" value="BASIC,formattedValue"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="imageWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.product.ImageWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="url,format,imageType"/>
+                <entry key="DEFAULT" value="BASIC,altText,galleryIndex"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="stockWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.product.StockWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="stockLevelStatus"/>
+                <entry key="DEFAULT" value="stockLevelStatus,stockLevel"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="categoryWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.catalog.CategoryWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,url"/>
+                <entry key="DEFAULT" value="BASIC,name"/>
+                <entry key="FULL" value="DEFAULT,image(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="productSearchPageWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.search.facetdata.ProductSearchPageWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="products(BASIC),pagination(BASIC)"/>
+                <entry key="DEFAULT" value="freeTextSearch,products(DEFAULT),facets(DEFAULT),pagination(DEFAULT),sorts(DEFAULT),currentQuery(DEFAULT)"/>
+                <entry key="FULL" value="freeTextSearch,products(FULL),facets(FULL),pagination(FULL),sorts(FULL),currentQuery(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="paginationWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.search.pagedata.PaginationWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="currentPage,pageSize,totalPages,totalResults"/>
+                <entry key="DEFAULT" value="BASIC,sort"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="orderEntryWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.order.OrderEntryWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="entryNumber,quantity"/>
+                <entry key="DEFAULT" value="BASIC,basePrice(DEFAULT),totalPrice(DEFAULT),product(DEFAULT),updateable"/>
+                <entry key="FULL" value="DEFAULT,product(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="cartWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.order.CartWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,guid,totalItems,totalPrice(BASIC)"/>
+                <entry key="DEFAULT" value="BASIC,entries(DEFAULT),totalUnitCount,subTotal(DEFAULT),totalPrice(DEFAULT),totalPriceWithTax(DEFAULT),totalTax(DEFAULT),deliveryCost(DEFAULT),deliveryAddress(DEFAULT),deliveryMode(DEFAULT),paymentInfo(DEFAULT),user(DEFAULT),net,calculated"/>
+                <entry key="FULL" value="DEFAULT,site,store,saveTime,entries(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="orderWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.order.OrderWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,guid,created,status,totalItems,totalPrice(BASIC)"/>
+                <entry key="DEFAULT" value="BASIC,statusDisplay,guestCustomer,entries(DEFAULT),totalUnitCount,subTotal(DEFAULT),totalPrice(DEFAULT),totalPriceWithTax(DEFAULT),totalTax(DEFAULT),deliveryCost(DEFAULT),deliveryAddress(DEFAULT),deliveryMode(DEFAULT),paymentInfo(DEFAULT),user(DEFAULT),net"/>
+                <entry key="FULL" value="DEFAULT,site,store,calculated,entries(FULL)"/>
+            </map>
+        </property>
+    </bean>
+</beans>

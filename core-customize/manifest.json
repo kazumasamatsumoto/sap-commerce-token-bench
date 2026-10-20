@@ -1,0 +1,43 @@
+{
+  "commerceSuiteVersion": "2211.40",
+  "extensionPacks": [],
+  "useCloudExtensionPack": false,
+  "enableImageProcessingService": false,
+  "extensions": [
+    "platformlite",
+    "xyzcore",
+    "xyzfacades",
+    "xyzocc"
+  ],
+  "useConfig": {
+    "properties": [
+      { "location": "hybris/config/local.properties" }
+    ],
+    "extensions": {
+      "location": "hybris/config/localextensions.xml",
+      "exclude": []
+    }
+  },
+  "storefrontAddons": [],
+  "aspects": [
+    {
+      "name": "backoffice",
+      "properties": [],
+      "webapps": []
+    },
+    {
+      "name": "api",
+      "properties": [
+        { "key": "xyz.default.baseSite", "value": "electronics-spa" }
+      ],
+      "webapps": [
+        { "name": "xyzocc", "contextPath": "/occ/v2" }
+      ]
+    }
+  ],
+  "tests": {
+    "extensions": ["xyzcore", "xyzfacades", "xyzocc"],
+    "annotations": ["UnitTests", "IntegrationTests"],
+    "packages": ["com.xyz.*"]
+  }
+}

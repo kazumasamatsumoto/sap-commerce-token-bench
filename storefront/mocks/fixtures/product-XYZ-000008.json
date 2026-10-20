@@ -1,0 +1,74 @@
+{
+  "code": "XYZ-000008",
+  "name": "ミラス ミニ空気清浄機 H378",
+  "summary": "空気清浄機。静かな動作音。",
+  "description": "ミラス ミニ空気清浄機 H378は強化ガラスを使った空気清浄機です。特長は、静かな動作音、かんたん設定です。",
+  "url": "/product/XYZ-000008",
+  "manufacturer": "Miras Corporation",
+  "ean": "4900000000085",
+  "purchasable": true,
+  "price": {
+    "currencyIso": "JPY",
+    "value": 50230,
+    "formattedValue": "¥50,230",
+    "priceType": "BUY"
+  },
+  "images": [
+    {
+      "url": "/medias/img-0008-product.svg",
+      "altText": "商品画像 8",
+      "format": "product",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0008-thumbnail.svg",
+      "altText": "商品サムネイル 8",
+      "format": "thumbnail",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0045-product.svg",
+      "altText": "商品画像 45",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 0
+    },
+    {
+      "url": "/medias/img-0082-product.svg",
+      "altText": "商品画像 82",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 1
+    }
+  ],
+  "stock": {
+    "stockLevel": 406,
+    "stockLevelStatus": "inStock"
+  },
+  "averageRating": 4.3,
+  "numberOfReviews": 3,
+  "categories": [
+    {
+      "code": "cat-06-02",
+      "name": "空気清浄機",
+      "url": "/category/cat-06-02",
+      "image": {
+        "url": "/medias/cat-06-02-pic.svg",
+        "altText": "空気清浄機",
+        "format": "thumbnail"
+      }
+    }
+  ],
+  "brand": {
+    "code": "brand-13",
+    "name": "ミラス",
+    "tier": "PREMIUM",
+    "logo": {
+      "url": "/medias/brand-logo-13.svg",
+      "altText": "ミラス",
+      "format": "logo"
+    }
+  },
+  "newArrival": false,
+  "material": "強化ガラス"
+}

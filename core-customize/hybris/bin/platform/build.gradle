@@ -1,0 +1,123 @@
+// 疑似 Commerce のビルド。本物の platform/build.xml(ant)の代わり。
+// config/localextensions.xml に書かれた拡張を順に集め、1 つの Spring Boot アプリにまとめる。
+// 拡張ごとのフォルダの形(src / testsrc / resources / web/src / web/testsrc)は本物の Commerce と同じ。
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'org.springframework.boot' version '3.5.16'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+def hybrisDir = file('../..')
+def binDir = file('..')
+def configDir = new File(hybrisDir, 'config')
+
+// localextensions.xml → 拡張の場所。名前と同じフォルダを bin/ の下から探す(custom/ の中も見る)。
+def extensionNames = new groovy.xml.XmlSlurper().parse(new File(configDir, 'localextensions.xml'))
+        .extensions.extension.collect { it.@name.toString() }
+def findExtension = { String name ->
+    def candidates = [new File(binDir, name), new File(binDir, "custom/${name}"), new File(binDir, "platform-lite")]
+    def dir = candidates.find { new File(it, 'extensioninfo.xml').exists() &&
+            new groovy.xml.XmlSlurper().parse(new File(it, 'extensioninfo.xml')).extension.@name.toString() == name }
+    if (dir == null) {
+        throw new GradleException("拡張 '${name}' が見つかりません(localextensions.xml に書かれているが、bin/ の下に extensioninfo.xml が無い)")
+    }
+    dir
+}
+def extensions = extensionNames.collect { [name: it, dir: findExtension(it)] }
+ext.hybrisExtensions = extensions
+
+group = 'com.xyz'
+version = '2211.0'
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
+}
+
+repositories {
+    mavenCentral()
+}
+
+def gensrc = file('bootstrap/gensrc')
+
+sourceSets {
+    // items.xml から Model を作る道具。本物の platform/bootstrap に当たる。
+    bootstrap {
+        java.srcDirs = [new File(findExtension('platformlite'), 'bootstrap/src')]
+    }
+    main {
+        java.srcDirs = [gensrc] + extensions.collectMany { [new File(it.dir, 'src'), new File(it.dir, 'web/src')] }
+        resources.srcDirs = extensions.collectMany { [new File(it.dir, 'resources'), new File(it.dir, 'web/webroot/WEB-INF/config')] } + [configDir]
+        resources.include '**/*'
+        resources.exclude 'localextensions.xml'
+        compileClasspath += bootstrap.output
+        runtimeClasspath += bootstrap.output
+    }
+    test {
+        java.srcDirs = []
+        groovy.srcDirs = extensions.collectMany { [new File(it.dir, 'testsrc'), new File(it.dir, 'web/testsrc')] }
+        resources.srcDirs = extensions.collect { new File(it.dir, 'resources-test') }
+        compileClasspath += bootstrap.output
+        runtimeClasspath += bootstrap.output
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.postgresql:postgresql:42.7.14'
+    implementation 'org.apache.commons:commons-lang3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.spockframework:spock-core:2.4-groovy-4.0'
+    testImplementation 'org.spockframework:spock-spring:2.4-groovy-4.0'
+    testImplementation 'org.apache.groovy:groovy'
+}
+
+// ---- ant build の中身: items.xml → Model(gensrc) ----
+tasks.register('generateModels', JavaExec) {
+    group = 'hybris'
+    description = 'items.xml から Model と enum のクラスを gensrc に作る(本物の ant build の前半に当たる)'
+    classpath = sourceSets.bootstrap.runtimeClasspath
+    mainClass = 'de.hybris.bootstrap.typesystem.ModelGenerator'
+    args = [gensrc.absolutePath] + extensions.collect { "${it.name}=${it.dir.absolutePath}" }
+    inputs.files(extensions.collect { fileTree(it.dir) { include 'resources/*-items.xml', 'resources/*-beans.xml', 'extensioninfo.xml' } })
+    outputs.dir(gensrc)
+    dependsOn 'bootstrapClasses'
+}
+compileJava.dependsOn 'generateModels'
+
+tasks.register('cleanGensrc', Delete) {
+    delete gensrc
+}
+clean.dependsOn 'cleanGensrc'
+
+// 本物の ant の出力に近づけるため、拡張ごとに 1 行ずつ出す。
+compileJava.doFirst {
+    extensions.each { logger.lifecycle("     [echo] building extension '${it.name}'... (${binDir.toPath().relativize(it.dir.toPath())})") }
+}
+
+bootJar {
+    archiveFileName = 'commerce.jar'
+    mainClass = 'de.hybris.platform.lite.HybrisLiteApplication'
+}
+
+jar { enabled = false }
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'failed', 'skipped'
+        exceptionFormat 'full'
+    }
+    // ant unittests は DB を使わないテストだけ、ant integrationtests は DB を使うテストも回す。
+    if (project.hasProperty('integration')) {
+        systemProperty 'hybris.db.url', System.getenv('HYBRIS_DB_URL') ?: 'jdbc:postgresql://localhost:5432/hybris'
+    } else {
+        useJUnitPlatform { excludeTags 'integration' }
+    }
+    if (project.hasProperty('testclasses.packages')) {
+        filter { includeTestsMatching(project.property('testclasses.packages').toString()) }
+    }
+}

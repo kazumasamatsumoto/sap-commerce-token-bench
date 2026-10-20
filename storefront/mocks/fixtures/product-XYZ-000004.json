@@ -1,0 +1,67 @@
+{
+  "code": "XYZ-000004",
+  "name": "ドーマ プラスコンパクトカメラ Q654",
+  "summary": "コンパクトカメラ。省エネ設計。",
+  "description": "ドーマ プラスコンパクトカメラ Q654はポリカーボネートを使ったコンパクトカメラです。特長は、省エネ設計、静かな動作音です。",
+  "url": "/product/XYZ-000004",
+  "manufacturer": "Doma Corporation",
+  "ean": "4900000000047",
+  "purchasable": true,
+  "price": {
+    "currencyIso": "JPY",
+    "value": 116470,
+    "formattedValue": "¥116,470",
+    "priceType": "BUY"
+  },
+  "images": [
+    {
+      "url": "/medias/img-0004-product.svg",
+      "altText": "商品画像 4",
+      "format": "product",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0004-thumbnail.svg",
+      "altText": "商品サムネイル 4",
+      "format": "thumbnail",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0041-product.svg",
+      "altText": "商品画像 41",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 0
+    }
+  ],
+  "stock": {
+    "stockLevel": 318,
+    "stockLevelStatus": "inStock"
+  },
+  "averageRating": 4,
+  "numberOfReviews": 2,
+  "categories": [
+    {
+      "code": "cat-01-03",
+      "name": "コンパクトカメラ",
+      "url": "/category/cat-01-03",
+      "image": {
+        "url": "/medias/cat-01-03-pic.svg",
+        "altText": "コンパクトカメラ",
+        "format": "thumbnail"
+      }
+    }
+  ],
+  "brand": {
+    "code": "brand-04",
+    "name": "ドーマ",
+    "tier": "STANDARD",
+    "logo": {
+      "url": "/medias/brand-logo-04.svg",
+      "altText": "ドーマ",
+      "format": "logo"
+    }
+  },
+  "newArrival": true,
+  "material": "ポリカーボネート"
+}

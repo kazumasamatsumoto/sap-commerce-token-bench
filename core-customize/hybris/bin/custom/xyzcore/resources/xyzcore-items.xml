@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  xyzcore の型。標準の型に属性を足すときは autocreate="false" generate="false" で同じ code の itemtype を書く。
+  新しい型を足したら ant all → ant updatesystem(表に列を足す)の順に実行する。
+-->
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+    <enumtypes>
+        <enumtype code="BrandTier" autocreate="true" generate="true">
+            <value code="STANDARD"/>
+            <value code="PREMIUM"/>
+            <value code="OUTLET"/>
+        </enumtype>
+    </enumtypes>
+
+    <relations>
+        <relation code="Brand2Products" localized="false" autocreate="true" generate="true">
+            <description>ブランドと商品。商品は 1 つのブランドに属する。</description>
+            <sourceElement qualifier="brand" type="Brand" cardinality="one"/>
+            <targetElement qualifier="products" type="Product" cardinality="many" collectiontype="list"/>
+        </relation>
+    </relations>
+
+    <itemtypes>
+        <itemtype code="Brand" autocreate="true" generate="true" jaloclass="com.xyz.core.jalo.Brand">
+            <description>自社で扱うブランド。商品詳細と商品一覧の絞り込みで使う。</description>
+            <deployment table="XyzBrands" typecode="25000"/>
+            <attributes>
+                <attribute qualifier="code" type="java.lang.String">
+                    <description>ブランドのコード(英小文字とハイフン)</description>
+                    <persistence type="property"/>
+                    <modifiers optional="false" unique="true"/>
+                </attribute>
+                <attribute qualifier="name" type="localized:java.lang.String">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="description" type="localized:java.lang.String">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="logo" type="Media">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="tier" type="BrandTier">
+                    <persistence type="property"/>
+                    <defaultvalue>em().getEnumerationValue("BrandTier", "STANDARD")</defaultvalue>
+                </attribute>
+                <attribute qualifier="active" type="java.lang.Boolean">
+                    <persistence type="property"/>
+                    <defaultvalue>Boolean.TRUE</defaultvalue>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="Product" autocreate="false" generate="false">
+            <attributes>
+                <attribute qualifier="xyzMaterial" type="localized:java.lang.String">
+                    <description>素材(商品詳細の仕様タブに出す)</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="xyzLaunchDate" type="java.util.Date">
+                    <description>発売日。発売日より前は一覧に出さない。</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="xyzNewArrival" type="java.lang.Boolean">
+                    <description>新着の印(動的属性。発売日から 30 日以内なら true)</description>
+                    <persistence type="dynamic" attributeHandler="xyzNewArrivalAttributeHandler"/>
+                    <modifiers write="false"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="Customer" autocreate="false" generate="false">
+            <attributes>
+                <attribute qualifier="xyzMemberRank" type="java.lang.String">
+                    <description>会員ランク(BRONZE / SILVER / GOLD)</description>
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+    </itemtypes>
+</items>

@@ -1,0 +1,822 @@
+{
+  "freeTextSearch": "",
+  "currentQuery": {
+    "url": "/search?q=%3Arelevance",
+    "query": {
+      "value": ":relevance"
+    }
+  },
+  "products": [
+    {
+      "code": "XYZ-000001",
+      "name": "アルテア マックスゲームソフト P493",
+      "summary": "ゲームソフト。かんたん設定。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 16480,
+        "formattedValue": "¥16,480",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0001-product.svg",
+          "altText": "商品画像 1",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0001-thumbnail.svg",
+          "altText": "商品サムネイル 1",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0038-product.svg",
+          "altText": "商品画像 38",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        }
+      ],
+      "stock": {
+        "stockLevel": 182,
+        "stockLevelStatus": "inStock"
+      },
+      "brand": {
+        "code": "brand-01",
+        "name": "アルテア"
+      },
+      "newArrival": false
+    },
+    {
+      "code": "XYZ-000002",
+      "name": "ベルクス マックスヘッドホン W839",
+      "summary": "ヘッドホン。アプリで操作できる。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 144140,
+        "formattedValue": "¥144,140",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0002-product.svg",
+          "altText": "商品画像 2",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0002-thumbnail.svg",
+          "altText": "商品サムネイル 2",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0039-product.svg",
+          "altText": "商品画像 39",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        },
+        {
+          "url": "/medias/img-0076-product.svg",
+          "altText": "商品画像 76",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 1
+        }
+      ],
+      "stock": {
+        "stockLevel": 0,
+        "stockLevelStatus": "outOfStock"
+      },
+      "brand": {
+        "code": "brand-02",
+        "name": "ベルクス"
+      },
+      "newArrival": false
+    },
+    {
+      "code": "XYZ-000003",
+      "name": "ミナト ライトプロジェクター Z946",
+      "summary": "プロジェクター。防水防じん。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 13040,
+        "formattedValue": "¥13,040",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0003-product.svg",
+          "altText": "商品画像 3",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0003-thumbnail.svg",
+          "altText": "商品サムネイル 3",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0040-product.svg",
+          "altText": "商品画像 40",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        },
+        {
+          "url": "/medias/img-0077-product.svg",
+          "altText": "商品画像 77",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 1
+        }
+      ],
+      "stock": {
+        "stockLevel": 300,
+        "stockLevelStatus": "inStock"
+      },
+      "brand": {
+        "code": "brand-29",
+        "name": "ミナト"
+      },
+      "newArrival": false
+    },
+    {
+      "code": "XYZ-000004",
+      "name": "ドーマ プラスコンパクトカメラ Q654",
+      "summary": "コンパクトカメラ。省エネ設計。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 116470,
+        "formattedValue": "¥116,470",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0004-product.svg",
+          "altText": "商品画像 4",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0004-thumbnail.svg",
+          "altText": "商品サムネイル 4",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0041-product.svg",
+          "altText": "商品画像 41",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        }
+      ],
+      "stock": {
+        "stockLevel": 318,
+        "stockLevelStatus": "inStock"
+      },
+      "brand": {
+        "code": "brand-04",
+        "name": "ドーマ"
+      },
+      "newArrival": true
+    },
+    {
+      "code": "XYZ-000005",
+      "name": "ミナト プロカメラバッグ V321",
+      "summary": "カメラバッグ。防水防じん。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 1100,
+        "formattedValue": "¥1,100",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0005-product.svg",
+          "altText": "商品画像 5",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0005-thumbnail.svg",
+          "altText": "商品サムネイル 5",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0042-product.svg",
+          "altText": "商品画像 42",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        },
+        {
+          "url": "/medias/img-0079-product.svg",
+          "altText": "商品画像 79",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 1
+        }
+      ],
+      "stock": {
+        "stockLevel": 146,
+        "stockLevelStatus": "inStock"
+      },
+      "brand": {
+        "code": "brand-29",
+        "name": "ミナト"
+      },
+      "newArrival": false
+    },
+    {
+      "code": "XYZ-000006",
+      "name": "ウィスプ ウルトラ掃除機 U861",
+      "summary": "掃除機。すっきりしたデザイン。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 73780,
+        "formattedValue": "¥73,780",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0006-product.svg",
+          "altText": "商品画像 6",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0006-thumbnail.svg",
+          "altText": "商品サムネイル 6",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0043-product.svg",
+          "altText": "商品画像 43",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        }
+      ],
+      "stock": {
+        "stockLevel": 0,
+        "stockLevelStatus": "outOfStock"
+      },
+      "brand": {
+        "code": "brand-23",
+        "name": "ウィスプ"
+      },
+      "newArrival": false
+    },
+    {
+      "code": "XYZ-000007",
+      "name": "コルト エアー電気ケトル F321",
+      "summary": "電気ケトル。高速充電に対応。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 72000,
+        "formattedValue": "¥72,000",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0007-product.svg",
+          "altText": "商品画像 7",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0007-thumbnail.svg",
+          "altText": "商品サムネイル 7",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0044-product.svg",
+          "altText": "商品画像 44",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        }
+      ],
+      "stock": {
+        "stockLevel": 0,
+        "stockLevelStatus": "outOfStock"
+      },
+      "brand": {
+        "code": "brand-11",
+        "name": "コルト"
+      },
+      "newArrival": false
+    },
+    {
+      "code": "XYZ-000008",
+      "name": "ミラス ミニ空気清浄機 H378",
+      "summary": "空気清浄機。静かな動作音。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 50230,
+        "formattedValue": "¥50,230",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0008-product.svg",
+          "altText": "商品画像 8",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0008-thumbnail.svg",
+          "altText": "商品サムネイル 8",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0045-product.svg",
+          "altText": "商品画像 45",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        },
+        {
+          "url": "/medias/img-0082-product.svg",
+          "altText": "商品画像 82",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 1
+        }
+      ],
+      "stock": {
+        "stockLevel": 406,
+        "stockLevelStatus": "inStock"
+      },
+      "brand": {
+        "code": "brand-13",
+        "name": "ミラス"
+      },
+      "newArrival": false
+    },
+    {
+      "code": "XYZ-000009",
+      "name": "ドーマ プラスカメラバッグ W209",
+      "summary": "カメラバッグ。かんたん設定。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 76300,
+        "formattedValue": "¥76,300",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0009-product.svg",
+          "altText": "商品画像 9",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0009-thumbnail.svg",
+          "altText": "商品サムネイル 9",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0046-product.svg",
+          "altText": "商品画像 46",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        }
+      ],
+      "stock": {
+        "stockLevel": 244,
+        "stockLevelStatus": "inStock"
+      },
+      "brand": {
+        "code": "brand-04",
+        "name": "ドーマ"
+      },
+      "newArrival": false
+    },
+    {
+      "code": "XYZ-000010",
+      "name": "ミラス ライト外付けHDD I235",
+      "summary": "外付けHDD。静かな動作音。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 176900,
+        "formattedValue": "¥176,900",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0010-product.svg",
+          "altText": "商品画像 10",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0010-thumbnail.svg",
+          "altText": "商品サムネイル 10",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0047-product.svg",
+          "altText": "商品画像 47",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        }
+      ],
+      "stock": {
+        "stockLevel": 267,
+        "stockLevelStatus": "inStock"
+      },
+      "brand": {
+        "code": "brand-13",
+        "name": "ミラス"
+      },
+      "newArrival": false
+    },
+    {
+      "code": "XYZ-000011",
+      "name": "ウィスプ エアータブレット F691",
+      "summary": "タブレット。アプリで操作できる。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 4350,
+        "formattedValue": "¥4,350",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0011-product.svg",
+          "altText": "商品画像 11",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0011-thumbnail.svg",
+          "altText": "商品サムネイル 11",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0048-product.svg",
+          "altText": "商品画像 48",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        },
+        {
+          "url": "/medias/img-0085-product.svg",
+          "altText": "商品画像 85",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 1
+        }
+      ],
+      "stock": {
+        "stockLevel": 165,
+        "stockLevelStatus": "inStock"
+      },
+      "brand": {
+        "code": "brand-23",
+        "name": "ウィスプ"
+      },
+      "newArrival": true
+    },
+    {
+      "code": "XYZ-000012",
+      "name": "ユーラ ミニデジタル一眼 A893",
+      "summary": "デジタル一眼。高速充電に対応。",
+      "price": {
+        "currencyIso": "JPY",
+        "value": 10620,
+        "formattedValue": "¥10,620",
+        "priceType": "BUY"
+      },
+      "images": [
+        {
+          "url": "/medias/img-0012-product.svg",
+          "altText": "商品画像 12",
+          "format": "product",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0012-thumbnail.svg",
+          "altText": "商品サムネイル 12",
+          "format": "thumbnail",
+          "imageType": "PRIMARY"
+        },
+        {
+          "url": "/medias/img-0049-product.svg",
+          "altText": "商品画像 49",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 0
+        },
+        {
+          "url": "/medias/img-0086-product.svg",
+          "altText": "商品画像 86",
+          "format": "product",
+          "imageType": "GALLERY",
+          "galleryIndex": 1
+        }
+      ],
+      "stock": {
+        "stockLevel": 225,
+        "stockLevelStatus": "inStock"
+      },
+      "brand": {
+        "code": "brand-25",
+        "name": "ユーラ"
+      },
+      "newArrival": false
+    }
+  ],
+  "facets": [
+    {
+      "name": "カテゴリ",
+      "category": true,
+      "multiSelect": true,
+      "visible": true,
+      "values": [
+        {
+          "name": "中継器",
+          "count": 26,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-09-03",
+            "query": {
+              "value": ":relevance:category:cat-09-03"
+            }
+          }
+        },
+        {
+          "name": "コンパクトカメラ",
+          "count": 25,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-01-03",
+            "query": {
+              "value": ":relevance:category:cat-01-03"
+            }
+          }
+        },
+        {
+          "name": "収納ケース",
+          "count": 25,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-10-08",
+            "query": {
+              "value": ":relevance:category:cat-10-08"
+            }
+          }
+        },
+        {
+          "name": "マウス",
+          "count": 24,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-03-05",
+            "query": {
+              "value": ":relevance:category:cat-03-05"
+            }
+          }
+        },
+        {
+          "name": "Webカメラ",
+          "count": 23,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-03-09",
+            "query": {
+              "value": ":relevance:category:cat-03-09"
+            }
+          }
+        },
+        {
+          "name": "キーボード",
+          "count": 22,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-03-04",
+            "query": {
+              "value": ":relevance:category:cat-03-04"
+            }
+          }
+        },
+        {
+          "name": "スマホケース",
+          "count": 22,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-04-03",
+            "query": {
+              "value": ":relevance:category:cat-04-03"
+            }
+          }
+        },
+        {
+          "name": "充電器",
+          "count": 22,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-04-05",
+            "query": {
+              "value": ":relevance:category:cat-04-05"
+            }
+          }
+        },
+        {
+          "name": "ゲーム機",
+          "count": 22,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-07-01",
+            "query": {
+              "value": ":relevance:category:cat-07-01"
+            }
+          }
+        },
+        {
+          "name": "スマートグラス",
+          "count": 22,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Acategory%3Acat-08-04",
+            "query": {
+              "value": ":relevance:category:cat-08-04"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ブランド",
+      "category": false,
+      "multiSelect": true,
+      "visible": true,
+      "values": [
+        {
+          "name": "ヒカリ",
+          "count": 47,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-30",
+            "query": {
+              "value": ":relevance:brand:brand-30"
+            }
+          }
+        },
+        {
+          "name": "カイロ",
+          "count": 43,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-03",
+            "query": {
+              "value": ":relevance:brand:brand-03"
+            }
+          }
+        },
+        {
+          "name": "ベルクス",
+          "count": 41,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-02",
+            "query": {
+              "value": ":relevance:brand:brand-02"
+            }
+          }
+        },
+        {
+          "name": "クオラ",
+          "count": 40,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-17",
+            "query": {
+              "value": ":relevance:brand:brand-17"
+            }
+          }
+        },
+        {
+          "name": "ソレイユ",
+          "count": 40,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-19",
+            "query": {
+              "value": ":relevance:brand:brand-19"
+            }
+          }
+        },
+        {
+          "name": "ゼノ",
+          "count": 40,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-24",
+            "query": {
+              "value": ":relevance:brand:brand-24"
+            }
+          }
+        },
+        {
+          "name": "ウィスプ",
+          "count": 39,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-23",
+            "query": {
+              "value": ":relevance:brand:brand-23"
+            }
+          }
+        },
+        {
+          "name": "ミラス",
+          "count": 38,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-13",
+            "query": {
+              "value": ":relevance:brand:brand-13"
+            }
+          }
+        },
+        {
+          "name": "ミナト",
+          "count": 37,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-29",
+            "query": {
+              "value": ":relevance:brand:brand-29"
+            }
+          }
+        },
+        {
+          "name": "コルト",
+          "count": 36,
+          "selected": false,
+          "query": {
+            "url": "/search?q=%3Arelevance%3Abrand%3Abrand-11",
+            "query": {
+              "value": ":relevance:brand:brand-11"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "pagination": {
+    "currentPage": 0,
+    "pageSize": 12,
+    "totalPages": 84,
+    "totalResults": 1000,
+    "sort": "relevance"
+  },
+  "sorts": [
+    {
+      "code": "relevance",
+      "name": "関連度",
+      "selected": true
+    },
+    {
+      "code": "topRated",
+      "name": "評価の高い順",
+      "selected": false
+    },
+    {
+      "code": "name-asc",
+      "name": "名前(昇順)",
+      "selected": false
+    },
+    {
+      "code": "name-desc",
+      "name": "名前(降順)",
+      "selected": false
+    },
+    {
+      "code": "price-asc",
+      "name": "価格の安い順",
+      "selected": false
+    },
+    {
+      "code": "price-desc",
+      "name": "価格の高い順",
+      "selected": false
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  xyzcore の bean。本物の案件と同じく、標準の bean を差し替えるときは alias を使う(id を上書きしない)。
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- ブランド -->
+    <alias name="defaultBrandDao" alias="brandDao"/>
+    <bean id="defaultBrandDao" class="com.xyz.core.brand.dao.impl.DefaultBrandDao" parent="abstractItemDao"/>
+
+    <alias name="defaultBrandService" alias="brandService"/>
+    <bean id="defaultBrandService" class="com.xyz.core.brand.impl.DefaultBrandService">
+        <property name="brandDao" ref="brandDao"/>
+    </bean>
+
+    <bean id="xyzBrandValidateInterceptor" class="com.xyz.core.interceptors.BrandValidateInterceptor"/>
+    <bean id="xyzBrandValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="xyzBrandValidateInterceptor"/>
+        <property name="typeCode" value="Brand"/>
+    </bean>
+
+    <!-- 動的属性 Product.xyzNewArrival -->
+    <bean id="xyzNewArrivalAttributeHandler" class="com.xyz.core.attributehandlers.XyzNewArrivalAttributeHandler">
+        <property name="newArrivalDays" value="30"/>
+    </bean>
+</beans>

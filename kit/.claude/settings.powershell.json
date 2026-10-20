@@ -1,0 +1,135 @@
+{
+  "permissions": {
+    "disableBypassPermissionsMode": "disable",
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/secrets/**)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/local.properties.secret*)",
+      "Edit(**/node_modules/**)",
+      "Edit(**/dist/**)",
+      "Edit(**/hybris/bin/platform/**)",
+      "Edit(**/hybris/bin/modules/**)",
+      "Bash(ant initialize)",
+      "Bash(ant initialize *)",
+      "PowerShell(ant initialize)",
+      "PowerShell(ant initialize *)",
+      "Bash(npm publish *)",
+      "Bash(yarn publish *)",
+      "Bash(pnpm publish *)",
+      "PowerShell(npm publish *)",
+      "PowerShell(yarn publish *)",
+      "PowerShell(pnpm publish *)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "PowerShell(git push *)",
+      "Bash(git reset *)",
+      "PowerShell(git reset *)",
+      "Bash(git clean *)",
+      "PowerShell(git clean *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "PowerShell(Invoke-WebRequest *)",
+      "PowerShell(Invoke-RestMethod *)"
+    ],
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(npm run build *)",
+      "Bash(npm run test *)",
+      "Bash(npm run lint *)",
+      "Bash(npm test *)",
+      "PowerShell(git status)",
+      "PowerShell(git diff *)",
+      "PowerShell(git log *)",
+      "PowerShell(git show *)",
+      "PowerShell(npm run build *)",
+      "PowerShell(npm run test *)",
+      "PowerShell(npm run lint *)",
+      "PowerShell(npm test *)",
+      "Bash(node .claude/skills/cs-cost/scripts/cost.mjs *)",
+      "PowerShell(node .claude/skills/cs-cost/scripts/cost.mjs *)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/session-context.ps1"
+            ]
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-dangerous-bash.ps1"
+            ],
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/protect-files.ps1"
+            ],
+            "onFailure": "block"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/check-after-edit.ps1"
+            ],
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

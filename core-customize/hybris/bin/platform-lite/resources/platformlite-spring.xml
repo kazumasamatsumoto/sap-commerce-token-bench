@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  疑似プラットフォームの bean(本物の core / commerceservices / commercefacades / cmsfacades の *-spring.xml に当たる)。
+  bean の名前は本物に合わせてある。拡張から差し替えるときは、同じ名前の alias を自分の *-spring.xml に書く:
+      <alias name="xyzProductFacade" alias="productFacade"/>
+  拡張から Populator を足すときは modifyPopulatorList を使う。
+  modelService / flexibleSearchService / i18NService / typeSystem は Java の設定(PlatformLiteConfiguration)で作っている。
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- ============================================================ 土台 -->
+    <bean id="abstractPopulatingConverter" class="de.hybris.platform.converters.impl.AbstractPopulatingConverter" abstract="true"/>
+    <bean id="modifyPopulatorList" class="de.hybris.platform.converters.config.ModifyPopulatorList" abstract="true"/>
+    <bean id="abstractItemDao" class="de.hybris.platform.servicelayer.internal.dao.AbstractItemDao" abstract="true">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+        <property name="modelService" ref="modelService"/>
+    </bean>
+
+    <alias name="defaultSessionService" alias="sessionService"/>
+    <bean id="defaultSessionService" class="de.hybris.platform.servicelayer.session.impl.DefaultSessionService"/>
+
+    <!-- ============================================================ サービス -->
+    <alias name="defaultCatalogVersionService" alias="catalogVersionService"/>
+    <bean id="defaultCatalogVersionService" class="de.hybris.platform.catalog.impl.DefaultCatalogVersionService" parent="abstractItemDao">
+        <property name="sessionService" ref="sessionService"/>
+    </bean>
+
+    <alias name="defaultBaseSiteService" alias="baseSiteService"/>
+    <bean id="defaultBaseSiteService" class="de.hybris.platform.site.impl.DefaultBaseSiteService" parent="abstractItemDao">
+        <property name="sessionService" ref="sessionService"/>
+        <property name="catalogVersionService" ref="catalogVersionService"/>
+    </bean>
+
+    <alias name="defaultBaseStoreService" alias="baseStoreService"/>
+    <bean id="defaultBaseStoreService" class="de.hybris.platform.store.services.impl.DefaultBaseStoreService" parent="abstractItemDao">
+        <property name="baseSiteService" ref="baseSiteService"/>
+    </bean>
+
+    <alias name="defaultCommonI18NService" alias="commonI18NService"/>
+    <bean id="defaultCommonI18NService" class="de.hybris.platform.servicelayer.i18n.impl.DefaultCommonI18NService" parent="abstractItemDao">
+        <property name="sessionService" ref="sessionService"/>
+        <property name="i18NService" ref="i18NService"/>
+        <property name="defaultCurrencyIsocode" value="${default.session.currency.isocode:JPY}"/>
+    </bean>
+
+    <alias name="defaultUserService" alias="userService"/>
+    <bean id="defaultUserService" class="de.hybris.platform.servicelayer.user.impl.DefaultUserService" parent="abstractItemDao">
+        <property name="sessionService" ref="sessionService"/>
+    </bean>
+
+    <alias name="defaultProductService" alias="productService"/>
+    <bean id="defaultProductService" class="de.hybris.platform.product.impl.DefaultProductService" parent="abstractItemDao">
+        <property name="catalogVersionService" ref="catalogVersionService"/>
+    </bean>
+
+    <alias name="defaultCategoryService" alias="categoryService"/>
+    <bean id="defaultCategoryService" class="de.hybris.platform.category.impl.DefaultCategoryService" parent="abstractItemDao">
+        <property name="catalogVersionService" ref="catalogVersionService"/>
+    </bean>
+
+    <alias name="defaultCommercePriceService" alias="commercePriceService"/>
+    <bean id="defaultCommercePriceService" class="de.hybris.platform.commerceservices.price.impl.DefaultCommercePriceService">
+        <property name="commonI18NService" ref="commonI18NService"/>
+    </bean>
+
+    <alias name="defaultCommerceStockService" alias="commerceStockService"/>
+    <bean id="defaultCommerceStockService" class="de.hybris.platform.commerceservices.stock.impl.DefaultCommerceStockService" parent="abstractItemDao">
+        <property name="lowStockThreshold" value="5"/>
+    </bean>
+
+    <alias name="defaultDeliveryModeService" alias="deliveryModeService"/>
+    <bean id="defaultDeliveryModeService" class="de.hybris.platform.order.impl.DefaultDeliveryModeService" parent="abstractItemDao"/>
+
+    <alias name="defaultCustomerReviewService" alias="customerReviewService"/>
+    <bean id="defaultCustomerReviewService" class="de.hybris.platform.customerreview.impl.DefaultCustomerReviewService" parent="abstractItemDao"/>
+
+    <alias name="defaultB2BUnitService" alias="b2bUnitService"/>
+    <bean id="defaultB2BUnitService" class="de.hybris.platform.b2b.services.impl.DefaultB2BUnitService" parent="abstractItemDao"/>
+
+    <alias name="defaultCMSPageService" alias="cmsPageService"/>
+    <bean id="defaultCMSPageService" class="de.hybris.platform.cms2.servicelayer.services.impl.DefaultCMSPageService" parent="abstractItemDao">
+        <property name="catalogVersionService" ref="catalogVersionService"/>
+    </bean>
+
+    <alias name="flexibleSearchProductSearchService" alias="productSearchService"/>
+    <bean id="flexibleSearchProductSearchService" class="de.hybris.platform.commerceservices.search.impl.FlexibleSearchProductSearchService" parent="abstractItemDao">
+        <property name="catalogVersionService" ref="catalogVersionService"/>
+        <property name="commonI18NService" ref="commonI18NService"/>
+        <property name="i18NService" ref="i18NService"/>
+    </bean>
+
+    <alias name="defaultCalculationService" alias="calculationService"/>
+    <bean id="defaultCalculationService" class="de.hybris.platform.order.impl.DefaultCalculationService">
+        <property name="modelService" ref="modelService"/>
+        <property name="commercePriceService" ref="commercePriceService"/>
+        <property name="commonI18NService" ref="commonI18NService"/>
+        <property name="taxRatePercent" value="10"/>
+    </bean>
+
+    <alias name="defaultCommerceCartService" alias="commerceCartService"/>
+    <bean id="defaultCommerceCartService" class="de.hybris.platform.commerceservices.order.impl.DefaultCommerceCartService" parent="abstractItemDao">
+        <property name="baseSiteService" ref="baseSiteService"/>
+        <property name="baseStoreService" ref="baseStoreService"/>
+        <property name="commonI18NService" ref="commonI18NService"/>
+        <property name="commerceStockService" ref="commerceStockService"/>
+        <property name="calculationService" ref="calculationService"/>
+        <property name="maxQuantityPerEntry" value="999"/>
+    </bean>
+
+    <alias name="defaultCommerceCheckoutService" alias="commerceCheckoutService"/>
+    <bean id="defaultCommerceCheckoutService" class="de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutService" parent="abstractItemDao">
+        <property name="commerceCartService" ref="commerceCartService"/>
+        <property name="deliveryModeService" ref="deliveryModeService"/>
+    </bean>
+
+    <alias name="defaultCustomerAccountService" alias="customerAccountService"/>
+    <bean id="defaultCustomerAccountService" class="de.hybris.platform.commerceservices.customer.impl.DefaultCustomerAccountService" parent="abstractItemDao">
+        <property name="userService" ref="userService"/>
+        <property name="baseSiteService" ref="baseSiteService"/>
+    </bean>
+
+    <!-- ============================================================ Populator と Converter -->
+    <bean id="priceDataFactory" class="de.hybris.platform.commercefacades.product.PriceDataFactory"/>
+
+    <bean id="productBasicPopulator" class="de.hybris.platform.commercefacades.product.converters.populators.ProductBasicPopulator"/>
+    <bean id="productPricePopulator" class="de.hybris.platform.commercefacades.product.converters.populators.ProductPricePopulator">
+        <property name="commercePriceService" ref="commercePriceService"/>
+        <property name="priceDataFactory" ref="priceDataFactory"/>
+    </bean>
+    <bean id="productImagePopulator" class="de.hybris.platform.commercefacades.product.converters.populators.ProductImagePopulator"/>
+    <bean id="productStockPopulator" class="de.hybris.platform.commercefacades.product.converters.populators.ProductStockPopulator">
+        <property name="commerceStockService" ref="commerceStockService"/>
+        <property name="baseStoreService" ref="baseStoreService"/>
+    </bean>
+    <bean id="productCategoriesPopulator" class="de.hybris.platform.commercefacades.product.converters.populators.ProductCategoriesPopulator">
+        <property name="categoryConverter" ref="categoryConverter"/>
+    </bean>
+    <bean id="productReviewSummaryPopulator" class="de.hybris.platform.commercefacades.product.converters.populators.ProductReviewSummaryPopulator">
+        <property name="customerReviewService" ref="customerReviewService"/>
+    </bean>
+
+    <!-- 商品詳細用(全部入り) -->
+    <bean id="productConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.product.data.ProductData"/>
+        <property name="populators">
+            <list>
+                <ref bean="productBasicPopulator"/>
+                <ref bean="productPricePopulator"/>
+                <ref bean="productImagePopulator"/>
+                <ref bean="productStockPopulator"/>
+                <ref bean="productCategoriesPopulator"/>
+                <ref bean="productReviewSummaryPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 一覧と検索用(軽い) -->
+    <bean id="productSearchResultConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.product.data.ProductData"/>
+        <property name="populators">
+            <list>
+                <ref bean="productBasicPopulator"/>
+                <ref bean="productPricePopulator"/>
+                <ref bean="productImagePopulator"/>
+                <ref bean="productStockPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="categoryPopulator" class="de.hybris.platform.commercefacades.product.converters.populators.CategoryPopulator"/>
+    <bean id="categoryConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.product.data.CategoryData"/>
+        <property name="populators"><list><ref bean="categoryPopulator"/></list></property>
+    </bean>
+
+    <bean id="customerReviewPopulator" class="de.hybris.platform.commercefacades.product.converters.populators.ReviewPopulator"/>
+    <bean id="customerReviewConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.product.data.ReviewData"/>
+        <property name="populators"><list><ref bean="customerReviewPopulator"/></list></property>
+    </bean>
+
+    <bean id="addressPopulator" class="de.hybris.platform.commercefacades.user.converters.populators.AddressPopulator"/>
+    <bean id="addressConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.user.data.AddressData"/>
+        <property name="populators"><list><ref bean="addressPopulator"/></list></property>
+    </bean>
+    <bean id="addressReversePopulator" class="de.hybris.platform.commercefacades.user.converters.populators.AddressReversePopulator">
+        <property name="commonI18NService" ref="commonI18NService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+    <bean id="customerPopulator" class="de.hybris.platform.commercefacades.user.converters.populators.CustomerPopulator">
+        <property name="addressConverter" ref="addressConverter"/>
+    </bean>
+    <bean id="customerConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.user.data.CustomerData"/>
+        <property name="populators"><list><ref bean="customerPopulator"/></list></property>
+    </bean>
+
+    <bean id="deliveryModePopulator" class="de.hybris.platform.commercefacades.order.converters.populators.DeliveryModePopulator">
+        <property name="priceDataFactory" ref="priceDataFactory"/>
+        <property name="commonI18NService" ref="commonI18NService"/>
+    </bean>
+    <bean id="deliveryModeConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.order.data.DeliveryModeData"/>
+        <property name="populators"><list><ref bean="deliveryModePopulator"/></list></property>
+    </bean>
+
+    <bean id="orderEntryPopulator" class="de.hybris.platform.commercefacades.order.converters.populators.OrderEntryPopulator">
+        <property name="productConverter" ref="productSearchResultConverter"/>
+        <property name="priceDataFactory" ref="priceDataFactory"/>
+    </bean>
+    <bean id="orderEntryConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.order.data.OrderEntryData"/>
+        <property name="populators"><list><ref bean="orderEntryPopulator"/></list></property>
+    </bean>
+
+    <bean id="abstractOrderPopulator" class="de.hybris.platform.commercefacades.order.converters.populators.AbstractOrderPopulator">
+        <property name="orderEntryConverter" ref="orderEntryConverter"/>
+        <property name="addressConverter" ref="addressConverter"/>
+        <property name="deliveryModeConverter" ref="deliveryModeConverter"/>
+        <property name="priceDataFactory" ref="priceDataFactory"/>
+    </bean>
+    <bean id="cartConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.order.data.CartData"/>
+        <property name="populators"><list><ref bean="abstractOrderPopulator"/></list></property>
+    </bean>
+    <bean id="orderConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.order.data.OrderData"/>
+        <property name="populators"><list><ref bean="abstractOrderPopulator"/></list></property>
+    </bean>
+
+    <bean id="orderHistoryPopulator" class="de.hybris.platform.commercefacades.order.converters.populators.OrderHistoryPopulator">
+        <property name="priceDataFactory" ref="priceDataFactory"/>
+    </bean>
+    <bean id="orderHistoryConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.order.data.OrderHistoryData"/>
+        <property name="populators"><list><ref bean="orderHistoryPopulator"/></list></property>
+    </bean>
+
+    <!-- ============================================================ Facade -->
+    <alias name="defaultProductFacade" alias="productFacade"/>
+    <bean id="defaultProductFacade" class="de.hybris.platform.commercefacades.product.impl.DefaultProductFacade">
+        <property name="productService" ref="productService"/>
+        <property name="customerReviewService" ref="customerReviewService"/>
+        <property name="userService" ref="userService"/>
+        <property name="productConverter" ref="productConverter"/>
+        <property name="customerReviewConverter" ref="customerReviewConverter"/>
+    </bean>
+
+    <alias name="defaultProductSearchFacade" alias="productSearchFacade"/>
+    <bean id="defaultProductSearchFacade" class="de.hybris.platform.commercefacades.search.impl.DefaultProductSearchFacade">
+        <property name="productSearchService" ref="productSearchService"/>
+        <property name="productSearchResultConverter" ref="productSearchResultConverter"/>
+    </bean>
+
+    <alias name="defaultCartFacade" alias="cartFacade"/>
+    <bean id="defaultCartFacade" class="de.hybris.platform.commercefacades.order.impl.DefaultCartFacade">
+        <property name="commerceCartService" ref="commerceCartService"/>
+        <property name="userService" ref="userService"/>
+        <property name="productService" ref="productService"/>
+        <property name="cartConverter" ref="cartConverter"/>
+        <property name="orderEntryConverter" ref="orderEntryConverter"/>
+    </bean>
+
+    <alias name="defaultCheckoutFacade" alias="checkoutFacade"/>
+    <bean id="defaultCheckoutFacade" class="de.hybris.platform.commercefacades.order.impl.DefaultCheckoutFacade">
+        <property name="cartFacade" ref="defaultCartFacade"/>
+        <property name="commerceCheckoutService" ref="commerceCheckoutService"/>
+        <property name="customerAccountService" ref="customerAccountService"/>
+        <property name="deliveryModeService" ref="deliveryModeService"/>
+        <property name="userService" ref="userService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="cartConverter" ref="cartConverter"/>
+        <property name="orderConverter" ref="orderConverter"/>
+        <property name="deliveryModeConverter" ref="deliveryModeConverter"/>
+        <property name="addressReversePopulator" ref="addressReversePopulator"/>
+    </bean>
+
+    <alias name="defaultCustomerFacade" alias="customerFacade"/>
+    <bean id="defaultCustomerFacade" class="de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade">
+        <property name="customerAccountService" ref="customerAccountService"/>
+        <property name="userService" ref="userService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+        <property name="customerConverter" ref="customerConverter"/>
+    </bean>
+
+    <alias name="defaultUserFacade" alias="userFacade"/>
+    <bean id="defaultUserFacade" class="de.hybris.platform.commercefacades.user.impl.DefaultUserFacade">
+        <property name="customerAccountService" ref="customerAccountService"/>
+        <property name="userService" ref="userService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+        <property name="addressConverter" ref="addressConverter"/>
+        <property name="addressReversePopulator" ref="addressReversePopulator"/>
+    </bean>
+
+    <alias name="defaultOrderFacade" alias="orderFacade"/>
+    <bean id="defaultOrderFacade" class="de.hybris.platform.commercefacades.order.impl.DefaultOrderFacade">
+        <property name="customerAccountService" ref="customerAccountService"/>
+        <property name="userService" ref="userService"/>
+        <property name="orderConverter" ref="orderConverter"/>
+        <property name="orderHistoryConverter" ref="orderHistoryConverter"/>
+    </bean>
+
+    <alias name="defaultStoreSessionFacade" alias="storeSessionFacade"/>
+    <bean id="defaultStoreSessionFacade" class="de.hybris.platform.commercefacades.storesession.impl.DefaultStoreSessionFacade">
+        <property name="commonI18NService" ref="commonI18NService"/>
+    </bean>
+
+    <alias name="defaultCmsPageFacade" alias="cmsPageFacade"/>
+    <bean id="defaultCmsPageFacade" class="de.hybris.platform.cmsfacades.pages.impl.DefaultCmsPageFacade">
+        <property name="cmsPageService" ref="cmsPageService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+        <property name="catalogVersionService" ref="catalogVersionService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="typeSystem" ref="typeSystem"/>
+    </bean>
+</beans>

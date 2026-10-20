@@ -1,0 +1,74 @@
+{
+  "code": "XYZ-000003",
+  "name": "ミナト ライトプロジェクター Z946",
+  "summary": "プロジェクター。防水防じん。",
+  "description": "ミナト ライトプロジェクター Z946はアルミニウムを使ったプロジェクターです。特長は、防水防じん、長時間使えるバッテリーです。",
+  "url": "/product/XYZ-000003",
+  "manufacturer": "Minato Corporation",
+  "ean": "4900000000030",
+  "purchasable": true,
+  "price": {
+    "currencyIso": "JPY",
+    "value": 13040,
+    "formattedValue": "¥13,040",
+    "priceType": "BUY"
+  },
+  "images": [
+    {
+      "url": "/medias/img-0003-product.svg",
+      "altText": "商品画像 3",
+      "format": "product",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0003-thumbnail.svg",
+      "altText": "商品サムネイル 3",
+      "format": "thumbnail",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0040-product.svg",
+      "altText": "商品画像 40",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 0
+    },
+    {
+      "url": "/medias/img-0077-product.svg",
+      "altText": "商品画像 77",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 1
+    }
+  ],
+  "stock": {
+    "stockLevel": 300,
+    "stockLevelStatus": "inStock"
+  },
+  "averageRating": 3.3,
+  "numberOfReviews": 3,
+  "categories": [
+    {
+      "code": "cat-05-03",
+      "name": "プロジェクター",
+      "url": "/category/cat-05-03",
+      "image": {
+        "url": "/medias/cat-05-03-pic.svg",
+        "altText": "プロジェクター",
+        "format": "thumbnail"
+      }
+    }
+  ],
+  "brand": {
+    "code": "brand-29",
+    "name": "ミナト",
+    "tier": "OUTLET",
+    "logo": {
+      "url": "/medias/brand-logo-29.svg",
+      "altText": "ミナト",
+      "format": "logo"
+    }
+  },
+  "newArrival": false,
+  "material": "アルミニウム"
+}

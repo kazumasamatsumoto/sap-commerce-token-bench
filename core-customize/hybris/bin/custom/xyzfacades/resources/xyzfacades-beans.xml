@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xyzfacades の Data。標準の Data に項目を足すときも、ここに同じ class の bean を書く。 -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+    <bean class="com.xyz.facades.brand.data.BrandData">
+        <description>ブランド(一覧と商品詳細で使う)</description>
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+        <property name="description" type="String"/>
+        <property name="tier" type="String"/>
+        <property name="logo" type="de.hybris.platform.commercefacades.product.data.ImageData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+        <property name="brand" type="com.xyz.facades.brand.data.BrandData"/>
+        <property name="newArrival" type="Boolean"/>
+        <property name="material" type="String"/>
+    </bean>
+</beans>

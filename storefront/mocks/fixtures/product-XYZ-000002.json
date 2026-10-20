@@ -1,0 +1,84 @@
+{
+  "code": "XYZ-000002",
+  "name": "ベルクス マックスヘッドホン W839",
+  "summary": "ヘッドホン。アプリで操作できる。",
+  "description": "ベルクス マックスヘッドホン W839は再生プラスチックを使ったヘッドホンです。特長は、アプリで操作できる、防水防じんです。",
+  "url": "/product/XYZ-000002",
+  "manufacturer": "Belx Corporation",
+  "ean": "4900000000023",
+  "purchasable": true,
+  "price": {
+    "currencyIso": "JPY",
+    "value": 144140,
+    "formattedValue": "¥144,140",
+    "priceType": "BUY"
+  },
+  "images": [
+    {
+      "url": "/medias/img-0002-product.svg",
+      "altText": "商品画像 2",
+      "format": "product",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0002-thumbnail.svg",
+      "altText": "商品サムネイル 2",
+      "format": "thumbnail",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0039-product.svg",
+      "altText": "商品画像 39",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 0
+    },
+    {
+      "url": "/medias/img-0076-product.svg",
+      "altText": "商品画像 76",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 1
+    }
+  ],
+  "stock": {
+    "stockLevel": 0,
+    "stockLevelStatus": "outOfStock"
+  },
+  "averageRating": 3,
+  "numberOfReviews": 1,
+  "categories": [
+    {
+      "code": "cat-02-02",
+      "name": "ヘッドホン",
+      "url": "/category/cat-02-02",
+      "image": {
+        "url": "/medias/cat-02-02-pic.svg",
+        "altText": "ヘッドホン",
+        "format": "thumbnail"
+      }
+    },
+    {
+      "code": "cat-01-07",
+      "name": "カメラバッグ",
+      "url": "/category/cat-01-07",
+      "image": {
+        "url": "/medias/cat-01-07-pic.svg",
+        "altText": "カメラバッグ",
+        "format": "thumbnail"
+      }
+    }
+  ],
+  "brand": {
+    "code": "brand-02",
+    "name": "ベルクス",
+    "tier": "STANDARD",
+    "logo": {
+      "url": "/medias/brand-logo-02.svg",
+      "altText": "ベルクス",
+      "format": "logo"
+    }
+  },
+  "newArrival": false,
+  "material": "再生プラスチック"
+}

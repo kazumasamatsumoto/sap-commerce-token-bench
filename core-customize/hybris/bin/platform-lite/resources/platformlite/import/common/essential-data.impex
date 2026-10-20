@@ -1,0 +1,31 @@
+# 疑似プラットフォームの必須データ: 言語、通貨、国、配送方法。ant initialize と ant updatesystem で入る。
+
+INSERT_UPDATE Language;isocode[unique=true];name[lang=ja];name[lang=en];active
+;ja;日本語;Japanese;true
+;en;英語;English;true
+
+INSERT_UPDATE Currency;isocode[unique=true];name[lang=ja];name[lang=en];symbol;digits;active
+;JPY;円;Yen;¥;0;true
+;USD;米ドル;US Dollar;$;2;true
+
+INSERT_UPDATE Country;isocode[unique=true];name[lang=ja];name[lang=en];active
+;JP;日本;Japan;true
+;US;アメリカ合衆国;United States;true
+
+INSERT_UPDATE UserGroup;uid[unique=true];name
+;customergroup;Customer Group
+;b2bcustomergroup;B2B Customer Group
+;b2bapprovergroup;B2B Approver Group
+;employeegroup;Employee Group
+;admingroup;Admin Group
+
+INSERT_UPDATE Employee;uid[unique=true];name;groups(uid)
+;admin;Administrator;admingroup,employeegroup
+
+INSERT_UPDATE Customer;uid[unique=true];name;customerID
+;anonymous;Anonymous;anonymous
+
+INSERT_UPDATE Title;code[unique=true];name[lang=ja];name[lang=en]
+;mr;様;Mr.
+;ms;様;Ms.
+;dr;博士;Dr.

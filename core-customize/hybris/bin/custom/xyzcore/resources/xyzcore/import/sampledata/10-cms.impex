@@ -1,0 +1,1108 @@
+# CMS: テンプレート → 部品 → スロット → ページ → スロットの割り当て
+# tools/generate-sampledata.mjs で生成。手で直さないこと。
+
+$cv=catalogVersion(catalog(id),version)[unique=true,default=electronicsProductCatalog:Online]
+$ccv=catalogVersion(catalog(id),version)[unique=true,default=electronicsContentCatalog:Online]
+
+INSERT_UPDATE PageTemplate;uid[unique=true];$ccv;name;frontendTemplateName;active
+;LandingPage2Template;;LandingPage2Template;LandingPage2Template;true
+;ContentPage1Template;;ContentPage1Template;ContentPage1Template;true
+;ProductDetailsPageTemplate;;ProductDetailsPageTemplate;ProductDetailsPageTemplate;true
+;ProductListPageTemplate;;ProductListPageTemplate;ProductListPageTemplate;true
+;SearchResultsListPageTemplate;;SearchResultsListPageTemplate;SearchResultsListPageTemplate;true
+;CategoryPageTemplate;;CategoryPageTemplate;CategoryPageTemplate;true
+;CartPageTemplate;;CartPageTemplate;CartPageTemplate;true
+;MultiStepCheckoutSummaryPageTemplate;;MultiStepCheckoutSummaryPageTemplate;MultiStepCheckoutSummaryPageTemplate;true
+;OrderConfirmationPageTemplate;;OrderConfirmationPageTemplate;OrderConfirmationPageTemplate;true
+
+INSERT_UPDATE CMSParagraphComponent;uid[unique=true];$ccv;name;visible;content[lang=ja];content[lang=en]
+;PreHeaderParagraph;;PreHeaderParagraph;true;5,000円以上で送料無料;Free shipping on orders over 5,000 yen
+;HomeAboutParagraph;;HomeAboutParagraph;true;XYZ電機は家電とデジタル機器の専門店です。;XYZ Electronics is your store for gadgets and appliances.
+;HomeNoticeParagraph;;HomeNoticeParagraph;true;年末年始の配送についてのお知らせ;Notice about holiday shipping
+;CartTotalsNote;;CartTotalsNote;true;送料は次の画面で確定します。;Shipping is calculated at checkout.
+;EmptyCartParagraph;;EmptyCartParagraph;true;カートに商品がありません。;Your cart is empty.
+;CheckoutSideParagraph;;CheckoutSideParagraph;true;お支払いは安全に処理されます。;Your payment is processed securely.
+;TabDescription;;TabDescription;true;商品説明;Description
+;TabSpecification;;TabSpecification;true;仕様;Specifications
+;TabShipping;;TabShipping;true;配送と返品;Shipping and Returns
+;faq-intro;;faq-intro;true;よくある質問のページです。;This is the FAQ page.
+;terms-intro;;terms-intro;true;利用規約のページです。;This is the Terms of Use page.
+;privacy-intro;;privacy-intro;true;個人情報保護方針のページです。;This is the Privacy Policy page.
+;contact-intro;;contact-intro;true;お問い合わせのページです。;This is the Contact Us page.
+;about-intro;;about-intro;true;XYZ電機についてのページです。;This is the About Us page.
+;shipping-intro;;shipping-intro;true;配送についてのページです。;This is the Shipping page.
+;returns-intro;;returns-intro;true;返品についてのページです。;This is the Returns page.
+;help-intro;;help-intro;true;ヘルプのページです。;This is the Help page.
+;sitemap-intro;;sitemap-intro;true;サイトマップのページです。;This is the Sitemap page.
+;company-intro;;company-intro;true;会社概要のページです。;This is the Company page.
+;my-account-intro;;my-account-intro;true;マイアカウントのページです。;This is the My Account page.
+;store-finder-intro;;store-finder-intro;true;店舗を探すのページです。;This is the Store Finder page.
+;campaign-01-intro;;campaign-01-intro;true;キャンペーン 1のページです。;This is the Campaign 1 page.
+;campaign-02-intro;;campaign-02-intro;true;キャンペーン 2のページです。;This is the Campaign 2 page.
+;campaign-03-intro;;campaign-03-intro;true;キャンペーン 3のページです。;This is the Campaign 3 page.
+;campaign-04-intro;;campaign-04-intro;true;キャンペーン 4のページです。;This is the Campaign 4 page.
+;campaign-05-intro;;campaign-05-intro;true;キャンペーン 5のページです。;This is the Campaign 5 page.
+;campaign-06-intro;;campaign-06-intro;true;キャンペーン 6のページです。;This is the Campaign 6 page.
+;campaign-07-intro;;campaign-07-intro;true;キャンペーン 7のページです。;This is the Campaign 7 page.
+;campaign-08-intro;;campaign-08-intro;true;キャンペーン 8のページです。;This is the Campaign 8 page.
+;campaign-09-intro;;campaign-09-intro;true;キャンペーン 9のページです。;This is the Campaign 9 page.
+;campaign-10-intro;;campaign-10-intro;true;キャンペーン 10のページです。;This is the Campaign 10 page.
+;campaign-11-intro;;campaign-11-intro;true;キャンペーン 11のページです。;This is the Campaign 11 page.
+;campaign-12-intro;;campaign-12-intro;true;キャンペーン 12のページです。;This is the Campaign 12 page.
+;campaign-13-intro;;campaign-13-intro;true;キャンペーン 13のページです。;This is the Campaign 13 page.
+;campaign-14-intro;;campaign-14-intro;true;キャンペーン 14のページです。;This is the Campaign 14 page.
+;campaign-15-intro;;campaign-15-intro;true;キャンペーン 15のページです。;This is the Campaign 15 page.
+;campaign-16-intro;;campaign-16-intro;true;キャンペーン 16のページです。;This is the Campaign 16 page.
+;campaign-17-intro;;campaign-17-intro;true;キャンペーン 17のページです。;This is the Campaign 17 page.
+;campaign-18-intro;;campaign-18-intro;true;キャンペーン 18のページです。;This is the Campaign 18 page.
+;campaign-19-intro;;campaign-19-intro;true;キャンペーン 19のページです。;This is the Campaign 19 page.
+;campaign-20-intro;;campaign-20-intro;true;キャンペーン 20のページです。;This is the Campaign 20 page.
+;campaign-21-intro;;campaign-21-intro;true;キャンペーン 21のページです。;This is the Campaign 21 page.
+;campaign-22-intro;;campaign-22-intro;true;キャンペーン 22のページです。;This is the Campaign 22 page.
+;campaign-23-intro;;campaign-23-intro;true;キャンペーン 23のページです。;This is the Campaign 23 page.
+;campaign-24-intro;;campaign-24-intro;true;キャンペーン 24のページです。;This is the Campaign 24 page.
+;campaign-25-intro;;campaign-25-intro;true;キャンペーン 25のページです。;This is the Campaign 25 page.
+;campaign-26-intro;;campaign-26-intro;true;キャンペーン 26のページです。;This is the Campaign 26 page.
+;campaign-27-intro;;campaign-27-intro;true;キャンペーン 27のページです。;This is the Campaign 27 page.
+;campaign-28-intro;;campaign-28-intro;true;キャンペーン 28のページです。;This is the Campaign 28 page.
+;campaign-29-intro;;campaign-29-intro;true;キャンペーン 29のページです。;This is the Campaign 29 page.
+;campaign-30-intro;;campaign-30-intro;true;キャンペーン 30のページです。;This is the Campaign 30 page.
+;campaign-31-intro;;campaign-31-intro;true;キャンペーン 31のページです。;This is the Campaign 31 page.
+;campaign-32-intro;;campaign-32-intro;true;キャンペーン 32のページです。;This is the Campaign 32 page.
+;campaign-33-intro;;campaign-33-intro;true;キャンペーン 33のページです。;This is the Campaign 33 page.
+;campaign-34-intro;;campaign-34-intro;true;キャンペーン 34のページです。;This is the Campaign 34 page.
+;campaign-35-intro;;campaign-35-intro;true;キャンペーン 35のページです。;This is the Campaign 35 page.
+;campaign-36-intro;;campaign-36-intro;true;キャンペーン 36のページです。;This is the Campaign 36 page.
+;campaign-37-intro;;campaign-37-intro;true;キャンペーン 37のページです。;This is the Campaign 37 page.
+;campaign-38-intro;;campaign-38-intro;true;キャンペーン 38のページです。;This is the Campaign 38 page.
+;campaign-39-intro;;campaign-39-intro;true;キャンペーン 39のページです。;This is the Campaign 39 page.
+;campaign-40-intro;;campaign-40-intro;true;キャンペーン 40のページです。;This is the Campaign 40 page.
+;campaign-41-intro;;campaign-41-intro;true;キャンペーン 41のページです。;This is the Campaign 41 page.
+;campaign-42-intro;;campaign-42-intro;true;キャンペーン 42のページです。;This is the Campaign 42 page.
+;campaign-43-intro;;campaign-43-intro;true;キャンペーン 43のページです。;This is the Campaign 43 page.
+;campaign-44-intro;;campaign-44-intro;true;キャンペーン 44のページです。;This is the Campaign 44 page.
+;campaign-45-intro;;campaign-45-intro;true;キャンペーン 45のページです。;This is the Campaign 45 page.
+;campaign-46-intro;;campaign-46-intro;true;キャンペーン 46のページです。;This is the Campaign 46 page.
+;campaign-47-intro;;campaign-47-intro;true;キャンペーン 47のページです。;This is the Campaign 47 page.
+;campaign-48-intro;;campaign-48-intro;true;キャンペーン 48のページです。;This is the Campaign 48 page.
+;campaign-49-intro;;campaign-49-intro;true;キャンペーン 49のページです。;This is the Campaign 49 page.
+;campaign-50-intro;;campaign-50-intro;true;キャンペーン 50のページです。;This is the Campaign 50 page.
+;campaign-51-intro;;campaign-51-intro;true;キャンペーン 51のページです。;This is the Campaign 51 page.
+;campaign-52-intro;;campaign-52-intro;true;キャンペーン 52のページです。;This is the Campaign 52 page.
+;campaign-53-intro;;campaign-53-intro;true;キャンペーン 53のページです。;This is the Campaign 53 page.
+;campaign-54-intro;;campaign-54-intro;true;キャンペーン 54のページです。;This is the Campaign 54 page.
+;campaign-55-intro;;campaign-55-intro;true;キャンペーン 55のページです。;This is the Campaign 55 page.
+;campaign-56-intro;;campaign-56-intro;true;キャンペーン 56のページです。;This is the Campaign 56 page.
+;campaign-57-intro;;campaign-57-intro;true;キャンペーン 57のページです。;This is the Campaign 57 page.
+;campaign-58-intro;;campaign-58-intro;true;キャンペーン 58のページです。;This is the Campaign 58 page.
+;campaign-59-intro;;campaign-59-intro;true;キャンペーン 59のページです。;This is the Campaign 59 page.
+;campaign-60-intro;;campaign-60-intro;true;キャンペーン 60のページです。;This is the Campaign 60 page.
+;campaign-61-intro;;campaign-61-intro;true;キャンペーン 61のページです。;This is the Campaign 61 page.
+;campaign-62-intro;;campaign-62-intro;true;キャンペーン 62のページです。;This is the Campaign 62 page.
+;campaign-63-intro;;campaign-63-intro;true;キャンペーン 63のページです。;This is the Campaign 63 page.
+;campaign-64-intro;;campaign-64-intro;true;キャンペーン 64のページです。;This is the Campaign 64 page.
+;campaign-65-intro;;campaign-65-intro;true;キャンペーン 65のページです。;This is the Campaign 65 page.
+;campaign-66-intro;;campaign-66-intro;true;キャンペーン 66のページです。;This is the Campaign 66 page.
+;campaign-67-intro;;campaign-67-intro;true;キャンペーン 67のページです。;This is the Campaign 67 page.
+;campaign-68-intro;;campaign-68-intro;true;キャンペーン 68のページです。;This is the Campaign 68 page.
+;campaign-69-intro;;campaign-69-intro;true;キャンペーン 69のページです。;This is the Campaign 69 page.
+;campaign-70-intro;;campaign-70-intro;true;キャンペーン 70のページです。;This is the Campaign 70 page.
+;campaign-71-intro;;campaign-71-intro;true;キャンペーン 71のページです。;This is the Campaign 71 page.
+;campaign-72-intro;;campaign-72-intro;true;キャンペーン 72のページです。;This is the Campaign 72 page.
+;campaign-73-intro;;campaign-73-intro;true;キャンペーン 73のページです。;This is the Campaign 73 page.
+;campaign-74-intro;;campaign-74-intro;true;キャンペーン 74のページです。;This is the Campaign 74 page.
+;campaign-75-intro;;campaign-75-intro;true;キャンペーン 75のページです。;This is the Campaign 75 page.
+;campaign-76-intro;;campaign-76-intro;true;キャンペーン 76のページです。;This is the Campaign 76 page.
+;campaign-77-intro;;campaign-77-intro;true;キャンペーン 77のページです。;This is the Campaign 77 page.
+;campaign-78-intro;;campaign-78-intro;true;キャンペーン 78のページです。;This is the Campaign 78 page.
+;campaign-79-intro;;campaign-79-intro;true;キャンペーン 79のページです。;This is the Campaign 79 page.
+;campaign-80-intro;;campaign-80-intro;true;キャンペーン 80のページです。;This is the Campaign 80 page.
+
+INSERT_UPDATE CMSLinkComponent;uid[unique=true];$ccv;name;visible;linkName[lang=ja];linkName[lang=en];url
+;NavLink-cat-01;;NavLink-cat-01;true;カメラ;Cameras;/category/cat-01
+;NavLink-cat-02;;NavLink-cat-02;true;オーディオ;Audio;/category/cat-02
+;NavLink-cat-03;;NavLink-cat-03;true;パソコン;Computers;/category/cat-03
+;NavLink-cat-04;;NavLink-cat-04;true;スマートフォン;Smartphones;/category/cat-04
+;NavLink-cat-05;;NavLink-cat-05;true;テレビ;TVs;/category/cat-05
+;NavLink-cat-06;;NavLink-cat-06;true;生活家電;Home Appliances;/category/cat-06
+;NavLink-cat-07;;NavLink-cat-07;true;ゲーム;Gaming;/category/cat-07
+;NavLink-cat-08;;NavLink-cat-08;true;ウェアラブル;Wearables;/category/cat-08
+;NavLink-cat-09;;NavLink-cat-09;true;ネットワーク;Networking;/category/cat-09
+;NavLink-cat-10;;NavLink-cat-10;true;アクセサリ;Accessories;/category/cat-10
+;FooterLink-faq;;FooterLink-faq;true;よくある質問;FAQ;/faq
+;FooterLink-terms;;FooterLink-terms;true;利用規約;Terms of Use;/terms
+;FooterLink-privacy;;FooterLink-privacy;true;個人情報保護方針;Privacy Policy;/privacy
+;FooterLink-contact;;FooterLink-contact;true;お問い合わせ;Contact Us;/contact
+;FooterLink-about;;FooterLink-about;true;XYZ電機について;About Us;/about
+;FooterLink-shipping;;FooterLink-shipping;true;配送について;Shipping;/shipping
+;FooterLink-returns;;FooterLink-returns;true;返品について;Returns;/returns
+;FooterLink-help;;FooterLink-help;true;ヘルプ;Help;/help
+;ContinueShoppingLink;;ContinueShoppingLink;true;買い物を続ける;Continue Shopping;/
+;faq-item2;;faq-item2;true;よくある質問 詳細 2;FAQ Details 2;/faq#2
+;faq-item3;;faq-item3;true;よくある質問 詳細 3;FAQ Details 3;/faq#3
+;terms-item2;;terms-item2;true;利用規約 詳細 2;Terms of Use Details 2;/terms#2
+;terms-item3;;terms-item3;true;利用規約 詳細 3;Terms of Use Details 3;/terms#3
+;privacy-item2;;privacy-item2;true;個人情報保護方針 詳細 2;Privacy Policy Details 2;/privacy#2
+;privacy-item3;;privacy-item3;true;個人情報保護方針 詳細 3;Privacy Policy Details 3;/privacy#3
+;contact-item2;;contact-item2;true;お問い合わせ 詳細 2;Contact Us Details 2;/contact#2
+;contact-item3;;contact-item3;true;お問い合わせ 詳細 3;Contact Us Details 3;/contact#3
+;about-item2;;about-item2;true;XYZ電機について 詳細 2;About Us Details 2;/about#2
+;about-item3;;about-item3;true;XYZ電機について 詳細 3;About Us Details 3;/about#3
+;shipping-item2;;shipping-item2;true;配送について 詳細 2;Shipping Details 2;/shipping#2
+;shipping-item3;;shipping-item3;true;配送について 詳細 3;Shipping Details 3;/shipping#3
+;returns-item2;;returns-item2;true;返品について 詳細 2;Returns Details 2;/returns#2
+;returns-item3;;returns-item3;true;返品について 詳細 3;Returns Details 3;/returns#3
+;help-item2;;help-item2;true;ヘルプ 詳細 2;Help Details 2;/help#2
+;help-item3;;help-item3;true;ヘルプ 詳細 3;Help Details 3;/help#3
+;sitemap-item2;;sitemap-item2;true;サイトマップ 詳細 2;Sitemap Details 2;/sitemap#2
+;sitemap-item3;;sitemap-item3;true;サイトマップ 詳細 3;Sitemap Details 3;/sitemap#3
+;company-item2;;company-item2;true;会社概要 詳細 2;Company Details 2;/company#2
+;company-item3;;company-item3;true;会社概要 詳細 3;Company Details 3;/company#3
+;my-account-item2;;my-account-item2;true;マイアカウント 詳細 2;My Account Details 2;/my-account#2
+;my-account-item3;;my-account-item3;true;マイアカウント 詳細 3;My Account Details 3;/my-account#3
+;store-finder-item2;;store-finder-item2;true;店舗を探す 詳細 2;Store Finder Details 2;/store-finder#2
+;store-finder-item3;;store-finder-item3;true;店舗を探す 詳細 3;Store Finder Details 3;/store-finder#3
+;campaign-01-item2;;campaign-01-item2;true;キャンペーン 1 詳細 2;Campaign 1 Details 2;/campaign-01#2
+;campaign-01-item3;;campaign-01-item3;true;キャンペーン 1 詳細 3;Campaign 1 Details 3;/campaign-01#3
+;campaign-02-item2;;campaign-02-item2;true;キャンペーン 2 詳細 2;Campaign 2 Details 2;/campaign-02#2
+;campaign-02-item3;;campaign-02-item3;true;キャンペーン 2 詳細 3;Campaign 2 Details 3;/campaign-02#3
+;campaign-03-item2;;campaign-03-item2;true;キャンペーン 3 詳細 2;Campaign 3 Details 2;/campaign-03#2
+;campaign-03-item3;;campaign-03-item3;true;キャンペーン 3 詳細 3;Campaign 3 Details 3;/campaign-03#3
+;campaign-04-item2;;campaign-04-item2;true;キャンペーン 4 詳細 2;Campaign 4 Details 2;/campaign-04#2
+;campaign-04-item3;;campaign-04-item3;true;キャンペーン 4 詳細 3;Campaign 4 Details 3;/campaign-04#3
+;campaign-05-item2;;campaign-05-item2;true;キャンペーン 5 詳細 2;Campaign 5 Details 2;/campaign-05#2
+;campaign-05-item3;;campaign-05-item3;true;キャンペーン 5 詳細 3;Campaign 5 Details 3;/campaign-05#3
+;campaign-06-item2;;campaign-06-item2;true;キャンペーン 6 詳細 2;Campaign 6 Details 2;/campaign-06#2
+;campaign-06-item3;;campaign-06-item3;true;キャンペーン 6 詳細 3;Campaign 6 Details 3;/campaign-06#3
+;campaign-07-item2;;campaign-07-item2;true;キャンペーン 7 詳細 2;Campaign 7 Details 2;/campaign-07#2
+;campaign-07-item3;;campaign-07-item3;true;キャンペーン 7 詳細 3;Campaign 7 Details 3;/campaign-07#3
+;campaign-08-item2;;campaign-08-item2;true;キャンペーン 8 詳細 2;Campaign 8 Details 2;/campaign-08#2
+;campaign-08-item3;;campaign-08-item3;true;キャンペーン 8 詳細 3;Campaign 8 Details 3;/campaign-08#3
+;campaign-09-item2;;campaign-09-item2;true;キャンペーン 9 詳細 2;Campaign 9 Details 2;/campaign-09#2
+;campaign-09-item3;;campaign-09-item3;true;キャンペーン 9 詳細 3;Campaign 9 Details 3;/campaign-09#3
+;campaign-10-item2;;campaign-10-item2;true;キャンペーン 10 詳細 2;Campaign 10 Details 2;/campaign-10#2
+;campaign-10-item3;;campaign-10-item3;true;キャンペーン 10 詳細 3;Campaign 10 Details 3;/campaign-10#3
+;campaign-11-item2;;campaign-11-item2;true;キャンペーン 11 詳細 2;Campaign 11 Details 2;/campaign-11#2
+;campaign-11-item3;;campaign-11-item3;true;キャンペーン 11 詳細 3;Campaign 11 Details 3;/campaign-11#3
+;campaign-12-item2;;campaign-12-item2;true;キャンペーン 12 詳細 2;Campaign 12 Details 2;/campaign-12#2
+;campaign-12-item3;;campaign-12-item3;true;キャンペーン 12 詳細 3;Campaign 12 Details 3;/campaign-12#3
+;campaign-13-item2;;campaign-13-item2;true;キャンペーン 13 詳細 2;Campaign 13 Details 2;/campaign-13#2
+;campaign-13-item3;;campaign-13-item3;true;キャンペーン 13 詳細 3;Campaign 13 Details 3;/campaign-13#3
+;campaign-14-item2;;campaign-14-item2;true;キャンペーン 14 詳細 2;Campaign 14 Details 2;/campaign-14#2
+;campaign-14-item3;;campaign-14-item3;true;キャンペーン 14 詳細 3;Campaign 14 Details 3;/campaign-14#3
+;campaign-15-item2;;campaign-15-item2;true;キャンペーン 15 詳細 2;Campaign 15 Details 2;/campaign-15#2
+;campaign-15-item3;;campaign-15-item3;true;キャンペーン 15 詳細 3;Campaign 15 Details 3;/campaign-15#3
+;campaign-16-item2;;campaign-16-item2;true;キャンペーン 16 詳細 2;Campaign 16 Details 2;/campaign-16#2
+;campaign-16-item3;;campaign-16-item3;true;キャンペーン 16 詳細 3;Campaign 16 Details 3;/campaign-16#3
+;campaign-17-item2;;campaign-17-item2;true;キャンペーン 17 詳細 2;Campaign 17 Details 2;/campaign-17#2
+;campaign-17-item3;;campaign-17-item3;true;キャンペーン 17 詳細 3;Campaign 17 Details 3;/campaign-17#3
+;campaign-18-item2;;campaign-18-item2;true;キャンペーン 18 詳細 2;Campaign 18 Details 2;/campaign-18#2
+;campaign-18-item3;;campaign-18-item3;true;キャンペーン 18 詳細 3;Campaign 18 Details 3;/campaign-18#3
+;campaign-19-item2;;campaign-19-item2;true;キャンペーン 19 詳細 2;Campaign 19 Details 2;/campaign-19#2
+;campaign-19-item3;;campaign-19-item3;true;キャンペーン 19 詳細 3;Campaign 19 Details 3;/campaign-19#3
+;campaign-20-item2;;campaign-20-item2;true;キャンペーン 20 詳細 2;Campaign 20 Details 2;/campaign-20#2
+;campaign-20-item3;;campaign-20-item3;true;キャンペーン 20 詳細 3;Campaign 20 Details 3;/campaign-20#3
+;campaign-21-item2;;campaign-21-item2;true;キャンペーン 21 詳細 2;Campaign 21 Details 2;/campaign-21#2
+;campaign-21-item3;;campaign-21-item3;true;キャンペーン 21 詳細 3;Campaign 21 Details 3;/campaign-21#3
+;campaign-22-item2;;campaign-22-item2;true;キャンペーン 22 詳細 2;Campaign 22 Details 2;/campaign-22#2
+;campaign-22-item3;;campaign-22-item3;true;キャンペーン 22 詳細 3;Campaign 22 Details 3;/campaign-22#3
+;campaign-23-item2;;campaign-23-item2;true;キャンペーン 23 詳細 2;Campaign 23 Details 2;/campaign-23#2
+;campaign-23-item3;;campaign-23-item3;true;キャンペーン 23 詳細 3;Campaign 23 Details 3;/campaign-23#3
+;campaign-24-item2;;campaign-24-item2;true;キャンペーン 24 詳細 2;Campaign 24 Details 2;/campaign-24#2
+;campaign-24-item3;;campaign-24-item3;true;キャンペーン 24 詳細 3;Campaign 24 Details 3;/campaign-24#3
+;campaign-25-item2;;campaign-25-item2;true;キャンペーン 25 詳細 2;Campaign 25 Details 2;/campaign-25#2
+;campaign-25-item3;;campaign-25-item3;true;キャンペーン 25 詳細 3;Campaign 25 Details 3;/campaign-25#3
+;campaign-26-item2;;campaign-26-item2;true;キャンペーン 26 詳細 2;Campaign 26 Details 2;/campaign-26#2
+;campaign-26-item3;;campaign-26-item3;true;キャンペーン 26 詳細 3;Campaign 26 Details 3;/campaign-26#3
+;campaign-27-item2;;campaign-27-item2;true;キャンペーン 27 詳細 2;Campaign 27 Details 2;/campaign-27#2
+;campaign-27-item3;;campaign-27-item3;true;キャンペーン 27 詳細 3;Campaign 27 Details 3;/campaign-27#3
+;campaign-28-item2;;campaign-28-item2;true;キャンペーン 28 詳細 2;Campaign 28 Details 2;/campaign-28#2
+;campaign-28-item3;;campaign-28-item3;true;キャンペーン 28 詳細 3;Campaign 28 Details 3;/campaign-28#3
+;campaign-29-item2;;campaign-29-item2;true;キャンペーン 29 詳細 2;Campaign 29 Details 2;/campaign-29#2
+;campaign-29-item3;;campaign-29-item3;true;キャンペーン 29 詳細 3;Campaign 29 Details 3;/campaign-29#3
+;campaign-30-item2;;campaign-30-item2;true;キャンペーン 30 詳細 2;Campaign 30 Details 2;/campaign-30#2
+;campaign-30-item3;;campaign-30-item3;true;キャンペーン 30 詳細 3;Campaign 30 Details 3;/campaign-30#3
+;campaign-31-item2;;campaign-31-item2;true;キャンペーン 31 詳細 2;Campaign 31 Details 2;/campaign-31#2
+;campaign-31-item3;;campaign-31-item3;true;キャンペーン 31 詳細 3;Campaign 31 Details 3;/campaign-31#3
+;campaign-32-item2;;campaign-32-item2;true;キャンペーン 32 詳細 2;Campaign 32 Details 2;/campaign-32#2
+;campaign-32-item3;;campaign-32-item3;true;キャンペーン 32 詳細 3;Campaign 32 Details 3;/campaign-32#3
+;campaign-33-item2;;campaign-33-item2;true;キャンペーン 33 詳細 2;Campaign 33 Details 2;/campaign-33#2
+;campaign-33-item3;;campaign-33-item3;true;キャンペーン 33 詳細 3;Campaign 33 Details 3;/campaign-33#3
+;campaign-34-item2;;campaign-34-item2;true;キャンペーン 34 詳細 2;Campaign 34 Details 2;/campaign-34#2
+;campaign-34-item3;;campaign-34-item3;true;キャンペーン 34 詳細 3;Campaign 34 Details 3;/campaign-34#3
+;campaign-35-item2;;campaign-35-item2;true;キャンペーン 35 詳細 2;Campaign 35 Details 2;/campaign-35#2
+;campaign-35-item3;;campaign-35-item3;true;キャンペーン 35 詳細 3;Campaign 35 Details 3;/campaign-35#3
+;campaign-36-item2;;campaign-36-item2;true;キャンペーン 36 詳細 2;Campaign 36 Details 2;/campaign-36#2
+;campaign-36-item3;;campaign-36-item3;true;キャンペーン 36 詳細 3;Campaign 36 Details 3;/campaign-36#3
+;campaign-37-item2;;campaign-37-item2;true;キャンペーン 37 詳細 2;Campaign 37 Details 2;/campaign-37#2
+;campaign-37-item3;;campaign-37-item3;true;キャンペーン 37 詳細 3;Campaign 37 Details 3;/campaign-37#3
+;campaign-38-item2;;campaign-38-item2;true;キャンペーン 38 詳細 2;Campaign 38 Details 2;/campaign-38#2
+;campaign-38-item3;;campaign-38-item3;true;キャンペーン 38 詳細 3;Campaign 38 Details 3;/campaign-38#3
+;campaign-39-item2;;campaign-39-item2;true;キャンペーン 39 詳細 2;Campaign 39 Details 2;/campaign-39#2
+;campaign-39-item3;;campaign-39-item3;true;キャンペーン 39 詳細 3;Campaign 39 Details 3;/campaign-39#3
+;campaign-40-item2;;campaign-40-item2;true;キャンペーン 40 詳細 2;Campaign 40 Details 2;/campaign-40#2
+;campaign-40-item3;;campaign-40-item3;true;キャンペーン 40 詳細 3;Campaign 40 Details 3;/campaign-40#3
+;campaign-41-item2;;campaign-41-item2;true;キャンペーン 41 詳細 2;Campaign 41 Details 2;/campaign-41#2
+;campaign-41-item3;;campaign-41-item3;true;キャンペーン 41 詳細 3;Campaign 41 Details 3;/campaign-41#3
+;campaign-42-item2;;campaign-42-item2;true;キャンペーン 42 詳細 2;Campaign 42 Details 2;/campaign-42#2
+;campaign-42-item3;;campaign-42-item3;true;キャンペーン 42 詳細 3;Campaign 42 Details 3;/campaign-42#3
+;campaign-43-item2;;campaign-43-item2;true;キャンペーン 43 詳細 2;Campaign 43 Details 2;/campaign-43#2
+;campaign-43-item3;;campaign-43-item3;true;キャンペーン 43 詳細 3;Campaign 43 Details 3;/campaign-43#3
+;campaign-44-item2;;campaign-44-item2;true;キャンペーン 44 詳細 2;Campaign 44 Details 2;/campaign-44#2
+;campaign-44-item3;;campaign-44-item3;true;キャンペーン 44 詳細 3;Campaign 44 Details 3;/campaign-44#3
+;campaign-45-item2;;campaign-45-item2;true;キャンペーン 45 詳細 2;Campaign 45 Details 2;/campaign-45#2
+;campaign-45-item3;;campaign-45-item3;true;キャンペーン 45 詳細 3;Campaign 45 Details 3;/campaign-45#3
+;campaign-46-item2;;campaign-46-item2;true;キャンペーン 46 詳細 2;Campaign 46 Details 2;/campaign-46#2
+;campaign-46-item3;;campaign-46-item3;true;キャンペーン 46 詳細 3;Campaign 46 Details 3;/campaign-46#3
+;campaign-47-item2;;campaign-47-item2;true;キャンペーン 47 詳細 2;Campaign 47 Details 2;/campaign-47#2
+;campaign-47-item3;;campaign-47-item3;true;キャンペーン 47 詳細 3;Campaign 47 Details 3;/campaign-47#3
+;campaign-48-item2;;campaign-48-item2;true;キャンペーン 48 詳細 2;Campaign 48 Details 2;/campaign-48#2
+;campaign-48-item3;;campaign-48-item3;true;キャンペーン 48 詳細 3;Campaign 48 Details 3;/campaign-48#3
+;campaign-49-item2;;campaign-49-item2;true;キャンペーン 49 詳細 2;Campaign 49 Details 2;/campaign-49#2
+;campaign-49-item3;;campaign-49-item3;true;キャンペーン 49 詳細 3;Campaign 49 Details 3;/campaign-49#3
+;campaign-50-item2;;campaign-50-item2;true;キャンペーン 50 詳細 2;Campaign 50 Details 2;/campaign-50#2
+;campaign-50-item3;;campaign-50-item3;true;キャンペーン 50 詳細 3;Campaign 50 Details 3;/campaign-50#3
+;campaign-51-item2;;campaign-51-item2;true;キャンペーン 51 詳細 2;Campaign 51 Details 2;/campaign-51#2
+;campaign-51-item3;;campaign-51-item3;true;キャンペーン 51 詳細 3;Campaign 51 Details 3;/campaign-51#3
+;campaign-52-item2;;campaign-52-item2;true;キャンペーン 52 詳細 2;Campaign 52 Details 2;/campaign-52#2
+;campaign-52-item3;;campaign-52-item3;true;キャンペーン 52 詳細 3;Campaign 52 Details 3;/campaign-52#3
+;campaign-53-item2;;campaign-53-item2;true;キャンペーン 53 詳細 2;Campaign 53 Details 2;/campaign-53#2
+;campaign-53-item3;;campaign-53-item3;true;キャンペーン 53 詳細 3;Campaign 53 Details 3;/campaign-53#3
+;campaign-54-item2;;campaign-54-item2;true;キャンペーン 54 詳細 2;Campaign 54 Details 2;/campaign-54#2
+;campaign-54-item3;;campaign-54-item3;true;キャンペーン 54 詳細 3;Campaign 54 Details 3;/campaign-54#3
+;campaign-55-item2;;campaign-55-item2;true;キャンペーン 55 詳細 2;Campaign 55 Details 2;/campaign-55#2
+;campaign-55-item3;;campaign-55-item3;true;キャンペーン 55 詳細 3;Campaign 55 Details 3;/campaign-55#3
+;campaign-56-item2;;campaign-56-item2;true;キャンペーン 56 詳細 2;Campaign 56 Details 2;/campaign-56#2
+;campaign-56-item3;;campaign-56-item3;true;キャンペーン 56 詳細 3;Campaign 56 Details 3;/campaign-56#3
+;campaign-57-item2;;campaign-57-item2;true;キャンペーン 57 詳細 2;Campaign 57 Details 2;/campaign-57#2
+;campaign-57-item3;;campaign-57-item3;true;キャンペーン 57 詳細 3;Campaign 57 Details 3;/campaign-57#3
+;campaign-58-item2;;campaign-58-item2;true;キャンペーン 58 詳細 2;Campaign 58 Details 2;/campaign-58#2
+;campaign-58-item3;;campaign-58-item3;true;キャンペーン 58 詳細 3;Campaign 58 Details 3;/campaign-58#3
+;campaign-59-item2;;campaign-59-item2;true;キャンペーン 59 詳細 2;Campaign 59 Details 2;/campaign-59#2
+;campaign-59-item3;;campaign-59-item3;true;キャンペーン 59 詳細 3;Campaign 59 Details 3;/campaign-59#3
+;campaign-60-item2;;campaign-60-item2;true;キャンペーン 60 詳細 2;Campaign 60 Details 2;/campaign-60#2
+;campaign-60-item3;;campaign-60-item3;true;キャンペーン 60 詳細 3;Campaign 60 Details 3;/campaign-60#3
+;campaign-61-item2;;campaign-61-item2;true;キャンペーン 61 詳細 2;Campaign 61 Details 2;/campaign-61#2
+;campaign-61-item3;;campaign-61-item3;true;キャンペーン 61 詳細 3;Campaign 61 Details 3;/campaign-61#3
+;campaign-62-item2;;campaign-62-item2;true;キャンペーン 62 詳細 2;Campaign 62 Details 2;/campaign-62#2
+;campaign-62-item3;;campaign-62-item3;true;キャンペーン 62 詳細 3;Campaign 62 Details 3;/campaign-62#3
+;campaign-63-item2;;campaign-63-item2;true;キャンペーン 63 詳細 2;Campaign 63 Details 2;/campaign-63#2
+;campaign-63-item3;;campaign-63-item3;true;キャンペーン 63 詳細 3;Campaign 63 Details 3;/campaign-63#3
+;campaign-64-item2;;campaign-64-item2;true;キャンペーン 64 詳細 2;Campaign 64 Details 2;/campaign-64#2
+;campaign-64-item3;;campaign-64-item3;true;キャンペーン 64 詳細 3;Campaign 64 Details 3;/campaign-64#3
+;campaign-65-item2;;campaign-65-item2;true;キャンペーン 65 詳細 2;Campaign 65 Details 2;/campaign-65#2
+;campaign-65-item3;;campaign-65-item3;true;キャンペーン 65 詳細 3;Campaign 65 Details 3;/campaign-65#3
+;campaign-66-item2;;campaign-66-item2;true;キャンペーン 66 詳細 2;Campaign 66 Details 2;/campaign-66#2
+;campaign-66-item3;;campaign-66-item3;true;キャンペーン 66 詳細 3;Campaign 66 Details 3;/campaign-66#3
+;campaign-67-item2;;campaign-67-item2;true;キャンペーン 67 詳細 2;Campaign 67 Details 2;/campaign-67#2
+;campaign-67-item3;;campaign-67-item3;true;キャンペーン 67 詳細 3;Campaign 67 Details 3;/campaign-67#3
+;campaign-68-item2;;campaign-68-item2;true;キャンペーン 68 詳細 2;Campaign 68 Details 2;/campaign-68#2
+;campaign-68-item3;;campaign-68-item3;true;キャンペーン 68 詳細 3;Campaign 68 Details 3;/campaign-68#3
+;campaign-69-item2;;campaign-69-item2;true;キャンペーン 69 詳細 2;Campaign 69 Details 2;/campaign-69#2
+;campaign-69-item3;;campaign-69-item3;true;キャンペーン 69 詳細 3;Campaign 69 Details 3;/campaign-69#3
+;campaign-70-item2;;campaign-70-item2;true;キャンペーン 70 詳細 2;Campaign 70 Details 2;/campaign-70#2
+;campaign-70-item3;;campaign-70-item3;true;キャンペーン 70 詳細 3;Campaign 70 Details 3;/campaign-70#3
+;campaign-71-item2;;campaign-71-item2;true;キャンペーン 71 詳細 2;Campaign 71 Details 2;/campaign-71#2
+;campaign-71-item3;;campaign-71-item3;true;キャンペーン 71 詳細 3;Campaign 71 Details 3;/campaign-71#3
+;campaign-72-item2;;campaign-72-item2;true;キャンペーン 72 詳細 2;Campaign 72 Details 2;/campaign-72#2
+;campaign-72-item3;;campaign-72-item3;true;キャンペーン 72 詳細 3;Campaign 72 Details 3;/campaign-72#3
+;campaign-73-item2;;campaign-73-item2;true;キャンペーン 73 詳細 2;Campaign 73 Details 2;/campaign-73#2
+;campaign-73-item3;;campaign-73-item3;true;キャンペーン 73 詳細 3;Campaign 73 Details 3;/campaign-73#3
+;campaign-74-item2;;campaign-74-item2;true;キャンペーン 74 詳細 2;Campaign 74 Details 2;/campaign-74#2
+;campaign-74-item3;;campaign-74-item3;true;キャンペーン 74 詳細 3;Campaign 74 Details 3;/campaign-74#3
+;campaign-75-item2;;campaign-75-item2;true;キャンペーン 75 詳細 2;Campaign 75 Details 2;/campaign-75#2
+;campaign-75-item3;;campaign-75-item3;true;キャンペーン 75 詳細 3;Campaign 75 Details 3;/campaign-75#3
+;campaign-76-item2;;campaign-76-item2;true;キャンペーン 76 詳細 2;Campaign 76 Details 2;/campaign-76#2
+;campaign-76-item3;;campaign-76-item3;true;キャンペーン 76 詳細 3;Campaign 76 Details 3;/campaign-76#3
+;campaign-77-item2;;campaign-77-item2;true;キャンペーン 77 詳細 2;Campaign 77 Details 2;/campaign-77#2
+;campaign-77-item3;;campaign-77-item3;true;キャンペーン 77 詳細 3;Campaign 77 Details 3;/campaign-77#3
+;campaign-78-item2;;campaign-78-item2;true;キャンペーン 78 詳細 2;Campaign 78 Details 2;/campaign-78#2
+;campaign-78-item3;;campaign-78-item3;true;キャンペーン 78 詳細 3;Campaign 78 Details 3;/campaign-78#3
+;campaign-79-item2;;campaign-79-item2;true;キャンペーン 79 詳細 2;Campaign 79 Details 2;/campaign-79#2
+;campaign-79-item3;;campaign-79-item3;true;キャンペーン 79 詳細 3;Campaign 79 Details 3;/campaign-79#3
+;campaign-80-item2;;campaign-80-item2;true;キャンペーン 80 詳細 2;Campaign 80 Details 2;/campaign-80#2
+;campaign-80-item3;;campaign-80-item3;true;キャンペーン 80 詳細 3;Campaign 80 Details 3;/campaign-80#3
+
+INSERT_UPDATE SimpleBannerComponent;uid[unique=true];$ccv;name;visible;headline[lang=ja];headline[lang=en];media(code,catalogVersion(catalog(id),version));urlLink
+;HomeHeroBanner1;;HomeHeroBanner1;true;特集 1;Feature 1;banner-01:electronicsContentCatalog:Online;/campaign-01
+;HomeHeroBanner2;;HomeHeroBanner2;true;特集 2;Feature 2;banner-02:electronicsContentCatalog:Online;/campaign-02
+;HomeHeroBanner3;;HomeHeroBanner3;true;特集 3;Feature 3;banner-03:electronicsContentCatalog:Online;/campaign-03
+;HomeSplitBannerA;;HomeSplitBannerA;true;新生活セール;New Life Sale;banner-04:electronicsContentCatalog:Online;/campaign-04
+;HomeSplitBannerB;;HomeSplitBannerB;true;ゲーミング特集;Gaming Picks;banner-05:electronicsContentCatalog:Online;/category/cat-07
+;CategoryBanner;;CategoryBanner;true;カテゴリ特集;Category Feature;banner-06:electronicsContentCatalog:Online;/campaign-06
+;faq-item4;;faq-item4;true;よくある質問 バナー;FAQ Banner;banner-05:electronicsContentCatalog:Online;/faq
+;terms-item4;;terms-item4;true;利用規約 バナー;Terms of Use Banner;banner-06:electronicsContentCatalog:Online;/terms
+;privacy-item4;;privacy-item4;true;個人情報保護方針 バナー;Privacy Policy Banner;banner-07:electronicsContentCatalog:Online;/privacy
+;contact-item4;;contact-item4;true;お問い合わせ バナー;Contact Us Banner;banner-08:electronicsContentCatalog:Online;/contact
+;about-item4;;about-item4;true;XYZ電機について バナー;About Us Banner;banner-09:electronicsContentCatalog:Online;/about
+;shipping-item4;;shipping-item4;true;配送について バナー;Shipping Banner;banner-10:electronicsContentCatalog:Online;/shipping
+;returns-item4;;returns-item4;true;返品について バナー;Returns Banner;banner-01:electronicsContentCatalog:Online;/returns
+;help-item4;;help-item4;true;ヘルプ バナー;Help Banner;banner-02:electronicsContentCatalog:Online;/help
+;sitemap-item4;;sitemap-item4;true;サイトマップ バナー;Sitemap Banner;banner-03:electronicsContentCatalog:Online;/sitemap
+;company-item4;;company-item4;true;会社概要 バナー;Company Banner;banner-04:electronicsContentCatalog:Online;/company
+;my-account-item4;;my-account-item4;true;マイアカウント バナー;My Account Banner;banner-05:electronicsContentCatalog:Online;/my-account
+;store-finder-item4;;store-finder-item4;true;店舗を探す バナー;Store Finder Banner;banner-06:electronicsContentCatalog:Online;/store-finder
+;campaign-01-item4;;campaign-01-item4;true;キャンペーン 1 バナー;Campaign 1 Banner;banner-07:electronicsContentCatalog:Online;/campaign-01
+;campaign-02-item4;;campaign-02-item4;true;キャンペーン 2 バナー;Campaign 2 Banner;banner-08:electronicsContentCatalog:Online;/campaign-02
+;campaign-03-item4;;campaign-03-item4;true;キャンペーン 3 バナー;Campaign 3 Banner;banner-09:electronicsContentCatalog:Online;/campaign-03
+;campaign-04-item4;;campaign-04-item4;true;キャンペーン 4 バナー;Campaign 4 Banner;banner-10:electronicsContentCatalog:Online;/campaign-04
+;campaign-05-item4;;campaign-05-item4;true;キャンペーン 5 バナー;Campaign 5 Banner;banner-01:electronicsContentCatalog:Online;/campaign-05
+;campaign-06-item4;;campaign-06-item4;true;キャンペーン 6 バナー;Campaign 6 Banner;banner-02:electronicsContentCatalog:Online;/campaign-06
+;campaign-07-item4;;campaign-07-item4;true;キャンペーン 7 バナー;Campaign 7 Banner;banner-03:electronicsContentCatalog:Online;/campaign-07
+;campaign-08-item4;;campaign-08-item4;true;キャンペーン 8 バナー;Campaign 8 Banner;banner-04:electronicsContentCatalog:Online;/campaign-08
+;campaign-09-item4;;campaign-09-item4;true;キャンペーン 9 バナー;Campaign 9 Banner;banner-05:electronicsContentCatalog:Online;/campaign-09
+;campaign-10-item4;;campaign-10-item4;true;キャンペーン 10 バナー;Campaign 10 Banner;banner-06:electronicsContentCatalog:Online;/campaign-10
+;campaign-11-item4;;campaign-11-item4;true;キャンペーン 11 バナー;Campaign 11 Banner;banner-07:electronicsContentCatalog:Online;/campaign-11
+;campaign-12-item4;;campaign-12-item4;true;キャンペーン 12 バナー;Campaign 12 Banner;banner-08:electronicsContentCatalog:Online;/campaign-12
+;campaign-13-item4;;campaign-13-item4;true;キャンペーン 13 バナー;Campaign 13 Banner;banner-09:electronicsContentCatalog:Online;/campaign-13
+;campaign-14-item4;;campaign-14-item4;true;キャンペーン 14 バナー;Campaign 14 Banner;banner-10:electronicsContentCatalog:Online;/campaign-14
+;campaign-15-item4;;campaign-15-item4;true;キャンペーン 15 バナー;Campaign 15 Banner;banner-01:electronicsContentCatalog:Online;/campaign-15
+;campaign-16-item4;;campaign-16-item4;true;キャンペーン 16 バナー;Campaign 16 Banner;banner-02:electronicsContentCatalog:Online;/campaign-16
+;campaign-17-item4;;campaign-17-item4;true;キャンペーン 17 バナー;Campaign 17 Banner;banner-03:electronicsContentCatalog:Online;/campaign-17
+;campaign-18-item4;;campaign-18-item4;true;キャンペーン 18 バナー;Campaign 18 Banner;banner-04:electronicsContentCatalog:Online;/campaign-18
+;campaign-19-item4;;campaign-19-item4;true;キャンペーン 19 バナー;Campaign 19 Banner;banner-05:electronicsContentCatalog:Online;/campaign-19
+;campaign-20-item4;;campaign-20-item4;true;キャンペーン 20 バナー;Campaign 20 Banner;banner-06:electronicsContentCatalog:Online;/campaign-20
+;campaign-21-item4;;campaign-21-item4;true;キャンペーン 21 バナー;Campaign 21 Banner;banner-07:electronicsContentCatalog:Online;/campaign-21
+;campaign-22-item4;;campaign-22-item4;true;キャンペーン 22 バナー;Campaign 22 Banner;banner-08:electronicsContentCatalog:Online;/campaign-22
+;campaign-23-item4;;campaign-23-item4;true;キャンペーン 23 バナー;Campaign 23 Banner;banner-09:electronicsContentCatalog:Online;/campaign-23
+;campaign-24-item4;;campaign-24-item4;true;キャンペーン 24 バナー;Campaign 24 Banner;banner-10:electronicsContentCatalog:Online;/campaign-24
+;campaign-25-item4;;campaign-25-item4;true;キャンペーン 25 バナー;Campaign 25 Banner;banner-01:electronicsContentCatalog:Online;/campaign-25
+;campaign-26-item4;;campaign-26-item4;true;キャンペーン 26 バナー;Campaign 26 Banner;banner-02:electronicsContentCatalog:Online;/campaign-26
+;campaign-27-item4;;campaign-27-item4;true;キャンペーン 27 バナー;Campaign 27 Banner;banner-03:electronicsContentCatalog:Online;/campaign-27
+;campaign-28-item4;;campaign-28-item4;true;キャンペーン 28 バナー;Campaign 28 Banner;banner-04:electronicsContentCatalog:Online;/campaign-28
+;campaign-29-item4;;campaign-29-item4;true;キャンペーン 29 バナー;Campaign 29 Banner;banner-05:electronicsContentCatalog:Online;/campaign-29
+;campaign-30-item4;;campaign-30-item4;true;キャンペーン 30 バナー;Campaign 30 Banner;banner-06:electronicsContentCatalog:Online;/campaign-30
+;campaign-31-item4;;campaign-31-item4;true;キャンペーン 31 バナー;Campaign 31 Banner;banner-07:electronicsContentCatalog:Online;/campaign-31
+;campaign-32-item4;;campaign-32-item4;true;キャンペーン 32 バナー;Campaign 32 Banner;banner-08:electronicsContentCatalog:Online;/campaign-32
+;campaign-33-item4;;campaign-33-item4;true;キャンペーン 33 バナー;Campaign 33 Banner;banner-09:electronicsContentCatalog:Online;/campaign-33
+;campaign-34-item4;;campaign-34-item4;true;キャンペーン 34 バナー;Campaign 34 Banner;banner-10:electronicsContentCatalog:Online;/campaign-34
+;campaign-35-item4;;campaign-35-item4;true;キャンペーン 35 バナー;Campaign 35 Banner;banner-01:electronicsContentCatalog:Online;/campaign-35
+;campaign-36-item4;;campaign-36-item4;true;キャンペーン 36 バナー;Campaign 36 Banner;banner-02:electronicsContentCatalog:Online;/campaign-36
+;campaign-37-item4;;campaign-37-item4;true;キャンペーン 37 バナー;Campaign 37 Banner;banner-03:electronicsContentCatalog:Online;/campaign-37
+;campaign-38-item4;;campaign-38-item4;true;キャンペーン 38 バナー;Campaign 38 Banner;banner-04:electronicsContentCatalog:Online;/campaign-38
+;campaign-39-item4;;campaign-39-item4;true;キャンペーン 39 バナー;Campaign 39 Banner;banner-05:electronicsContentCatalog:Online;/campaign-39
+;campaign-40-item4;;campaign-40-item4;true;キャンペーン 40 バナー;Campaign 40 Banner;banner-06:electronicsContentCatalog:Online;/campaign-40
+;campaign-41-item4;;campaign-41-item4;true;キャンペーン 41 バナー;Campaign 41 Banner;banner-07:electronicsContentCatalog:Online;/campaign-41
+;campaign-42-item4;;campaign-42-item4;true;キャンペーン 42 バナー;Campaign 42 Banner;banner-08:electronicsContentCatalog:Online;/campaign-42
+;campaign-43-item4;;campaign-43-item4;true;キャンペーン 43 バナー;Campaign 43 Banner;banner-09:electronicsContentCatalog:Online;/campaign-43
+;campaign-44-item4;;campaign-44-item4;true;キャンペーン 44 バナー;Campaign 44 Banner;banner-10:electronicsContentCatalog:Online;/campaign-44
+;campaign-45-item4;;campaign-45-item4;true;キャンペーン 45 バナー;Campaign 45 Banner;banner-01:electronicsContentCatalog:Online;/campaign-45
+;campaign-46-item4;;campaign-46-item4;true;キャンペーン 46 バナー;Campaign 46 Banner;banner-02:electronicsContentCatalog:Online;/campaign-46
+;campaign-47-item4;;campaign-47-item4;true;キャンペーン 47 バナー;Campaign 47 Banner;banner-03:electronicsContentCatalog:Online;/campaign-47
+;campaign-48-item4;;campaign-48-item4;true;キャンペーン 48 バナー;Campaign 48 Banner;banner-04:electronicsContentCatalog:Online;/campaign-48
+;campaign-49-item4;;campaign-49-item4;true;キャンペーン 49 バナー;Campaign 49 Banner;banner-05:electronicsContentCatalog:Online;/campaign-49
+;campaign-50-item4;;campaign-50-item4;true;キャンペーン 50 バナー;Campaign 50 Banner;banner-06:electronicsContentCatalog:Online;/campaign-50
+;campaign-51-item4;;campaign-51-item4;true;キャンペーン 51 バナー;Campaign 51 Banner;banner-07:electronicsContentCatalog:Online;/campaign-51
+;campaign-52-item4;;campaign-52-item4;true;キャンペーン 52 バナー;Campaign 52 Banner;banner-08:electronicsContentCatalog:Online;/campaign-52
+;campaign-53-item4;;campaign-53-item4;true;キャンペーン 53 バナー;Campaign 53 Banner;banner-09:electronicsContentCatalog:Online;/campaign-53
+;campaign-54-item4;;campaign-54-item4;true;キャンペーン 54 バナー;Campaign 54 Banner;banner-10:electronicsContentCatalog:Online;/campaign-54
+;campaign-55-item4;;campaign-55-item4;true;キャンペーン 55 バナー;Campaign 55 Banner;banner-01:electronicsContentCatalog:Online;/campaign-55
+;campaign-56-item4;;campaign-56-item4;true;キャンペーン 56 バナー;Campaign 56 Banner;banner-02:electronicsContentCatalog:Online;/campaign-56
+;campaign-57-item4;;campaign-57-item4;true;キャンペーン 57 バナー;Campaign 57 Banner;banner-03:electronicsContentCatalog:Online;/campaign-57
+;campaign-58-item4;;campaign-58-item4;true;キャンペーン 58 バナー;Campaign 58 Banner;banner-04:electronicsContentCatalog:Online;/campaign-58
+;campaign-59-item4;;campaign-59-item4;true;キャンペーン 59 バナー;Campaign 59 Banner;banner-05:electronicsContentCatalog:Online;/campaign-59
+;campaign-60-item4;;campaign-60-item4;true;キャンペーン 60 バナー;Campaign 60 Banner;banner-06:electronicsContentCatalog:Online;/campaign-60
+;campaign-61-item4;;campaign-61-item4;true;キャンペーン 61 バナー;Campaign 61 Banner;banner-07:electronicsContentCatalog:Online;/campaign-61
+;campaign-62-item4;;campaign-62-item4;true;キャンペーン 62 バナー;Campaign 62 Banner;banner-08:electronicsContentCatalog:Online;/campaign-62
+;campaign-63-item4;;campaign-63-item4;true;キャンペーン 63 バナー;Campaign 63 Banner;banner-09:electronicsContentCatalog:Online;/campaign-63
+;campaign-64-item4;;campaign-64-item4;true;キャンペーン 64 バナー;Campaign 64 Banner;banner-10:electronicsContentCatalog:Online;/campaign-64
+;campaign-65-item4;;campaign-65-item4;true;キャンペーン 65 バナー;Campaign 65 Banner;banner-01:electronicsContentCatalog:Online;/campaign-65
+;campaign-66-item4;;campaign-66-item4;true;キャンペーン 66 バナー;Campaign 66 Banner;banner-02:electronicsContentCatalog:Online;/campaign-66
+;campaign-67-item4;;campaign-67-item4;true;キャンペーン 67 バナー;Campaign 67 Banner;banner-03:electronicsContentCatalog:Online;/campaign-67
+;campaign-68-item4;;campaign-68-item4;true;キャンペーン 68 バナー;Campaign 68 Banner;banner-04:electronicsContentCatalog:Online;/campaign-68
+
+INSERT_UPDATE ProductCarouselComponent;uid[unique=true];$ccv;name;visible;title[lang=ja];title[lang=en];productCodes
+;HomeNewArrivalsCarousel;;HomeNewArrivalsCarousel;true;新着商品;New Arrivals;XYZ-000434,XYZ-000402,XYZ-000741,XYZ-000278,XYZ-000917,XYZ-000945,XYZ-000084,XYZ-000336
+;HomeBestSellersCarousel;;HomeBestSellersCarousel;true;売れ筋ランキング;Best Sellers;XYZ-000772,XYZ-000178,XYZ-000774,XYZ-000464,XYZ-000426,XYZ-000462,XYZ-000420,XYZ-000342
+;HomeRecommendCarousel;;HomeRecommendCarousel;true;おすすめ;Recommended;XYZ-000129,XYZ-000139,XYZ-000877,XYZ-000967,XYZ-000419,XYZ-000435,XYZ-000201,XYZ-000096
+;EmptyCartCarousel;;EmptyCartCarousel;true;人気の商品;Popular Products;XYZ-000709,XYZ-000487,XYZ-000743,XYZ-000005,XYZ-000469,XYZ-000877,XYZ-000677,XYZ-000221
+;UpSellingCarousel;;UpSellingCarousel;true;こちらもおすすめ;You may also like;XYZ-000781,XYZ-000359,XYZ-000126,XYZ-000727,XYZ-000850,XYZ-000674,XYZ-000238,XYZ-000866
+;CrossSellingCarousel;;CrossSellingCarousel;true;一緒に買われている商品;Frequently bought together;XYZ-000173,XYZ-000913,XYZ-000093,XYZ-000185,XYZ-000877,XYZ-000469,XYZ-000030,XYZ-000294
+;faq-item1;;faq-item1;true;よくある質問 の商品;FAQ Products;XYZ-000735,XYZ-000092,XYZ-000671,XYZ-000273,XYZ-000135,XYZ-000802,XYZ-000153,XYZ-000564
+;terms-item1;;terms-item1;true;利用規約 の商品;Terms of Use Products;XYZ-000637,XYZ-000308,XYZ-000626,XYZ-000582,XYZ-000480,XYZ-000838,XYZ-000268,XYZ-000239
+;privacy-item1;;privacy-item1;true;個人情報保護方針 の商品;Privacy Policy Products;XYZ-000347,XYZ-000013,XYZ-000425,XYZ-000574,XYZ-000442,XYZ-000118,XYZ-000524,XYZ-000288
+;contact-item1;;contact-item1;true;お問い合わせ の商品;Contact Us Products;XYZ-000372,XYZ-000015,XYZ-000700,XYZ-000124,XYZ-000715,XYZ-000504,XYZ-000001,XYZ-000206
+;about-item1;;about-item1;true;XYZ電機について の商品;About Us Products;XYZ-000458,XYZ-000915,XYZ-000024,XYZ-000134,XYZ-000803,XYZ-000038,XYZ-000414,XYZ-000307
+;shipping-item1;;shipping-item1;true;配送について の商品;Shipping Products;XYZ-000835,XYZ-000296,XYZ-000776,XYZ-000761,XYZ-000694,XYZ-000055,XYZ-000036,XYZ-000327
+;returns-item1;;returns-item1;true;返品について の商品;Returns Products;XYZ-000187,XYZ-000398,XYZ-000313,XYZ-000474,XYZ-000261,XYZ-000540,XYZ-000503,XYZ-000990
+;help-item1;;help-item1;true;ヘルプ の商品;Help Products;XYZ-000076,XYZ-000435,XYZ-000478,XYZ-000716,XYZ-000497,XYZ-000688,XYZ-000712,XYZ-000122
+;sitemap-item1;;sitemap-item1;true;サイトマップ の商品;Sitemap Products;XYZ-000377,XYZ-000520,XYZ-000051,XYZ-000057,XYZ-000642,XYZ-000384,XYZ-000309,XYZ-000816
+;company-item1;;company-item1;true;会社概要 の商品;Company Products;XYZ-000498,XYZ-000605,XYZ-000924,XYZ-000891,XYZ-000386,XYZ-000634,XYZ-000285,XYZ-000766
+;my-account-item1;;my-account-item1;true;マイアカウント の商品;My Account Products;XYZ-000646,XYZ-000691,XYZ-000653,XYZ-000008,XYZ-000481,XYZ-000510,XYZ-000942,XYZ-000235
+;store-finder-item1;;store-finder-item1;true;店舗を探す の商品;Store Finder Products;XYZ-000038,XYZ-000739,XYZ-000392,XYZ-000211,XYZ-000144,XYZ-000913,XYZ-000953,XYZ-000002
+;campaign-01-item1;;campaign-01-item1;true;キャンペーン 1 の商品;Campaign 1 Products;XYZ-000723,XYZ-000417,XYZ-000252,XYZ-000897,XYZ-000179,XYZ-000282,XYZ-000152,XYZ-000550
+;campaign-02-item1;;campaign-02-item1;true;キャンペーン 2 の商品;Campaign 2 Products;XYZ-000123,XYZ-000562,XYZ-000533,XYZ-000493,XYZ-000905,XYZ-000556,XYZ-000730,XYZ-000833
+;campaign-03-item1;;campaign-03-item1;true;キャンペーン 3 の商品;Campaign 3 Products;XYZ-000183,XYZ-000756,XYZ-000364,XYZ-000275,XYZ-000650,XYZ-000065,XYZ-000875,XYZ-000810
+;campaign-04-item1;;campaign-04-item1;true;キャンペーン 4 の商品;Campaign 4 Products;XYZ-000906,XYZ-000377,XYZ-000030,XYZ-000414,XYZ-000203,XYZ-000659,XYZ-000688,XYZ-000060
+;campaign-05-item1;;campaign-05-item1;true;キャンペーン 5 の商品;Campaign 5 Products;XYZ-000463,XYZ-000944,XYZ-000873,XYZ-000769,XYZ-000692,XYZ-000826,XYZ-000070,XYZ-000386
+;campaign-06-item1;;campaign-06-item1;true;キャンペーン 6 の商品;Campaign 6 Products;XYZ-000703,XYZ-000743,XYZ-000330,XYZ-000773,XYZ-000714,XYZ-000003,XYZ-000485,XYZ-000929
+;campaign-07-item1;;campaign-07-item1;true;キャンペーン 7 の商品;Campaign 7 Products;XYZ-000580,XYZ-000528,XYZ-000727,XYZ-000591,XYZ-000077,XYZ-000806,XYZ-000105,XYZ-000302
+;campaign-08-item1;;campaign-08-item1;true;キャンペーン 8 の商品;Campaign 8 Products;XYZ-000109,XYZ-000088,XYZ-000264,XYZ-000367,XYZ-000842,XYZ-000350,XYZ-000977,XYZ-000569
+;campaign-09-item1;;campaign-09-item1;true;キャンペーン 9 の商品;Campaign 9 Products;XYZ-000171,XYZ-000381,XYZ-000851,XYZ-000918,XYZ-000109,XYZ-000845,XYZ-000281,XYZ-000493
+;campaign-10-item1;;campaign-10-item1;true;キャンペーン 10 の商品;Campaign 10 Products;XYZ-000945,XYZ-000969,XYZ-000778,XYZ-000413,XYZ-000882,XYZ-000300,XYZ-000698,XYZ-000612
+;campaign-11-item1;;campaign-11-item1;true;キャンペーン 11 の商品;Campaign 11 Products;XYZ-000510,XYZ-000194,XYZ-000327,XYZ-000374,XYZ-000998,XYZ-000437,XYZ-000906,XYZ-000886
+;campaign-12-item1;;campaign-12-item1;true;キャンペーン 12 の商品;Campaign 12 Products;XYZ-000236,XYZ-000070,XYZ-000642,XYZ-000771,XYZ-000928,XYZ-000116,XYZ-000845,XYZ-000730
+;campaign-13-item1;;campaign-13-item1;true;キャンペーン 13 の商品;Campaign 13 Products;XYZ-000494,XYZ-000235,XYZ-000579,XYZ-000386,XYZ-000873,XYZ-000335,XYZ-000644,XYZ-000856
+;campaign-14-item1;;campaign-14-item1;true;キャンペーン 14 の商品;Campaign 14 Products;XYZ-000742,XYZ-000136,XYZ-000897,XYZ-000113,XYZ-000835,XYZ-000038,XYZ-000662,XYZ-000730
+;campaign-15-item1;;campaign-15-item1;true;キャンペーン 15 の商品;Campaign 15 Products;XYZ-000325,XYZ-000570,XYZ-000736,XYZ-000046,XYZ-000466,XYZ-000917,XYZ-000317,XYZ-000160
+;campaign-16-item1;;campaign-16-item1;true;キャンペーン 16 の商品;Campaign 16 Products;XYZ-000960,XYZ-000063,XYZ-000494,XYZ-000139,XYZ-000327,XYZ-000252,XYZ-000452,XYZ-000250
+;campaign-17-item1;;campaign-17-item1;true;キャンペーン 17 の商品;Campaign 17 Products;XYZ-000141,XYZ-000024,XYZ-000216,XYZ-000366,XYZ-000546,XYZ-000189,XYZ-000092,XYZ-000684
+;campaign-18-item1;;campaign-18-item1;true;キャンペーン 18 の商品;Campaign 18 Products;XYZ-000886,XYZ-000462,XYZ-000013,XYZ-000891,XYZ-000162,XYZ-000174,XYZ-000611,XYZ-000022
+;campaign-19-item1;;campaign-19-item1;true;キャンペーン 19 の商品;Campaign 19 Products;XYZ-000223,XYZ-000598,XYZ-000806,XYZ-000578,XYZ-000866,XYZ-000351,XYZ-000062,XYZ-000039
+;campaign-20-item1;;campaign-20-item1;true;キャンペーン 20 の商品;Campaign 20 Products;XYZ-000042,XYZ-000781,XYZ-000634,XYZ-000279,XYZ-000176,XYZ-000447,XYZ-000095,XYZ-000062
+;campaign-21-item1;;campaign-21-item1;true;キャンペーン 21 の商品;Campaign 21 Products;XYZ-000892,XYZ-000166,XYZ-000203,XYZ-000162,XYZ-000331,XYZ-000589,XYZ-000325,XYZ-000137
+;campaign-22-item1;;campaign-22-item1;true;キャンペーン 22 の商品;Campaign 22 Products;XYZ-000926,XYZ-000807,XYZ-000547,XYZ-000527,XYZ-000377,XYZ-000938,XYZ-000921,XYZ-000336
+;campaign-23-item1;;campaign-23-item1;true;キャンペーン 23 の商品;Campaign 23 Products;XYZ-000705,XYZ-000114,XYZ-000459,XYZ-000188,XYZ-000071,XYZ-000553,XYZ-000821,XYZ-000323
+;campaign-24-item1;;campaign-24-item1;true;キャンペーン 24 の商品;Campaign 24 Products;XYZ-000247,XYZ-000659,XYZ-000373,XYZ-000236,XYZ-000185,XYZ-000742,XYZ-000754,XYZ-000608
+;campaign-25-item1;;campaign-25-item1;true;キャンペーン 25 の商品;Campaign 25 Products;XYZ-000728,XYZ-000334,XYZ-000517,XYZ-000564,XYZ-000409,XYZ-000564,XYZ-000555,XYZ-000116
+;campaign-26-item1;;campaign-26-item1;true;キャンペーン 26 の商品;Campaign 26 Products;XYZ-000274,XYZ-000039,XYZ-000505,XYZ-000633,XYZ-000190,XYZ-000948,XYZ-000156,XYZ-000593
+;campaign-27-item1;;campaign-27-item1;true;キャンペーン 27 の商品;Campaign 27 Products;XYZ-000707,XYZ-000313,XYZ-000390,XYZ-000251,XYZ-000662,XYZ-000456,XYZ-000180,XYZ-000973
+;campaign-28-item1;;campaign-28-item1;true;キャンペーン 28 の商品;Campaign 28 Products;XYZ-000581,XYZ-000456,XYZ-000005,XYZ-000201,XYZ-000963,XYZ-000361,XYZ-000631,XYZ-000469
+;campaign-29-item1;;campaign-29-item1;true;キャンペーン 29 の商品;Campaign 29 Products;XYZ-000625,XYZ-000550,XYZ-000661,XYZ-000796,XYZ-000403,XYZ-000781,XYZ-000869,XYZ-000822
+;campaign-30-item1;;campaign-30-item1;true;キャンペーン 30 の商品;Campaign 30 Products;XYZ-000275,XYZ-000697,XYZ-000478,XYZ-000949,XYZ-000040,XYZ-000356,XYZ-000713,XYZ-000937
+;campaign-31-item1;;campaign-31-item1;true;キャンペーン 31 の商品;Campaign 31 Products;XYZ-000522,XYZ-000885,XYZ-000732,XYZ-000835,XYZ-000789,XYZ-000055,XYZ-000478,XYZ-000574
+;campaign-32-item1;;campaign-32-item1;true;キャンペーン 32 の商品;Campaign 32 Products;XYZ-000838,XYZ-000809,XYZ-000996,XYZ-000224,XYZ-000051,XYZ-000293,XYZ-000585,XYZ-000259
+;campaign-33-item1;;campaign-33-item1;true;キャンペーン 33 の商品;Campaign 33 Products;XYZ-000955,XYZ-000640,XYZ-000059,XYZ-000426,XYZ-000307,XYZ-000049,XYZ-000222,XYZ-000656
+;campaign-34-item1;;campaign-34-item1;true;キャンペーン 34 の商品;Campaign 34 Products;XYZ-000815,XYZ-000070,XYZ-000216,XYZ-000168,XYZ-000179,XYZ-000176,XYZ-000880,XYZ-000491
+;campaign-35-item1;;campaign-35-item1;true;キャンペーン 35 の商品;Campaign 35 Products;XYZ-000141,XYZ-000058,XYZ-000466,XYZ-000200,XYZ-000651,XYZ-000604,XYZ-000139,XYZ-000886
+;campaign-36-item1;;campaign-36-item1;true;キャンペーン 36 の商品;Campaign 36 Products;XYZ-000847,XYZ-000172,XYZ-000379,XYZ-000220,XYZ-000694,XYZ-000688,XYZ-000971,XYZ-000704
+;campaign-37-item1;;campaign-37-item1;true;キャンペーン 37 の商品;Campaign 37 Products;XYZ-000437,XYZ-000429,XYZ-000077,XYZ-000246,XYZ-000603,XYZ-000948,XYZ-000767,XYZ-000277
+;campaign-38-item1;;campaign-38-item1;true;キャンペーン 38 の商品;Campaign 38 Products;XYZ-000760,XYZ-000952,XYZ-000257,XYZ-000190,XYZ-000573,XYZ-000540,XYZ-000965,XYZ-000160
+;campaign-39-item1;;campaign-39-item1;true;キャンペーン 39 の商品;Campaign 39 Products;XYZ-000083,XYZ-000775,XYZ-000855,XYZ-000952,XYZ-000333,XYZ-000926,XYZ-000566,XYZ-000153
+;campaign-40-item1;;campaign-40-item1;true;キャンペーン 40 の商品;Campaign 40 Products;XYZ-000747,XYZ-000468,XYZ-000432,XYZ-000534,XYZ-000408,XYZ-000799,XYZ-000436,XYZ-000583
+;campaign-41-item1;;campaign-41-item1;true;キャンペーン 41 の商品;Campaign 41 Products;XYZ-000710,XYZ-000876,XYZ-000851,XYZ-000102,XYZ-000693,XYZ-000306,XYZ-000088,XYZ-000874
+;campaign-42-item1;;campaign-42-item1;true;キャンペーン 42 の商品;Campaign 42 Products;XYZ-000510,XYZ-000951,XYZ-000315,XYZ-000318,XYZ-000039,XYZ-000394,XYZ-000171,XYZ-000223
+;campaign-43-item1;;campaign-43-item1;true;キャンペーン 43 の商品;Campaign 43 Products;XYZ-000564,XYZ-000165,XYZ-000615,XYZ-000392,XYZ-000272,XYZ-000644,XYZ-000221,XYZ-000592
+;campaign-44-item1;;campaign-44-item1;true;キャンペーン 44 の商品;Campaign 44 Products;XYZ-000361,XYZ-000053,XYZ-000295,XYZ-000069,XYZ-000488,XYZ-000452,XYZ-000184,XYZ-000274
+;campaign-45-item1;;campaign-45-item1;true;キャンペーン 45 の商品;Campaign 45 Products;XYZ-000304,XYZ-000424,XYZ-000905,XYZ-000150,XYZ-000707,XYZ-000383,XYZ-000001,XYZ-000099
+;campaign-46-item1;;campaign-46-item1;true;キャンペーン 46 の商品;Campaign 46 Products;XYZ-000664,XYZ-000772,XYZ-000384,XYZ-000281,XYZ-000995,XYZ-000980,XYZ-000272,XYZ-000099
+;campaign-47-item1;;campaign-47-item1;true;キャンペーン 47 の商品;Campaign 47 Products;XYZ-000602,XYZ-000180,XYZ-000631,XYZ-000276,XYZ-000545,XYZ-000495,XYZ-000514,XYZ-000972
+;campaign-48-item1;;campaign-48-item1;true;キャンペーン 48 の商品;Campaign 48 Products;XYZ-000973,XYZ-000903,XYZ-000845,XYZ-000435,XYZ-000872,XYZ-000421,XYZ-000336,XYZ-000066
+;campaign-49-item1;;campaign-49-item1;true;キャンペーン 49 の商品;Campaign 49 Products;XYZ-000794,XYZ-000838,XYZ-000017,XYZ-000623,XYZ-000162,XYZ-000629,XYZ-000429,XYZ-000239
+;campaign-50-item1;;campaign-50-item1;true;キャンペーン 50 の商品;Campaign 50 Products;XYZ-000338,XYZ-000843,XYZ-000747,XYZ-000773,XYZ-000346,XYZ-000297,XYZ-000786,XYZ-000540
+;campaign-51-item1;;campaign-51-item1;true;キャンペーン 51 の商品;Campaign 51 Products;XYZ-000128,XYZ-000132,XYZ-000379,XYZ-000942,XYZ-000202,XYZ-000616,XYZ-000111,XYZ-000103
+;campaign-52-item1;;campaign-52-item1;true;キャンペーン 52 の商品;Campaign 52 Products;XYZ-000401,XYZ-000951,XYZ-000245,XYZ-000028,XYZ-000500,XYZ-000419,XYZ-000193,XYZ-000097
+;campaign-53-item1;;campaign-53-item1;true;キャンペーン 53 の商品;Campaign 53 Products;XYZ-000261,XYZ-000726,XYZ-000575,XYZ-000923,XYZ-000635,XYZ-000199,XYZ-000490,XYZ-000321
+;campaign-54-item1;;campaign-54-item1;true;キャンペーン 54 の商品;Campaign 54 Products;XYZ-000509,XYZ-000975,XYZ-000844,XYZ-000122,XYZ-000486,XYZ-000364,XYZ-000171,XYZ-000317
+;campaign-55-item1;;campaign-55-item1;true;キャンペーン 55 の商品;Campaign 55 Products;XYZ-000679,XYZ-000989,XYZ-000023,XYZ-000719,XYZ-000017,XYZ-000059,XYZ-000194,XYZ-000513
+;campaign-56-item1;;campaign-56-item1;true;キャンペーン 56 の商品;Campaign 56 Products;XYZ-000654,XYZ-000224,XYZ-000837,XYZ-000735,XYZ-000879,XYZ-000750,XYZ-000637,XYZ-000441
+;campaign-57-item1;;campaign-57-item1;true;キャンペーン 57 の商品;Campaign 57 Products;XYZ-000690,XYZ-000007,XYZ-000103,XYZ-000660,XYZ-000285,XYZ-000272,XYZ-000491,XYZ-000124
+;campaign-58-item1;;campaign-58-item1;true;キャンペーン 58 の商品;Campaign 58 Products;XYZ-000237,XYZ-000822,XYZ-000258,XYZ-000773,XYZ-000540,XYZ-000365,XYZ-000281,XYZ-000047
+;campaign-59-item1;;campaign-59-item1;true;キャンペーン 59 の商品;Campaign 59 Products;XYZ-000155,XYZ-000557,XYZ-000966,XYZ-000181,XYZ-000478,XYZ-000941,XYZ-000997,XYZ-000898
+;campaign-60-item1;;campaign-60-item1;true;キャンペーン 60 の商品;Campaign 60 Products;XYZ-000092,XYZ-000421,XYZ-000302,XYZ-000846,XYZ-000281,XYZ-000783,XYZ-000165,XYZ-000503
+;campaign-61-item1;;campaign-61-item1;true;キャンペーン 61 の商品;Campaign 61 Products;XYZ-000282,XYZ-000955,XYZ-000176,XYZ-000643,XYZ-000728,XYZ-000947,XYZ-000790,XYZ-000630
+;campaign-62-item1;;campaign-62-item1;true;キャンペーン 62 の商品;Campaign 62 Products;XYZ-000875,XYZ-000222,XYZ-000054,XYZ-000631,XYZ-000024,XYZ-000501,XYZ-000537,XYZ-000071
+;campaign-63-item1;;campaign-63-item1;true;キャンペーン 63 の商品;Campaign 63 Products;XYZ-000242,XYZ-000043,XYZ-000146,XYZ-000935,XYZ-000580,XYZ-000627,XYZ-000992,XYZ-000314
+;campaign-64-item1;;campaign-64-item1;true;キャンペーン 64 の商品;Campaign 64 Products;XYZ-000638,XYZ-000740,XYZ-000297,XYZ-000577,XYZ-000610,XYZ-000541,XYZ-000978,XYZ-000862
+;campaign-65-item1;;campaign-65-item1;true;キャンペーン 65 の商品;Campaign 65 Products;XYZ-000593,XYZ-000948,XYZ-000835,XYZ-000593,XYZ-000744,XYZ-000872,XYZ-000958,XYZ-000572
+;campaign-66-item1;;campaign-66-item1;true;キャンペーン 66 の商品;Campaign 66 Products;XYZ-000261,XYZ-000996,XYZ-000131,XYZ-000676,XYZ-000839,XYZ-000575,XYZ-000754,XYZ-000347
+;campaign-67-item1;;campaign-67-item1;true;キャンペーン 67 の商品;Campaign 67 Products;XYZ-000149,XYZ-000673,XYZ-000008,XYZ-000047,XYZ-000052,XYZ-000941,XYZ-000666,XYZ-000095
+;campaign-68-item1;;campaign-68-item1;true;キャンペーン 68 の商品;Campaign 68 Products;XYZ-000762,XYZ-000188,XYZ-000169,XYZ-000220,XYZ-000293,XYZ-000309,XYZ-000777,XYZ-000103
+;campaign-69-item1;;campaign-69-item1;true;キャンペーン 69 の商品;Campaign 69 Products;XYZ-000739,XYZ-000886,XYZ-000196,XYZ-000544,XYZ-000017,XYZ-000443,XYZ-000545,XYZ-000976
+;campaign-70-item1;;campaign-70-item1;true;キャンペーン 70 の商品;Campaign 70 Products;XYZ-000983,XYZ-000710,XYZ-000841,XYZ-000543,XYZ-000503,XYZ-000289,XYZ-000270,XYZ-000375
+;campaign-71-item1;;campaign-71-item1;true;キャンペーン 71 の商品;Campaign 71 Products;XYZ-000211,XYZ-000278,XYZ-000988,XYZ-000259,XYZ-000360,XYZ-000196,XYZ-000175,XYZ-000940
+;campaign-72-item1;;campaign-72-item1;true;キャンペーン 72 の商品;Campaign 72 Products;XYZ-000391,XYZ-000698,XYZ-000085,XYZ-000792,XYZ-000557,XYZ-000278,XYZ-000006,XYZ-000319
+;campaign-73-item1;;campaign-73-item1;true;キャンペーン 73 の商品;Campaign 73 Products;XYZ-000201,XYZ-000618,XYZ-000850,XYZ-000304,XYZ-000690,XYZ-000085,XYZ-000279,XYZ-000489
+;campaign-74-item1;;campaign-74-item1;true;キャンペーン 74 の商品;Campaign 74 Products;XYZ-000452,XYZ-000244,XYZ-000691,XYZ-000111,XYZ-000257,XYZ-000988,XYZ-000859,XYZ-000681
+;campaign-75-item1;;campaign-75-item1;true;キャンペーン 75 の商品;Campaign 75 Products;XYZ-000856,XYZ-000107,XYZ-000870,XYZ-000157,XYZ-000866,XYZ-000699,XYZ-000098,XYZ-000861
+;campaign-76-item1;;campaign-76-item1;true;キャンペーン 76 の商品;Campaign 76 Products;XYZ-000126,XYZ-000013,XYZ-000191,XYZ-000518,XYZ-000956,XYZ-000989,XYZ-000911,XYZ-000958
+;campaign-77-item1;;campaign-77-item1;true;キャンペーン 77 の商品;Campaign 77 Products;XYZ-000704,XYZ-000666,XYZ-000676,XYZ-000788,XYZ-000996,XYZ-000796,XYZ-000339,XYZ-000989
+;campaign-78-item1;;campaign-78-item1;true;キャンペーン 78 の商品;Campaign 78 Products;XYZ-000577,XYZ-000933,XYZ-000122,XYZ-000749,XYZ-000790,XYZ-000393,XYZ-000764,XYZ-000389
+;campaign-79-item1;;campaign-79-item1;true;キャンペーン 79 の商品;Campaign 79 Products;XYZ-000921,XYZ-000716,XYZ-000279,XYZ-000208,XYZ-000535,XYZ-000217,XYZ-000248,XYZ-000298
+;campaign-80-item1;;campaign-80-item1;true;キャンペーン 80 の商品;Campaign 80 Products;XYZ-000072,XYZ-000547,XYZ-001000,XYZ-000039,XYZ-000821,XYZ-000858,XYZ-000955,XYZ-000215
+
+INSERT_UPDATE CMSFlexComponent;uid[unique=true];$ccv;name;visible;flexType
+;SiteLogoComponent;;SiteLogoComponent;true;SiteLogoComponent
+;SearchBoxComponent;;SearchBoxComponent;true;SearchBox
+;MiniCartComponent;;MiniCartComponent;true;MiniCartComponent
+;NavigationComponent;;NavigationComponent;true;NavigationComponent
+;FooterComponent;;FooterComponent;true;FooterComponent
+;CartComponent;;CartComponent;true;CartComponent
+;SearchResultsListComponent;;SearchResultsListComponent;true;SearchResultsListComponent
+;CheckoutComponent;;CheckoutComponent;true;CheckoutComponent
+;OrderConfirmationComponent;;OrderConfirmationComponent;true;OrderConfirmationComponent
+;ProductDetailsComponent;;ProductDetailsComponent;true;ProductDetailsComponent
+;ProductFacetNavigationComponent;;ProductFacetNavigationComponent;true;ProductFacetNavigationComponent
+;ProductListComponent;;ProductListComponent;true;ProductListComponent
+
+INSERT_UPDATE ContentSlot;uid[unique=true];$ccv;name;active;cmsComponents(uid,catalogVersion(catalog(id),version))
+;PreHeaderSlot;;PreHeader Slot;true;PreHeaderParagraph:electronicsContentCatalog:Online
+;SiteLogoSlot;;SiteLogo Slot;true;SiteLogoComponent:electronicsContentCatalog:Online
+;SearchBoxSlot;;SearchBox Slot;true;SearchBoxComponent:electronicsContentCatalog:Online
+;MiniCartSlot;;MiniCart Slot;true;MiniCartComponent:electronicsContentCatalog:Online
+;NavigationBarSlot;;NavigationBar Slot;true;NavigationComponent:electronicsContentCatalog:Online,NavLink-cat-01:electronicsContentCatalog:Online,NavLink-cat-02:electronicsContentCatalog:Online,NavLink-cat-03:electronicsContentCatalog:Online,NavLink-cat-04:electronicsContentCatalog:Online,NavLink-cat-05:electronicsContentCatalog:Online,NavLink-cat-06:electronicsContentCatalog:Online,NavLink-cat-07:electronicsContentCatalog:Online,NavLink-cat-08:electronicsContentCatalog:Online,NavLink-cat-09:electronicsContentCatalog:Online,NavLink-cat-10:electronicsContentCatalog:Online
+;FooterSlot;;Footer Slot;true;FooterComponent:electronicsContentCatalog:Online,FooterLink-faq:electronicsContentCatalog:Online,FooterLink-terms:electronicsContentCatalog:Online,FooterLink-privacy:electronicsContentCatalog:Online,FooterLink-contact:electronicsContentCatalog:Online,FooterLink-about:electronicsContentCatalog:Online,FooterLink-shipping:electronicsContentCatalog:Online,FooterLink-returns:electronicsContentCatalog:Online,FooterLink-help:electronicsContentCatalog:Online
+;Section1-homepage;;Section1 for homepage;true;HomeHeroBanner1:electronicsContentCatalog:Online,HomeHeroBanner2:electronicsContentCatalog:Online,HomeHeroBanner3:electronicsContentCatalog:Online
+;Section2A-homepage;;Section2A for homepage;true;HomeSplitBannerA:electronicsContentCatalog:Online
+;Section2B-homepage;;Section2B for homepage;true;HomeSplitBannerB:electronicsContentCatalog:Online
+;Section3-homepage;;Section3 for homepage;true;HomeNewArrivalsCarousel:electronicsContentCatalog:Online,HomeBestSellersCarousel:electronicsContentCatalog:Online
+;Section4-homepage;;Section4 for homepage;true;HomeAboutParagraph:electronicsContentCatalog:Online,HomeRecommendCarousel:electronicsContentCatalog:Online
+;Section5-homepage;;Section5 for homepage;true;HomeNoticeParagraph:electronicsContentCatalog:Online
+;TopContent-cartPage;;TopContent for cartPage;true;CartComponent:electronicsContentCatalog:Online
+;CenterRightContentSlot-cartPage;;CenterRightContentSlot for cartPage;true;CartTotalsNote:electronicsContentCatalog:Online,ContinueShoppingLink:electronicsContentCatalog:Online
+;EmptyCartMiddleContent-cartPage;;EmptyCartMiddleContent for cartPage;true;EmptyCartParagraph:electronicsContentCatalog:Online,EmptyCartCarousel:electronicsContentCatalog:Online
+;SearchResultsListSlot-search;;SearchResultsListSlot for search;true;SearchResultsListComponent:electronicsContentCatalog:Online
+;BodyContent-checkout;;BodyContent for checkout;true;CheckoutComponent:electronicsContentCatalog:Online
+;SideContent-checkout;;SideContent for checkout;true;CheckoutSideParagraph:electronicsContentCatalog:Online
+;BodyContent-orderConfirmation;;BodyContent for orderConfirmation;true;OrderConfirmationComponent:electronicsContentCatalog:Online
+;Summary-productDetails;;Summary for productDetails;true;ProductDetailsComponent:electronicsContentCatalog:Online
+;UpSelling-productDetails;;UpSelling for productDetails;true;UpSellingCarousel:electronicsContentCatalog:Online
+;CrossSelling-productDetails;;CrossSelling for productDetails;true;CrossSellingCarousel:electronicsContentCatalog:Online
+;Tabs-productDetails;;Tabs for productDetails;true;TabDescription:electronicsContentCatalog:Online,TabSpecification:electronicsContentCatalog:Online,TabShipping:electronicsContentCatalog:Online
+;ProductLeftRefinements-productList;;ProductLeftRefinements for productList;true;ProductFacetNavigationComponent:electronicsContentCatalog:Online
+;ProductListSlot-productList;;ProductListSlot for productList;true;ProductListComponent:electronicsContentCatalog:Online
+;ProductLeftRefinements-categoryLanding;;ProductLeftRefinements for categoryLanding;true;ProductFacetNavigationComponent:electronicsContentCatalog:Online
+;ProductListSlot-categoryLanding;;ProductListSlot for categoryLanding;true;CategoryBanner:electronicsContentCatalog:Online,ProductListComponent:electronicsContentCatalog:Online
+;Section2A-faq;;Section2A for faq;true;faq-intro:electronicsContentCatalog:Online
+;Section2B-faq;;Section2B for faq;true;faq-item1:electronicsContentCatalog:Online,faq-item2:electronicsContentCatalog:Online,faq-item3:electronicsContentCatalog:Online,faq-item4:electronicsContentCatalog:Online
+;Section2A-terms;;Section2A for terms;true;terms-intro:electronicsContentCatalog:Online
+;Section2B-terms;;Section2B for terms;true;terms-item1:electronicsContentCatalog:Online,terms-item2:electronicsContentCatalog:Online,terms-item3:electronicsContentCatalog:Online,terms-item4:electronicsContentCatalog:Online
+;Section2A-privacy;;Section2A for privacy;true;privacy-intro:electronicsContentCatalog:Online
+;Section2B-privacy;;Section2B for privacy;true;privacy-item1:electronicsContentCatalog:Online,privacy-item2:electronicsContentCatalog:Online,privacy-item3:electronicsContentCatalog:Online,privacy-item4:electronicsContentCatalog:Online
+;Section2A-contact;;Section2A for contact;true;contact-intro:electronicsContentCatalog:Online
+;Section2B-contact;;Section2B for contact;true;contact-item1:electronicsContentCatalog:Online,contact-item2:electronicsContentCatalog:Online,contact-item3:electronicsContentCatalog:Online,contact-item4:electronicsContentCatalog:Online
+;Section2A-about;;Section2A for about;true;about-intro:electronicsContentCatalog:Online
+;Section2B-about;;Section2B for about;true;about-item1:electronicsContentCatalog:Online,about-item2:electronicsContentCatalog:Online,about-item3:electronicsContentCatalog:Online,about-item4:electronicsContentCatalog:Online
+;Section2A-shipping;;Section2A for shipping;true;shipping-intro:electronicsContentCatalog:Online
+;Section2B-shipping;;Section2B for shipping;true;shipping-item1:electronicsContentCatalog:Online,shipping-item2:electronicsContentCatalog:Online,shipping-item3:electronicsContentCatalog:Online,shipping-item4:electronicsContentCatalog:Online
+;Section2A-returns;;Section2A for returns;true;returns-intro:electronicsContentCatalog:Online
+;Section2B-returns;;Section2B for returns;true;returns-item1:electronicsContentCatalog:Online,returns-item2:electronicsContentCatalog:Online,returns-item3:electronicsContentCatalog:Online,returns-item4:electronicsContentCatalog:Online
+;Section2A-help;;Section2A for help;true;help-intro:electronicsContentCatalog:Online
+;Section2B-help;;Section2B for help;true;help-item1:electronicsContentCatalog:Online,help-item2:electronicsContentCatalog:Online,help-item3:electronicsContentCatalog:Online,help-item4:electronicsContentCatalog:Online
+;Section2A-sitemap;;Section2A for sitemap;true;sitemap-intro:electronicsContentCatalog:Online
+;Section2B-sitemap;;Section2B for sitemap;true;sitemap-item1:electronicsContentCatalog:Online,sitemap-item2:electronicsContentCatalog:Online,sitemap-item3:electronicsContentCatalog:Online,sitemap-item4:electronicsContentCatalog:Online
+;Section2A-company;;Section2A for company;true;company-intro:electronicsContentCatalog:Online
+;Section2B-company;;Section2B for company;true;company-item1:electronicsContentCatalog:Online,company-item2:electronicsContentCatalog:Online,company-item3:electronicsContentCatalog:Online,company-item4:electronicsContentCatalog:Online
+;Section2A-my-account;;Section2A for my-account;true;my-account-intro:electronicsContentCatalog:Online
+;Section2B-my-account;;Section2B for my-account;true;my-account-item1:electronicsContentCatalog:Online,my-account-item2:electronicsContentCatalog:Online,my-account-item3:electronicsContentCatalog:Online,my-account-item4:electronicsContentCatalog:Online
+;Section2A-store-finder;;Section2A for store-finder;true;store-finder-intro:electronicsContentCatalog:Online
+;Section2B-store-finder;;Section2B for store-finder;true;store-finder-item1:electronicsContentCatalog:Online,store-finder-item2:electronicsContentCatalog:Online,store-finder-item3:electronicsContentCatalog:Online,store-finder-item4:electronicsContentCatalog:Online
+;Section2A-campaign-01;;Section2A for campaign-01;true;campaign-01-intro:electronicsContentCatalog:Online
+;Section2B-campaign-01;;Section2B for campaign-01;true;campaign-01-item1:electronicsContentCatalog:Online,campaign-01-item2:electronicsContentCatalog:Online,campaign-01-item3:electronicsContentCatalog:Online,campaign-01-item4:electronicsContentCatalog:Online
+;Section2A-campaign-02;;Section2A for campaign-02;true;campaign-02-intro:electronicsContentCatalog:Online
+;Section2B-campaign-02;;Section2B for campaign-02;true;campaign-02-item1:electronicsContentCatalog:Online,campaign-02-item2:electronicsContentCatalog:Online,campaign-02-item3:electronicsContentCatalog:Online,campaign-02-item4:electronicsContentCatalog:Online
+;Section2A-campaign-03;;Section2A for campaign-03;true;campaign-03-intro:electronicsContentCatalog:Online
+;Section2B-campaign-03;;Section2B for campaign-03;true;campaign-03-item1:electronicsContentCatalog:Online,campaign-03-item2:electronicsContentCatalog:Online,campaign-03-item3:electronicsContentCatalog:Online,campaign-03-item4:electronicsContentCatalog:Online
+;Section2A-campaign-04;;Section2A for campaign-04;true;campaign-04-intro:electronicsContentCatalog:Online
+;Section2B-campaign-04;;Section2B for campaign-04;true;campaign-04-item1:electronicsContentCatalog:Online,campaign-04-item2:electronicsContentCatalog:Online,campaign-04-item3:electronicsContentCatalog:Online,campaign-04-item4:electronicsContentCatalog:Online
+;Section2A-campaign-05;;Section2A for campaign-05;true;campaign-05-intro:electronicsContentCatalog:Online
+;Section2B-campaign-05;;Section2B for campaign-05;true;campaign-05-item1:electronicsContentCatalog:Online,campaign-05-item2:electronicsContentCatalog:Online,campaign-05-item3:electronicsContentCatalog:Online,campaign-05-item4:electronicsContentCatalog:Online
+;Section2A-campaign-06;;Section2A for campaign-06;true;campaign-06-intro:electronicsContentCatalog:Online
+;Section2B-campaign-06;;Section2B for campaign-06;true;campaign-06-item1:electronicsContentCatalog:Online,campaign-06-item2:electronicsContentCatalog:Online,campaign-06-item3:electronicsContentCatalog:Online,campaign-06-item4:electronicsContentCatalog:Online
+;Section2A-campaign-07;;Section2A for campaign-07;true;campaign-07-intro:electronicsContentCatalog:Online
+;Section2B-campaign-07;;Section2B for campaign-07;true;campaign-07-item1:electronicsContentCatalog:Online,campaign-07-item2:electronicsContentCatalog:Online,campaign-07-item3:electronicsContentCatalog:Online,campaign-07-item4:electronicsContentCatalog:Online
+;Section2A-campaign-08;;Section2A for campaign-08;true;campaign-08-intro:electronicsContentCatalog:Online
+;Section2B-campaign-08;;Section2B for campaign-08;true;campaign-08-item1:electronicsContentCatalog:Online,campaign-08-item2:electronicsContentCatalog:Online,campaign-08-item3:electronicsContentCatalog:Online,campaign-08-item4:electronicsContentCatalog:Online
+;Section2A-campaign-09;;Section2A for campaign-09;true;campaign-09-intro:electronicsContentCatalog:Online
+;Section2B-campaign-09;;Section2B for campaign-09;true;campaign-09-item1:electronicsContentCatalog:Online,campaign-09-item2:electronicsContentCatalog:Online,campaign-09-item3:electronicsContentCatalog:Online,campaign-09-item4:electronicsContentCatalog:Online
+;Section2A-campaign-10;;Section2A for campaign-10;true;campaign-10-intro:electronicsContentCatalog:Online
+;Section2B-campaign-10;;Section2B for campaign-10;true;campaign-10-item1:electronicsContentCatalog:Online,campaign-10-item2:electronicsContentCatalog:Online,campaign-10-item3:electronicsContentCatalog:Online,campaign-10-item4:electronicsContentCatalog:Online
+;Section2A-campaign-11;;Section2A for campaign-11;true;campaign-11-intro:electronicsContentCatalog:Online
+;Section2B-campaign-11;;Section2B for campaign-11;true;campaign-11-item1:electronicsContentCatalog:Online,campaign-11-item2:electronicsContentCatalog:Online,campaign-11-item3:electronicsContentCatalog:Online,campaign-11-item4:electronicsContentCatalog:Online
+;Section2A-campaign-12;;Section2A for campaign-12;true;campaign-12-intro:electronicsContentCatalog:Online
+;Section2B-campaign-12;;Section2B for campaign-12;true;campaign-12-item1:electronicsContentCatalog:Online,campaign-12-item2:electronicsContentCatalog:Online,campaign-12-item3:electronicsContentCatalog:Online,campaign-12-item4:electronicsContentCatalog:Online
+;Section2A-campaign-13;;Section2A for campaign-13;true;campaign-13-intro:electronicsContentCatalog:Online
+;Section2B-campaign-13;;Section2B for campaign-13;true;campaign-13-item1:electronicsContentCatalog:Online,campaign-13-item2:electronicsContentCatalog:Online,campaign-13-item3:electronicsContentCatalog:Online,campaign-13-item4:electronicsContentCatalog:Online
+;Section2A-campaign-14;;Section2A for campaign-14;true;campaign-14-intro:electronicsContentCatalog:Online
+;Section2B-campaign-14;;Section2B for campaign-14;true;campaign-14-item1:electronicsContentCatalog:Online,campaign-14-item2:electronicsContentCatalog:Online,campaign-14-item3:electronicsContentCatalog:Online,campaign-14-item4:electronicsContentCatalog:Online
+;Section2A-campaign-15;;Section2A for campaign-15;true;campaign-15-intro:electronicsContentCatalog:Online
+;Section2B-campaign-15;;Section2B for campaign-15;true;campaign-15-item1:electronicsContentCatalog:Online,campaign-15-item2:electronicsContentCatalog:Online,campaign-15-item3:electronicsContentCatalog:Online,campaign-15-item4:electronicsContentCatalog:Online
+;Section2A-campaign-16;;Section2A for campaign-16;true;campaign-16-intro:electronicsContentCatalog:Online
+;Section2B-campaign-16;;Section2B for campaign-16;true;campaign-16-item1:electronicsContentCatalog:Online,campaign-16-item2:electronicsContentCatalog:Online,campaign-16-item3:electronicsContentCatalog:Online,campaign-16-item4:electronicsContentCatalog:Online
+;Section2A-campaign-17;;Section2A for campaign-17;true;campaign-17-intro:electronicsContentCatalog:Online
+;Section2B-campaign-17;;Section2B for campaign-17;true;campaign-17-item1:electronicsContentCatalog:Online,campaign-17-item2:electronicsContentCatalog:Online,campaign-17-item3:electronicsContentCatalog:Online,campaign-17-item4:electronicsContentCatalog:Online
+;Section2A-campaign-18;;Section2A for campaign-18;true;campaign-18-intro:electronicsContentCatalog:Online
+;Section2B-campaign-18;;Section2B for campaign-18;true;campaign-18-item1:electronicsContentCatalog:Online,campaign-18-item2:electronicsContentCatalog:Online,campaign-18-item3:electronicsContentCatalog:Online,campaign-18-item4:electronicsContentCatalog:Online
+;Section2A-campaign-19;;Section2A for campaign-19;true;campaign-19-intro:electronicsContentCatalog:Online
+;Section2B-campaign-19;;Section2B for campaign-19;true;campaign-19-item1:electronicsContentCatalog:Online,campaign-19-item2:electronicsContentCatalog:Online,campaign-19-item3:electronicsContentCatalog:Online,campaign-19-item4:electronicsContentCatalog:Online
+;Section2A-campaign-20;;Section2A for campaign-20;true;campaign-20-intro:electronicsContentCatalog:Online
+;Section2B-campaign-20;;Section2B for campaign-20;true;campaign-20-item1:electronicsContentCatalog:Online,campaign-20-item2:electronicsContentCatalog:Online,campaign-20-item3:electronicsContentCatalog:Online,campaign-20-item4:electronicsContentCatalog:Online
+;Section2A-campaign-21;;Section2A for campaign-21;true;campaign-21-intro:electronicsContentCatalog:Online
+;Section2B-campaign-21;;Section2B for campaign-21;true;campaign-21-item1:electronicsContentCatalog:Online,campaign-21-item2:electronicsContentCatalog:Online,campaign-21-item3:electronicsContentCatalog:Online,campaign-21-item4:electronicsContentCatalog:Online
+;Section2A-campaign-22;;Section2A for campaign-22;true;campaign-22-intro:electronicsContentCatalog:Online
+;Section2B-campaign-22;;Section2B for campaign-22;true;campaign-22-item1:electronicsContentCatalog:Online,campaign-22-item2:electronicsContentCatalog:Online,campaign-22-item3:electronicsContentCatalog:Online,campaign-22-item4:electronicsContentCatalog:Online
+;Section2A-campaign-23;;Section2A for campaign-23;true;campaign-23-intro:electronicsContentCatalog:Online
+;Section2B-campaign-23;;Section2B for campaign-23;true;campaign-23-item1:electronicsContentCatalog:Online,campaign-23-item2:electronicsContentCatalog:Online,campaign-23-item3:electronicsContentCatalog:Online,campaign-23-item4:electronicsContentCatalog:Online
+;Section2A-campaign-24;;Section2A for campaign-24;true;campaign-24-intro:electronicsContentCatalog:Online
+;Section2B-campaign-24;;Section2B for campaign-24;true;campaign-24-item1:electronicsContentCatalog:Online,campaign-24-item2:electronicsContentCatalog:Online,campaign-24-item3:electronicsContentCatalog:Online,campaign-24-item4:electronicsContentCatalog:Online
+;Section2A-campaign-25;;Section2A for campaign-25;true;campaign-25-intro:electronicsContentCatalog:Online
+;Section2B-campaign-25;;Section2B for campaign-25;true;campaign-25-item1:electronicsContentCatalog:Online,campaign-25-item2:electronicsContentCatalog:Online,campaign-25-item3:electronicsContentCatalog:Online,campaign-25-item4:electronicsContentCatalog:Online
+;Section2A-campaign-26;;Section2A for campaign-26;true;campaign-26-intro:electronicsContentCatalog:Online
+;Section2B-campaign-26;;Section2B for campaign-26;true;campaign-26-item1:electronicsContentCatalog:Online,campaign-26-item2:electronicsContentCatalog:Online,campaign-26-item3:electronicsContentCatalog:Online,campaign-26-item4:electronicsContentCatalog:Online
+;Section2A-campaign-27;;Section2A for campaign-27;true;campaign-27-intro:electronicsContentCatalog:Online
+;Section2B-campaign-27;;Section2B for campaign-27;true;campaign-27-item1:electronicsContentCatalog:Online,campaign-27-item2:electronicsContentCatalog:Online,campaign-27-item3:electronicsContentCatalog:Online,campaign-27-item4:electronicsContentCatalog:Online
+;Section2A-campaign-28;;Section2A for campaign-28;true;campaign-28-intro:electronicsContentCatalog:Online
+;Section2B-campaign-28;;Section2B for campaign-28;true;campaign-28-item1:electronicsContentCatalog:Online,campaign-28-item2:electronicsContentCatalog:Online,campaign-28-item3:electronicsContentCatalog:Online,campaign-28-item4:electronicsContentCatalog:Online
+;Section2A-campaign-29;;Section2A for campaign-29;true;campaign-29-intro:electronicsContentCatalog:Online
+;Section2B-campaign-29;;Section2B for campaign-29;true;campaign-29-item1:electronicsContentCatalog:Online,campaign-29-item2:electronicsContentCatalog:Online,campaign-29-item3:electronicsContentCatalog:Online,campaign-29-item4:electronicsContentCatalog:Online
+;Section2A-campaign-30;;Section2A for campaign-30;true;campaign-30-intro:electronicsContentCatalog:Online
+;Section2B-campaign-30;;Section2B for campaign-30;true;campaign-30-item1:electronicsContentCatalog:Online,campaign-30-item2:electronicsContentCatalog:Online,campaign-30-item3:electronicsContentCatalog:Online,campaign-30-item4:electronicsContentCatalog:Online
+;Section2A-campaign-31;;Section2A for campaign-31;true;campaign-31-intro:electronicsContentCatalog:Online
+;Section2B-campaign-31;;Section2B for campaign-31;true;campaign-31-item1:electronicsContentCatalog:Online,campaign-31-item2:electronicsContentCatalog:Online,campaign-31-item3:electronicsContentCatalog:Online,campaign-31-item4:electronicsContentCatalog:Online
+;Section2A-campaign-32;;Section2A for campaign-32;true;campaign-32-intro:electronicsContentCatalog:Online
+;Section2B-campaign-32;;Section2B for campaign-32;true;campaign-32-item1:electronicsContentCatalog:Online,campaign-32-item2:electronicsContentCatalog:Online,campaign-32-item3:electronicsContentCatalog:Online,campaign-32-item4:electronicsContentCatalog:Online
+;Section2A-campaign-33;;Section2A for campaign-33;true;campaign-33-intro:electronicsContentCatalog:Online
+;Section2B-campaign-33;;Section2B for campaign-33;true;campaign-33-item1:electronicsContentCatalog:Online,campaign-33-item2:electronicsContentCatalog:Online,campaign-33-item3:electronicsContentCatalog:Online,campaign-33-item4:electronicsContentCatalog:Online
+;Section2A-campaign-34;;Section2A for campaign-34;true;campaign-34-intro:electronicsContentCatalog:Online
+;Section2B-campaign-34;;Section2B for campaign-34;true;campaign-34-item1:electronicsContentCatalog:Online,campaign-34-item2:electronicsContentCatalog:Online,campaign-34-item3:electronicsContentCatalog:Online,campaign-34-item4:electronicsContentCatalog:Online
+;Section2A-campaign-35;;Section2A for campaign-35;true;campaign-35-intro:electronicsContentCatalog:Online
+;Section2B-campaign-35;;Section2B for campaign-35;true;campaign-35-item1:electronicsContentCatalog:Online,campaign-35-item2:electronicsContentCatalog:Online,campaign-35-item3:electronicsContentCatalog:Online,campaign-35-item4:electronicsContentCatalog:Online
+;Section2A-campaign-36;;Section2A for campaign-36;true;campaign-36-intro:electronicsContentCatalog:Online
+;Section2B-campaign-36;;Section2B for campaign-36;true;campaign-36-item1:electronicsContentCatalog:Online,campaign-36-item2:electronicsContentCatalog:Online,campaign-36-item3:electronicsContentCatalog:Online,campaign-36-item4:electronicsContentCatalog:Online
+;Section2A-campaign-37;;Section2A for campaign-37;true;campaign-37-intro:electronicsContentCatalog:Online
+;Section2B-campaign-37;;Section2B for campaign-37;true;campaign-37-item1:electronicsContentCatalog:Online,campaign-37-item2:electronicsContentCatalog:Online,campaign-37-item3:electronicsContentCatalog:Online,campaign-37-item4:electronicsContentCatalog:Online
+;Section2A-campaign-38;;Section2A for campaign-38;true;campaign-38-intro:electronicsContentCatalog:Online
+;Section2B-campaign-38;;Section2B for campaign-38;true;campaign-38-item1:electronicsContentCatalog:Online,campaign-38-item2:electronicsContentCatalog:Online,campaign-38-item3:electronicsContentCatalog:Online,campaign-38-item4:electronicsContentCatalog:Online
+;Section2A-campaign-39;;Section2A for campaign-39;true;campaign-39-intro:electronicsContentCatalog:Online
+;Section2B-campaign-39;;Section2B for campaign-39;true;campaign-39-item1:electronicsContentCatalog:Online,campaign-39-item2:electronicsContentCatalog:Online,campaign-39-item3:electronicsContentCatalog:Online,campaign-39-item4:electronicsContentCatalog:Online
+;Section2A-campaign-40;;Section2A for campaign-40;true;campaign-40-intro:electronicsContentCatalog:Online
+;Section2B-campaign-40;;Section2B for campaign-40;true;campaign-40-item1:electronicsContentCatalog:Online,campaign-40-item2:electronicsContentCatalog:Online,campaign-40-item3:electronicsContentCatalog:Online,campaign-40-item4:electronicsContentCatalog:Online
+;Section2A-campaign-41;;Section2A for campaign-41;true;campaign-41-intro:electronicsContentCatalog:Online
+;Section2B-campaign-41;;Section2B for campaign-41;true;campaign-41-item1:electronicsContentCatalog:Online,campaign-41-item2:electronicsContentCatalog:Online,campaign-41-item3:electronicsContentCatalog:Online,campaign-41-item4:electronicsContentCatalog:Online
+;Section2A-campaign-42;;Section2A for campaign-42;true;campaign-42-intro:electronicsContentCatalog:Online
+;Section2B-campaign-42;;Section2B for campaign-42;true;campaign-42-item1:electronicsContentCatalog:Online,campaign-42-item2:electronicsContentCatalog:Online,campaign-42-item3:electronicsContentCatalog:Online,campaign-42-item4:electronicsContentCatalog:Online
+;Section2A-campaign-43;;Section2A for campaign-43;true;campaign-43-intro:electronicsContentCatalog:Online
+;Section2B-campaign-43;;Section2B for campaign-43;true;campaign-43-item1:electronicsContentCatalog:Online,campaign-43-item2:electronicsContentCatalog:Online,campaign-43-item3:electronicsContentCatalog:Online,campaign-43-item4:electronicsContentCatalog:Online
+;Section2A-campaign-44;;Section2A for campaign-44;true;campaign-44-intro:electronicsContentCatalog:Online
+;Section2B-campaign-44;;Section2B for campaign-44;true;campaign-44-item1:electronicsContentCatalog:Online,campaign-44-item2:electronicsContentCatalog:Online,campaign-44-item3:electronicsContentCatalog:Online,campaign-44-item4:electronicsContentCatalog:Online
+;Section2A-campaign-45;;Section2A for campaign-45;true;campaign-45-intro:electronicsContentCatalog:Online
+;Section2B-campaign-45;;Section2B for campaign-45;true;campaign-45-item1:electronicsContentCatalog:Online,campaign-45-item2:electronicsContentCatalog:Online,campaign-45-item3:electronicsContentCatalog:Online,campaign-45-item4:electronicsContentCatalog:Online
+;Section2A-campaign-46;;Section2A for campaign-46;true;campaign-46-intro:electronicsContentCatalog:Online
+;Section2B-campaign-46;;Section2B for campaign-46;true;campaign-46-item1:electronicsContentCatalog:Online,campaign-46-item2:electronicsContentCatalog:Online,campaign-46-item3:electronicsContentCatalog:Online,campaign-46-item4:electronicsContentCatalog:Online
+;Section2A-campaign-47;;Section2A for campaign-47;true;campaign-47-intro:electronicsContentCatalog:Online
+;Section2B-campaign-47;;Section2B for campaign-47;true;campaign-47-item1:electronicsContentCatalog:Online,campaign-47-item2:electronicsContentCatalog:Online,campaign-47-item3:electronicsContentCatalog:Online,campaign-47-item4:electronicsContentCatalog:Online
+;Section2A-campaign-48;;Section2A for campaign-48;true;campaign-48-intro:electronicsContentCatalog:Online
+;Section2B-campaign-48;;Section2B for campaign-48;true;campaign-48-item1:electronicsContentCatalog:Online,campaign-48-item2:electronicsContentCatalog:Online,campaign-48-item3:electronicsContentCatalog:Online,campaign-48-item4:electronicsContentCatalog:Online
+;Section2A-campaign-49;;Section2A for campaign-49;true;campaign-49-intro:electronicsContentCatalog:Online
+;Section2B-campaign-49;;Section2B for campaign-49;true;campaign-49-item1:electronicsContentCatalog:Online,campaign-49-item2:electronicsContentCatalog:Online,campaign-49-item3:electronicsContentCatalog:Online,campaign-49-item4:electronicsContentCatalog:Online
+;Section2A-campaign-50;;Section2A for campaign-50;true;campaign-50-intro:electronicsContentCatalog:Online
+;Section2B-campaign-50;;Section2B for campaign-50;true;campaign-50-item1:electronicsContentCatalog:Online,campaign-50-item2:electronicsContentCatalog:Online,campaign-50-item3:electronicsContentCatalog:Online,campaign-50-item4:electronicsContentCatalog:Online
+;Section2A-campaign-51;;Section2A for campaign-51;true;campaign-51-intro:electronicsContentCatalog:Online
+;Section2B-campaign-51;;Section2B for campaign-51;true;campaign-51-item1:electronicsContentCatalog:Online,campaign-51-item2:electronicsContentCatalog:Online,campaign-51-item3:electronicsContentCatalog:Online,campaign-51-item4:electronicsContentCatalog:Online
+;Section2A-campaign-52;;Section2A for campaign-52;true;campaign-52-intro:electronicsContentCatalog:Online
+;Section2B-campaign-52;;Section2B for campaign-52;true;campaign-52-item1:electronicsContentCatalog:Online,campaign-52-item2:electronicsContentCatalog:Online,campaign-52-item3:electronicsContentCatalog:Online,campaign-52-item4:electronicsContentCatalog:Online
+;Section2A-campaign-53;;Section2A for campaign-53;true;campaign-53-intro:electronicsContentCatalog:Online
+;Section2B-campaign-53;;Section2B for campaign-53;true;campaign-53-item1:electronicsContentCatalog:Online,campaign-53-item2:electronicsContentCatalog:Online,campaign-53-item3:electronicsContentCatalog:Online,campaign-53-item4:electronicsContentCatalog:Online
+;Section2A-campaign-54;;Section2A for campaign-54;true;campaign-54-intro:electronicsContentCatalog:Online
+;Section2B-campaign-54;;Section2B for campaign-54;true;campaign-54-item1:electronicsContentCatalog:Online,campaign-54-item2:electronicsContentCatalog:Online,campaign-54-item3:electronicsContentCatalog:Online,campaign-54-item4:electronicsContentCatalog:Online
+;Section2A-campaign-55;;Section2A for campaign-55;true;campaign-55-intro:electronicsContentCatalog:Online
+;Section2B-campaign-55;;Section2B for campaign-55;true;campaign-55-item1:electronicsContentCatalog:Online,campaign-55-item2:electronicsContentCatalog:Online,campaign-55-item3:electronicsContentCatalog:Online,campaign-55-item4:electronicsContentCatalog:Online
+;Section2A-campaign-56;;Section2A for campaign-56;true;campaign-56-intro:electronicsContentCatalog:Online
+;Section2B-campaign-56;;Section2B for campaign-56;true;campaign-56-item1:electronicsContentCatalog:Online,campaign-56-item2:electronicsContentCatalog:Online,campaign-56-item3:electronicsContentCatalog:Online,campaign-56-item4:electronicsContentCatalog:Online
+;Section2A-campaign-57;;Section2A for campaign-57;true;campaign-57-intro:electronicsContentCatalog:Online
+;Section2B-campaign-57;;Section2B for campaign-57;true;campaign-57-item1:electronicsContentCatalog:Online,campaign-57-item2:electronicsContentCatalog:Online,campaign-57-item3:electronicsContentCatalog:Online,campaign-57-item4:electronicsContentCatalog:Online
+;Section2A-campaign-58;;Section2A for campaign-58;true;campaign-58-intro:electronicsContentCatalog:Online
+;Section2B-campaign-58;;Section2B for campaign-58;true;campaign-58-item1:electronicsContentCatalog:Online,campaign-58-item2:electronicsContentCatalog:Online,campaign-58-item3:electronicsContentCatalog:Online,campaign-58-item4:electronicsContentCatalog:Online
+;Section2A-campaign-59;;Section2A for campaign-59;true;campaign-59-intro:electronicsContentCatalog:Online
+;Section2B-campaign-59;;Section2B for campaign-59;true;campaign-59-item1:electronicsContentCatalog:Online,campaign-59-item2:electronicsContentCatalog:Online,campaign-59-item3:electronicsContentCatalog:Online,campaign-59-item4:electronicsContentCatalog:Online
+;Section2A-campaign-60;;Section2A for campaign-60;true;campaign-60-intro:electronicsContentCatalog:Online
+;Section2B-campaign-60;;Section2B for campaign-60;true;campaign-60-item1:electronicsContentCatalog:Online,campaign-60-item2:electronicsContentCatalog:Online,campaign-60-item3:electronicsContentCatalog:Online,campaign-60-item4:electronicsContentCatalog:Online
+;Section2A-campaign-61;;Section2A for campaign-61;true;campaign-61-intro:electronicsContentCatalog:Online
+;Section2B-campaign-61;;Section2B for campaign-61;true;campaign-61-item1:electronicsContentCatalog:Online,campaign-61-item2:electronicsContentCatalog:Online,campaign-61-item3:electronicsContentCatalog:Online,campaign-61-item4:electronicsContentCatalog:Online
+;Section2A-campaign-62;;Section2A for campaign-62;true;campaign-62-intro:electronicsContentCatalog:Online
+;Section2B-campaign-62;;Section2B for campaign-62;true;campaign-62-item1:electronicsContentCatalog:Online,campaign-62-item2:electronicsContentCatalog:Online,campaign-62-item3:electronicsContentCatalog:Online,campaign-62-item4:electronicsContentCatalog:Online
+;Section2A-campaign-63;;Section2A for campaign-63;true;campaign-63-intro:electronicsContentCatalog:Online
+;Section2B-campaign-63;;Section2B for campaign-63;true;campaign-63-item1:electronicsContentCatalog:Online,campaign-63-item2:electronicsContentCatalog:Online,campaign-63-item3:electronicsContentCatalog:Online,campaign-63-item4:electronicsContentCatalog:Online
+;Section2A-campaign-64;;Section2A for campaign-64;true;campaign-64-intro:electronicsContentCatalog:Online
+;Section2B-campaign-64;;Section2B for campaign-64;true;campaign-64-item1:electronicsContentCatalog:Online,campaign-64-item2:electronicsContentCatalog:Online,campaign-64-item3:electronicsContentCatalog:Online,campaign-64-item4:electronicsContentCatalog:Online
+;Section2A-campaign-65;;Section2A for campaign-65;true;campaign-65-intro:electronicsContentCatalog:Online
+;Section2B-campaign-65;;Section2B for campaign-65;true;campaign-65-item1:electronicsContentCatalog:Online,campaign-65-item2:electronicsContentCatalog:Online,campaign-65-item3:electronicsContentCatalog:Online,campaign-65-item4:electronicsContentCatalog:Online
+;Section2A-campaign-66;;Section2A for campaign-66;true;campaign-66-intro:electronicsContentCatalog:Online
+;Section2B-campaign-66;;Section2B for campaign-66;true;campaign-66-item1:electronicsContentCatalog:Online,campaign-66-item2:electronicsContentCatalog:Online,campaign-66-item3:electronicsContentCatalog:Online,campaign-66-item4:electronicsContentCatalog:Online
+;Section2A-campaign-67;;Section2A for campaign-67;true;campaign-67-intro:electronicsContentCatalog:Online
+;Section2B-campaign-67;;Section2B for campaign-67;true;campaign-67-item1:electronicsContentCatalog:Online,campaign-67-item2:electronicsContentCatalog:Online,campaign-67-item3:electronicsContentCatalog:Online,campaign-67-item4:electronicsContentCatalog:Online
+;Section2A-campaign-68;;Section2A for campaign-68;true;campaign-68-intro:electronicsContentCatalog:Online
+;Section2B-campaign-68;;Section2B for campaign-68;true;campaign-68-item1:electronicsContentCatalog:Online,campaign-68-item2:electronicsContentCatalog:Online,campaign-68-item3:electronicsContentCatalog:Online,campaign-68-item4:electronicsContentCatalog:Online
+;Section2A-campaign-69;;Section2A for campaign-69;true;campaign-69-intro:electronicsContentCatalog:Online
+;Section2B-campaign-69;;Section2B for campaign-69;true;campaign-69-item1:electronicsContentCatalog:Online,campaign-69-item2:electronicsContentCatalog:Online,campaign-69-item3:electronicsContentCatalog:Online
+;Section2A-campaign-70;;Section2A for campaign-70;true;campaign-70-intro:electronicsContentCatalog:Online
+;Section2B-campaign-70;;Section2B for campaign-70;true;campaign-70-item1:electronicsContentCatalog:Online,campaign-70-item2:electronicsContentCatalog:Online,campaign-70-item3:electronicsContentCatalog:Online
+;Section2A-campaign-71;;Section2A for campaign-71;true;campaign-71-intro:electronicsContentCatalog:Online
+;Section2B-campaign-71;;Section2B for campaign-71;true;campaign-71-item1:electronicsContentCatalog:Online,campaign-71-item2:electronicsContentCatalog:Online,campaign-71-item3:electronicsContentCatalog:Online
+;Section2A-campaign-72;;Section2A for campaign-72;true;campaign-72-intro:electronicsContentCatalog:Online
+;Section2B-campaign-72;;Section2B for campaign-72;true;campaign-72-item1:electronicsContentCatalog:Online,campaign-72-item2:electronicsContentCatalog:Online,campaign-72-item3:electronicsContentCatalog:Online
+;Section2A-campaign-73;;Section2A for campaign-73;true;campaign-73-intro:electronicsContentCatalog:Online
+;Section2B-campaign-73;;Section2B for campaign-73;true;campaign-73-item1:electronicsContentCatalog:Online,campaign-73-item2:electronicsContentCatalog:Online,campaign-73-item3:electronicsContentCatalog:Online
+;Section2A-campaign-74;;Section2A for campaign-74;true;campaign-74-intro:electronicsContentCatalog:Online
+;Section2B-campaign-74;;Section2B for campaign-74;true;campaign-74-item1:electronicsContentCatalog:Online,campaign-74-item2:electronicsContentCatalog:Online,campaign-74-item3:electronicsContentCatalog:Online
+;Section2A-campaign-75;;Section2A for campaign-75;true;campaign-75-intro:electronicsContentCatalog:Online
+;Section2B-campaign-75;;Section2B for campaign-75;true;campaign-75-item1:electronicsContentCatalog:Online,campaign-75-item2:electronicsContentCatalog:Online,campaign-75-item3:electronicsContentCatalog:Online
+;Section2A-campaign-76;;Section2A for campaign-76;true;campaign-76-intro:electronicsContentCatalog:Online
+;Section2B-campaign-76;;Section2B for campaign-76;true;campaign-76-item1:electronicsContentCatalog:Online,campaign-76-item2:electronicsContentCatalog:Online,campaign-76-item3:electronicsContentCatalog:Online
+;Section2A-campaign-77;;Section2A for campaign-77;true;campaign-77-intro:electronicsContentCatalog:Online
+;Section2B-campaign-77;;Section2B for campaign-77;true;campaign-77-item1:electronicsContentCatalog:Online,campaign-77-item2:electronicsContentCatalog:Online,campaign-77-item3:electronicsContentCatalog:Online
+;Section2A-campaign-78;;Section2A for campaign-78;true;campaign-78-intro:electronicsContentCatalog:Online
+;Section2B-campaign-78;;Section2B for campaign-78;true;campaign-78-item1:electronicsContentCatalog:Online,campaign-78-item2:electronicsContentCatalog:Online,campaign-78-item3:electronicsContentCatalog:Online
+;Section2A-campaign-79;;Section2A for campaign-79;true;campaign-79-intro:electronicsContentCatalog:Online
+;Section2B-campaign-79;;Section2B for campaign-79;true;campaign-79-item1:electronicsContentCatalog:Online,campaign-79-item2:electronicsContentCatalog:Online,campaign-79-item3:electronicsContentCatalog:Online
+;Section2A-campaign-80;;Section2A for campaign-80;true;campaign-80-intro:electronicsContentCatalog:Online
+;Section2B-campaign-80;;Section2B for campaign-80;true;campaign-80-item1:electronicsContentCatalog:Online,campaign-80-item2:electronicsContentCatalog:Online,campaign-80-item3:electronicsContentCatalog:Online
+
+INSERT_UPDATE ContentPage;uid[unique=true];$ccv;name;title[lang=ja];title[lang=en];masterTemplate(uid,catalogVersion(catalog(id),version));defaultPage;approvalStatus(code);label;homepage
+;homepage;;Home;ホーム;Home;LandingPage2Template:electronicsContentCatalog:Online;true;approved;homepage;true
+;cartPage;;Cart;カート;Cart;CartPageTemplate:electronicsContentCatalog:Online;true;approved;/cart;false
+;search;;Search Results;検索結果;Search Results;SearchResultsListPageTemplate:electronicsContentCatalog:Online;true;approved;search;false
+;checkout;;Checkout;ご注文手続き;Checkout;MultiStepCheckoutSummaryPageTemplate:electronicsContentCatalog:Online;true;approved;/checkout;false
+;orderConfirmation;;Order Confirmation;ご注文完了;Order Confirmation;OrderConfirmationPageTemplate:electronicsContentCatalog:Online;true;approved;/order-confirmation;false
+;faq;;FAQ;よくある質問;FAQ;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/faq;false
+;terms;;Terms of Use;利用規約;Terms of Use;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/terms;false
+;privacy;;Privacy Policy;個人情報保護方針;Privacy Policy;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/privacy;false
+;contact;;Contact Us;お問い合わせ;Contact Us;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/contact;false
+;about;;About Us;XYZ電機について;About Us;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/about;false
+;shipping;;Shipping;配送について;Shipping;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/shipping;false
+;returns;;Returns;返品について;Returns;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/returns;false
+;help;;Help;ヘルプ;Help;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/help;false
+;sitemap;;Sitemap;サイトマップ;Sitemap;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/sitemap;false
+;company;;Company;会社概要;Company;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/company;false
+;my-account;;My Account;マイアカウント;My Account;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/my-account;false
+;store-finder;;Store Finder;店舗を探す;Store Finder;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/store-finder;false
+;campaign-01;;Campaign 1;キャンペーン 1;Campaign 1;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-01;false
+;campaign-02;;Campaign 2;キャンペーン 2;Campaign 2;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-02;false
+;campaign-03;;Campaign 3;キャンペーン 3;Campaign 3;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-03;false
+;campaign-04;;Campaign 4;キャンペーン 4;Campaign 4;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-04;false
+;campaign-05;;Campaign 5;キャンペーン 5;Campaign 5;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-05;false
+;campaign-06;;Campaign 6;キャンペーン 6;Campaign 6;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-06;false
+;campaign-07;;Campaign 7;キャンペーン 7;Campaign 7;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-07;false
+;campaign-08;;Campaign 8;キャンペーン 8;Campaign 8;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-08;false
+;campaign-09;;Campaign 9;キャンペーン 9;Campaign 9;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-09;false
+;campaign-10;;Campaign 10;キャンペーン 10;Campaign 10;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-10;false
+;campaign-11;;Campaign 11;キャンペーン 11;Campaign 11;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-11;false
+;campaign-12;;Campaign 12;キャンペーン 12;Campaign 12;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-12;false
+;campaign-13;;Campaign 13;キャンペーン 13;Campaign 13;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-13;false
+;campaign-14;;Campaign 14;キャンペーン 14;Campaign 14;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-14;false
+;campaign-15;;Campaign 15;キャンペーン 15;Campaign 15;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-15;false
+;campaign-16;;Campaign 16;キャンペーン 16;Campaign 16;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-16;false
+;campaign-17;;Campaign 17;キャンペーン 17;Campaign 17;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-17;false
+;campaign-18;;Campaign 18;キャンペーン 18;Campaign 18;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-18;false
+;campaign-19;;Campaign 19;キャンペーン 19;Campaign 19;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-19;false
+;campaign-20;;Campaign 20;キャンペーン 20;Campaign 20;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-20;false
+;campaign-21;;Campaign 21;キャンペーン 21;Campaign 21;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-21;false
+;campaign-22;;Campaign 22;キャンペーン 22;Campaign 22;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-22;false
+;campaign-23;;Campaign 23;キャンペーン 23;Campaign 23;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-23;false
+;campaign-24;;Campaign 24;キャンペーン 24;Campaign 24;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-24;false
+;campaign-25;;Campaign 25;キャンペーン 25;Campaign 25;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-25;false
+;campaign-26;;Campaign 26;キャンペーン 26;Campaign 26;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-26;false
+;campaign-27;;Campaign 27;キャンペーン 27;Campaign 27;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-27;false
+;campaign-28;;Campaign 28;キャンペーン 28;Campaign 28;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-28;false
+;campaign-29;;Campaign 29;キャンペーン 29;Campaign 29;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-29;false
+;campaign-30;;Campaign 30;キャンペーン 30;Campaign 30;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-30;false
+;campaign-31;;Campaign 31;キャンペーン 31;Campaign 31;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-31;false
+;campaign-32;;Campaign 32;キャンペーン 32;Campaign 32;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-32;false
+;campaign-33;;Campaign 33;キャンペーン 33;Campaign 33;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-33;false
+;campaign-34;;Campaign 34;キャンペーン 34;Campaign 34;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-34;false
+;campaign-35;;Campaign 35;キャンペーン 35;Campaign 35;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-35;false
+;campaign-36;;Campaign 36;キャンペーン 36;Campaign 36;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-36;false
+;campaign-37;;Campaign 37;キャンペーン 37;Campaign 37;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-37;false
+;campaign-38;;Campaign 38;キャンペーン 38;Campaign 38;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-38;false
+;campaign-39;;Campaign 39;キャンペーン 39;Campaign 39;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-39;false
+;campaign-40;;Campaign 40;キャンペーン 40;Campaign 40;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-40;false
+;campaign-41;;Campaign 41;キャンペーン 41;Campaign 41;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-41;false
+;campaign-42;;Campaign 42;キャンペーン 42;Campaign 42;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-42;false
+;campaign-43;;Campaign 43;キャンペーン 43;Campaign 43;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-43;false
+;campaign-44;;Campaign 44;キャンペーン 44;Campaign 44;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-44;false
+;campaign-45;;Campaign 45;キャンペーン 45;Campaign 45;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-45;false
+;campaign-46;;Campaign 46;キャンペーン 46;Campaign 46;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-46;false
+;campaign-47;;Campaign 47;キャンペーン 47;Campaign 47;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-47;false
+;campaign-48;;Campaign 48;キャンペーン 48;Campaign 48;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-48;false
+;campaign-49;;Campaign 49;キャンペーン 49;Campaign 49;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-49;false
+;campaign-50;;Campaign 50;キャンペーン 50;Campaign 50;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-50;false
+;campaign-51;;Campaign 51;キャンペーン 51;Campaign 51;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-51;false
+;campaign-52;;Campaign 52;キャンペーン 52;Campaign 52;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-52;false
+;campaign-53;;Campaign 53;キャンペーン 53;Campaign 53;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-53;false
+;campaign-54;;Campaign 54;キャンペーン 54;Campaign 54;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-54;false
+;campaign-55;;Campaign 55;キャンペーン 55;Campaign 55;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-55;false
+;campaign-56;;Campaign 56;キャンペーン 56;Campaign 56;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-56;false
+;campaign-57;;Campaign 57;キャンペーン 57;Campaign 57;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-57;false
+;campaign-58;;Campaign 58;キャンペーン 58;Campaign 58;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-58;false
+;campaign-59;;Campaign 59;キャンペーン 59;Campaign 59;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-59;false
+;campaign-60;;Campaign 60;キャンペーン 60;Campaign 60;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-60;false
+;campaign-61;;Campaign 61;キャンペーン 61;Campaign 61;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-61;false
+;campaign-62;;Campaign 62;キャンペーン 62;Campaign 62;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-62;false
+;campaign-63;;Campaign 63;キャンペーン 63;Campaign 63;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-63;false
+;campaign-64;;Campaign 64;キャンペーン 64;Campaign 64;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-64;false
+;campaign-65;;Campaign 65;キャンペーン 65;Campaign 65;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-65;false
+;campaign-66;;Campaign 66;キャンペーン 66;Campaign 66;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-66;false
+;campaign-67;;Campaign 67;キャンペーン 67;Campaign 67;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-67;false
+;campaign-68;;Campaign 68;キャンペーン 68;Campaign 68;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-68;false
+;campaign-69;;Campaign 69;キャンペーン 69;Campaign 69;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-69;false
+;campaign-70;;Campaign 70;キャンペーン 70;Campaign 70;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-70;false
+;campaign-71;;Campaign 71;キャンペーン 71;Campaign 71;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-71;false
+;campaign-72;;Campaign 72;キャンペーン 72;Campaign 72;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-72;false
+;campaign-73;;Campaign 73;キャンペーン 73;Campaign 73;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-73;false
+;campaign-74;;Campaign 74;キャンペーン 74;Campaign 74;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-74;false
+;campaign-75;;Campaign 75;キャンペーン 75;Campaign 75;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-75;false
+;campaign-76;;Campaign 76;キャンペーン 76;Campaign 76;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-76;false
+;campaign-77;;Campaign 77;キャンペーン 77;Campaign 77;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-77;false
+;campaign-78;;Campaign 78;キャンペーン 78;Campaign 78;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-78;false
+;campaign-79;;Campaign 79;キャンペーン 79;Campaign 79;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-79;false
+;campaign-80;;Campaign 80;キャンペーン 80;Campaign 80;ContentPage1Template:electronicsContentCatalog:Online;true;approved;/campaign-80;false
+
+INSERT_UPDATE ProductPage;uid[unique=true];$ccv;name;title[lang=ja];title[lang=en];masterTemplate(uid,catalogVersion(catalog(id),version));defaultPage;approvalStatus(code)
+;productDetails;;Product Details;商品詳細;Product Details;ProductDetailsPageTemplate:electronicsContentCatalog:Online;true;approved
+
+INSERT_UPDATE CategoryPage;uid[unique=true];$ccv;name;title[lang=ja];title[lang=en];masterTemplate(uid,catalogVersion(catalog(id),version));defaultPage;approvalStatus(code)
+;productList;;Product List;商品一覧;Product List;ProductListPageTemplate:electronicsContentCatalog:Online;true;approved
+;categoryLanding;;Category Landing;カテゴリトップ;Category Landing;CategoryPageTemplate:electronicsContentCatalog:Online;false;approved
+
+INSERT_UPDATE ContentSlotForTemplate;uid[unique=true];$ccv;name;position;pageTemplate(uid,catalogVersion(catalog(id),version));contentSlot(uid,catalogVersion(catalog(id),version))
+;csft-PreHeader-LandingPage2Template;;PreHeader for LandingPage2Template;PreHeader;LandingPage2Template:electronicsContentCatalog:Online;PreHeaderSlot:electronicsContentCatalog:Online
+;csft-SiteLogo-LandingPage2Template;;SiteLogo for LandingPage2Template;SiteLogo;LandingPage2Template:electronicsContentCatalog:Online;SiteLogoSlot:electronicsContentCatalog:Online
+;csft-SearchBox-LandingPage2Template;;SearchBox for LandingPage2Template;SearchBox;LandingPage2Template:electronicsContentCatalog:Online;SearchBoxSlot:electronicsContentCatalog:Online
+;csft-MiniCart-LandingPage2Template;;MiniCart for LandingPage2Template;MiniCart;LandingPage2Template:electronicsContentCatalog:Online;MiniCartSlot:electronicsContentCatalog:Online
+;csft-NavigationBar-LandingPage2Template;;NavigationBar for LandingPage2Template;NavigationBar;LandingPage2Template:electronicsContentCatalog:Online;NavigationBarSlot:electronicsContentCatalog:Online
+;csft-Footer-LandingPage2Template;;Footer for LandingPage2Template;Footer;LandingPage2Template:electronicsContentCatalog:Online;FooterSlot:electronicsContentCatalog:Online
+;csft-PreHeader-ContentPage1Template;;PreHeader for ContentPage1Template;PreHeader;ContentPage1Template:electronicsContentCatalog:Online;PreHeaderSlot:electronicsContentCatalog:Online
+;csft-SiteLogo-ContentPage1Template;;SiteLogo for ContentPage1Template;SiteLogo;ContentPage1Template:electronicsContentCatalog:Online;SiteLogoSlot:electronicsContentCatalog:Online
+;csft-SearchBox-ContentPage1Template;;SearchBox for ContentPage1Template;SearchBox;ContentPage1Template:electronicsContentCatalog:Online;SearchBoxSlot:electronicsContentCatalog:Online
+;csft-MiniCart-ContentPage1Template;;MiniCart for ContentPage1Template;MiniCart;ContentPage1Template:electronicsContentCatalog:Online;MiniCartSlot:electronicsContentCatalog:Online
+;csft-NavigationBar-ContentPage1Template;;NavigationBar for ContentPage1Template;NavigationBar;ContentPage1Template:electronicsContentCatalog:Online;NavigationBarSlot:electronicsContentCatalog:Online
+;csft-Footer-ContentPage1Template;;Footer for ContentPage1Template;Footer;ContentPage1Template:electronicsContentCatalog:Online;FooterSlot:electronicsContentCatalog:Online
+;csft-PreHeader-ProductDetailsPageTemplate;;PreHeader for ProductDetailsPageTemplate;PreHeader;ProductDetailsPageTemplate:electronicsContentCatalog:Online;PreHeaderSlot:electronicsContentCatalog:Online
+;csft-SiteLogo-ProductDetailsPageTemplate;;SiteLogo for ProductDetailsPageTemplate;SiteLogo;ProductDetailsPageTemplate:electronicsContentCatalog:Online;SiteLogoSlot:electronicsContentCatalog:Online
+;csft-SearchBox-ProductDetailsPageTemplate;;SearchBox for ProductDetailsPageTemplate;SearchBox;ProductDetailsPageTemplate:electronicsContentCatalog:Online;SearchBoxSlot:electronicsContentCatalog:Online
+;csft-MiniCart-ProductDetailsPageTemplate;;MiniCart for ProductDetailsPageTemplate;MiniCart;ProductDetailsPageTemplate:electronicsContentCatalog:Online;MiniCartSlot:electronicsContentCatalog:Online
+;csft-NavigationBar-ProductDetailsPageTemplate;;NavigationBar for ProductDetailsPageTemplate;NavigationBar;ProductDetailsPageTemplate:electronicsContentCatalog:Online;NavigationBarSlot:electronicsContentCatalog:Online
+;csft-Footer-ProductDetailsPageTemplate;;Footer for ProductDetailsPageTemplate;Footer;ProductDetailsPageTemplate:electronicsContentCatalog:Online;FooterSlot:electronicsContentCatalog:Online
+;csft-PreHeader-ProductListPageTemplate;;PreHeader for ProductListPageTemplate;PreHeader;ProductListPageTemplate:electronicsContentCatalog:Online;PreHeaderSlot:electronicsContentCatalog:Online
+;csft-SiteLogo-ProductListPageTemplate;;SiteLogo for ProductListPageTemplate;SiteLogo;ProductListPageTemplate:electronicsContentCatalog:Online;SiteLogoSlot:electronicsContentCatalog:Online
+;csft-SearchBox-ProductListPageTemplate;;SearchBox for ProductListPageTemplate;SearchBox;ProductListPageTemplate:electronicsContentCatalog:Online;SearchBoxSlot:electronicsContentCatalog:Online
+;csft-MiniCart-ProductListPageTemplate;;MiniCart for ProductListPageTemplate;MiniCart;ProductListPageTemplate:electronicsContentCatalog:Online;MiniCartSlot:electronicsContentCatalog:Online
+;csft-NavigationBar-ProductListPageTemplate;;NavigationBar for ProductListPageTemplate;NavigationBar;ProductListPageTemplate:electronicsContentCatalog:Online;NavigationBarSlot:electronicsContentCatalog:Online
+;csft-Footer-ProductListPageTemplate;;Footer for ProductListPageTemplate;Footer;ProductListPageTemplate:electronicsContentCatalog:Online;FooterSlot:electronicsContentCatalog:Online
+;csft-PreHeader-SearchResultsListPageTemplate;;PreHeader for SearchResultsListPageTemplate;PreHeader;SearchResultsListPageTemplate:electronicsContentCatalog:Online;PreHeaderSlot:electronicsContentCatalog:Online
+;csft-SiteLogo-SearchResultsListPageTemplate;;SiteLogo for SearchResultsListPageTemplate;SiteLogo;SearchResultsListPageTemplate:electronicsContentCatalog:Online;SiteLogoSlot:electronicsContentCatalog:Online
+;csft-SearchBox-SearchResultsListPageTemplate;;SearchBox for SearchResultsListPageTemplate;SearchBox;SearchResultsListPageTemplate:electronicsContentCatalog:Online;SearchBoxSlot:electronicsContentCatalog:Online
+;csft-MiniCart-SearchResultsListPageTemplate;;MiniCart for SearchResultsListPageTemplate;MiniCart;SearchResultsListPageTemplate:electronicsContentCatalog:Online;MiniCartSlot:electronicsContentCatalog:Online
+;csft-NavigationBar-SearchResultsListPageTemplate;;NavigationBar for SearchResultsListPageTemplate;NavigationBar;SearchResultsListPageTemplate:electronicsContentCatalog:Online;NavigationBarSlot:electronicsContentCatalog:Online
+;csft-Footer-SearchResultsListPageTemplate;;Footer for SearchResultsListPageTemplate;Footer;SearchResultsListPageTemplate:electronicsContentCatalog:Online;FooterSlot:electronicsContentCatalog:Online
+;csft-PreHeader-CategoryPageTemplate;;PreHeader for CategoryPageTemplate;PreHeader;CategoryPageTemplate:electronicsContentCatalog:Online;PreHeaderSlot:electronicsContentCatalog:Online
+;csft-SiteLogo-CategoryPageTemplate;;SiteLogo for CategoryPageTemplate;SiteLogo;CategoryPageTemplate:electronicsContentCatalog:Online;SiteLogoSlot:electronicsContentCatalog:Online
+;csft-SearchBox-CategoryPageTemplate;;SearchBox for CategoryPageTemplate;SearchBox;CategoryPageTemplate:electronicsContentCatalog:Online;SearchBoxSlot:electronicsContentCatalog:Online
+;csft-MiniCart-CategoryPageTemplate;;MiniCart for CategoryPageTemplate;MiniCart;CategoryPageTemplate:electronicsContentCatalog:Online;MiniCartSlot:electronicsContentCatalog:Online
+;csft-NavigationBar-CategoryPageTemplate;;NavigationBar for CategoryPageTemplate;NavigationBar;CategoryPageTemplate:electronicsContentCatalog:Online;NavigationBarSlot:electronicsContentCatalog:Online
+;csft-Footer-CategoryPageTemplate;;Footer for CategoryPageTemplate;Footer;CategoryPageTemplate:electronicsContentCatalog:Online;FooterSlot:electronicsContentCatalog:Online
+;csft-PreHeader-CartPageTemplate;;PreHeader for CartPageTemplate;PreHeader;CartPageTemplate:electronicsContentCatalog:Online;PreHeaderSlot:electronicsContentCatalog:Online
+;csft-SiteLogo-CartPageTemplate;;SiteLogo for CartPageTemplate;SiteLogo;CartPageTemplate:electronicsContentCatalog:Online;SiteLogoSlot:electronicsContentCatalog:Online
+;csft-SearchBox-CartPageTemplate;;SearchBox for CartPageTemplate;SearchBox;CartPageTemplate:electronicsContentCatalog:Online;SearchBoxSlot:electronicsContentCatalog:Online
+;csft-MiniCart-CartPageTemplate;;MiniCart for CartPageTemplate;MiniCart;CartPageTemplate:electronicsContentCatalog:Online;MiniCartSlot:electronicsContentCatalog:Online
+;csft-NavigationBar-CartPageTemplate;;NavigationBar for CartPageTemplate;NavigationBar;CartPageTemplate:electronicsContentCatalog:Online;NavigationBarSlot:electronicsContentCatalog:Online
+;csft-Footer-CartPageTemplate;;Footer for CartPageTemplate;Footer;CartPageTemplate:electronicsContentCatalog:Online;FooterSlot:electronicsContentCatalog:Online
+;csft-PreHeader-MultiStepCheckoutSummaryPageTemplate;;PreHeader for MultiStepCheckoutSummaryPageTemplate;PreHeader;MultiStepCheckoutSummaryPageTemplate:electronicsContentCatalog:Online;PreHeaderSlot:electronicsContentCatalog:Online
+;csft-SiteLogo-MultiStepCheckoutSummaryPageTemplate;;SiteLogo for MultiStepCheckoutSummaryPageTemplate;SiteLogo;MultiStepCheckoutSummaryPageTemplate:electronicsContentCatalog:Online;SiteLogoSlot:electronicsContentCatalog:Online
+;csft-SearchBox-MultiStepCheckoutSummaryPageTemplate;;SearchBox for MultiStepCheckoutSummaryPageTemplate;SearchBox;MultiStepCheckoutSummaryPageTemplate:electronicsContentCatalog:Online;SearchBoxSlot:electronicsContentCatalog:Online
+;csft-MiniCart-MultiStepCheckoutSummaryPageTemplate;;MiniCart for MultiStepCheckoutSummaryPageTemplate;MiniCart;MultiStepCheckoutSummaryPageTemplate:electronicsContentCatalog:Online;MiniCartSlot:electronicsContentCatalog:Online
+;csft-NavigationBar-MultiStepCheckoutSummaryPageTemplate;;NavigationBar for MultiStepCheckoutSummaryPageTemplate;NavigationBar;MultiStepCheckoutSummaryPageTemplate:electronicsContentCatalog:Online;NavigationBarSlot:electronicsContentCatalog:Online
+;csft-Footer-MultiStepCheckoutSummaryPageTemplate;;Footer for MultiStepCheckoutSummaryPageTemplate;Footer;MultiStepCheckoutSummaryPageTemplate:electronicsContentCatalog:Online;FooterSlot:electronicsContentCatalog:Online
+;csft-PreHeader-OrderConfirmationPageTemplate;;PreHeader for OrderConfirmationPageTemplate;PreHeader;OrderConfirmationPageTemplate:electronicsContentCatalog:Online;PreHeaderSlot:electronicsContentCatalog:Online
+;csft-SiteLogo-OrderConfirmationPageTemplate;;SiteLogo for OrderConfirmationPageTemplate;SiteLogo;OrderConfirmationPageTemplate:electronicsContentCatalog:Online;SiteLogoSlot:electronicsContentCatalog:Online
+;csft-SearchBox-OrderConfirmationPageTemplate;;SearchBox for OrderConfirmationPageTemplate;SearchBox;OrderConfirmationPageTemplate:electronicsContentCatalog:Online;SearchBoxSlot:electronicsContentCatalog:Online
+;csft-MiniCart-OrderConfirmationPageTemplate;;MiniCart for OrderConfirmationPageTemplate;MiniCart;OrderConfirmationPageTemplate:electronicsContentCatalog:Online;MiniCartSlot:electronicsContentCatalog:Online
+;csft-NavigationBar-OrderConfirmationPageTemplate;;NavigationBar for OrderConfirmationPageTemplate;NavigationBar;OrderConfirmationPageTemplate:electronicsContentCatalog:Online;NavigationBarSlot:electronicsContentCatalog:Online
+;csft-Footer-OrderConfirmationPageTemplate;;Footer for OrderConfirmationPageTemplate;Footer;OrderConfirmationPageTemplate:electronicsContentCatalog:Online;FooterSlot:electronicsContentCatalog:Online
+
+INSERT_UPDATE ContentSlotForPage;uid[unique=true];$ccv;name;position;page(uid,catalogVersion(catalog(id),version));contentSlot(uid,catalogVersion(catalog(id),version))
+;csfp-Section1-homepage;;Section1 for homepage;Section1;homepage:electronicsContentCatalog:Online;Section1-homepage:electronicsContentCatalog:Online
+;csfp-Section2A-homepage;;Section2A for homepage;Section2A;homepage:electronicsContentCatalog:Online;Section2A-homepage:electronicsContentCatalog:Online
+;csfp-Section2B-homepage;;Section2B for homepage;Section2B;homepage:electronicsContentCatalog:Online;Section2B-homepage:electronicsContentCatalog:Online
+;csfp-Section3-homepage;;Section3 for homepage;Section3;homepage:electronicsContentCatalog:Online;Section3-homepage:electronicsContentCatalog:Online
+;csfp-Section4-homepage;;Section4 for homepage;Section4;homepage:electronicsContentCatalog:Online;Section4-homepage:electronicsContentCatalog:Online
+;csfp-Section5-homepage;;Section5 for homepage;Section5;homepage:electronicsContentCatalog:Online;Section5-homepage:electronicsContentCatalog:Online
+;csfp-TopContent-cartPage;;TopContent for cartPage;TopContent;cartPage:electronicsContentCatalog:Online;TopContent-cartPage:electronicsContentCatalog:Online
+;csfp-CenterRightContentSlot-cartPage;;CenterRightContentSlot for cartPage;CenterRightContentSlot;cartPage:electronicsContentCatalog:Online;CenterRightContentSlot-cartPage:electronicsContentCatalog:Online
+;csfp-EmptyCartMiddleContent-cartPage;;EmptyCartMiddleContent for cartPage;EmptyCartMiddleContent;cartPage:electronicsContentCatalog:Online;EmptyCartMiddleContent-cartPage:electronicsContentCatalog:Online
+;csfp-SearchResultsListSlot-search;;SearchResultsListSlot for search;SearchResultsListSlot;search:electronicsContentCatalog:Online;SearchResultsListSlot-search:electronicsContentCatalog:Online
+;csfp-BodyContent-checkout;;BodyContent for checkout;BodyContent;checkout:electronicsContentCatalog:Online;BodyContent-checkout:electronicsContentCatalog:Online
+;csfp-SideContent-checkout;;SideContent for checkout;SideContent;checkout:electronicsContentCatalog:Online;SideContent-checkout:electronicsContentCatalog:Online
+;csfp-BodyContent-orderConfirmation;;BodyContent for orderConfirmation;BodyContent;orderConfirmation:electronicsContentCatalog:Online;BodyContent-orderConfirmation:electronicsContentCatalog:Online
+;csfp-Summary-productDetails;;Summary for productDetails;Summary;productDetails:electronicsContentCatalog:Online;Summary-productDetails:electronicsContentCatalog:Online
+;csfp-UpSelling-productDetails;;UpSelling for productDetails;UpSelling;productDetails:electronicsContentCatalog:Online;UpSelling-productDetails:electronicsContentCatalog:Online
+;csfp-CrossSelling-productDetails;;CrossSelling for productDetails;CrossSelling;productDetails:electronicsContentCatalog:Online;CrossSelling-productDetails:electronicsContentCatalog:Online
+;csfp-Tabs-productDetails;;Tabs for productDetails;Tabs;productDetails:electronicsContentCatalog:Online;Tabs-productDetails:electronicsContentCatalog:Online
+;csfp-ProductLeftRefinements-productList;;ProductLeftRefinements for productList;ProductLeftRefinements;productList:electronicsContentCatalog:Online;ProductLeftRefinements-productList:electronicsContentCatalog:Online
+;csfp-ProductListSlot-productList;;ProductListSlot for productList;ProductListSlot;productList:electronicsContentCatalog:Online;ProductListSlot-productList:electronicsContentCatalog:Online
+;csfp-ProductLeftRefinements-categoryLanding;;ProductLeftRefinements for categoryLanding;ProductLeftRefinements;categoryLanding:electronicsContentCatalog:Online;ProductLeftRefinements-categoryLanding:electronicsContentCatalog:Online
+;csfp-ProductListSlot-categoryLanding;;ProductListSlot for categoryLanding;ProductListSlot;categoryLanding:electronicsContentCatalog:Online;ProductListSlot-categoryLanding:electronicsContentCatalog:Online
+;csfp-Section2A-faq;;Section2A for faq;Section2A;faq:electronicsContentCatalog:Online;Section2A-faq:electronicsContentCatalog:Online
+;csfp-Section2B-faq;;Section2B for faq;Section2B;faq:electronicsContentCatalog:Online;Section2B-faq:electronicsContentCatalog:Online
+;csfp-Section2A-terms;;Section2A for terms;Section2A;terms:electronicsContentCatalog:Online;Section2A-terms:electronicsContentCatalog:Online
+;csfp-Section2B-terms;;Section2B for terms;Section2B;terms:electronicsContentCatalog:Online;Section2B-terms:electronicsContentCatalog:Online
+;csfp-Section2A-privacy;;Section2A for privacy;Section2A;privacy:electronicsContentCatalog:Online;Section2A-privacy:electronicsContentCatalog:Online
+;csfp-Section2B-privacy;;Section2B for privacy;Section2B;privacy:electronicsContentCatalog:Online;Section2B-privacy:electronicsContentCatalog:Online
+;csfp-Section2A-contact;;Section2A for contact;Section2A;contact:electronicsContentCatalog:Online;Section2A-contact:electronicsContentCatalog:Online
+;csfp-Section2B-contact;;Section2B for contact;Section2B;contact:electronicsContentCatalog:Online;Section2B-contact:electronicsContentCatalog:Online
+;csfp-Section2A-about;;Section2A for about;Section2A;about:electronicsContentCatalog:Online;Section2A-about:electronicsContentCatalog:Online
+;csfp-Section2B-about;;Section2B for about;Section2B;about:electronicsContentCatalog:Online;Section2B-about:electronicsContentCatalog:Online
+;csfp-Section2A-shipping;;Section2A for shipping;Section2A;shipping:electronicsContentCatalog:Online;Section2A-shipping:electronicsContentCatalog:Online
+;csfp-Section2B-shipping;;Section2B for shipping;Section2B;shipping:electronicsContentCatalog:Online;Section2B-shipping:electronicsContentCatalog:Online
+;csfp-Section2A-returns;;Section2A for returns;Section2A;returns:electronicsContentCatalog:Online;Section2A-returns:electronicsContentCatalog:Online
+;csfp-Section2B-returns;;Section2B for returns;Section2B;returns:electronicsContentCatalog:Online;Section2B-returns:electronicsContentCatalog:Online
+;csfp-Section2A-help;;Section2A for help;Section2A;help:electronicsContentCatalog:Online;Section2A-help:electronicsContentCatalog:Online
+;csfp-Section2B-help;;Section2B for help;Section2B;help:electronicsContentCatalog:Online;Section2B-help:electronicsContentCatalog:Online
+;csfp-Section2A-sitemap;;Section2A for sitemap;Section2A;sitemap:electronicsContentCatalog:Online;Section2A-sitemap:electronicsContentCatalog:Online
+;csfp-Section2B-sitemap;;Section2B for sitemap;Section2B;sitemap:electronicsContentCatalog:Online;Section2B-sitemap:electronicsContentCatalog:Online
+;csfp-Section2A-company;;Section2A for company;Section2A;company:electronicsContentCatalog:Online;Section2A-company:electronicsContentCatalog:Online
+;csfp-Section2B-company;;Section2B for company;Section2B;company:electronicsContentCatalog:Online;Section2B-company:electronicsContentCatalog:Online
+;csfp-Section2A-my-account;;Section2A for my-account;Section2A;my-account:electronicsContentCatalog:Online;Section2A-my-account:electronicsContentCatalog:Online
+;csfp-Section2B-my-account;;Section2B for my-account;Section2B;my-account:electronicsContentCatalog:Online;Section2B-my-account:electronicsContentCatalog:Online
+;csfp-Section2A-store-finder;;Section2A for store-finder;Section2A;store-finder:electronicsContentCatalog:Online;Section2A-store-finder:electronicsContentCatalog:Online
+;csfp-Section2B-store-finder;;Section2B for store-finder;Section2B;store-finder:electronicsContentCatalog:Online;Section2B-store-finder:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-01;;Section2A for campaign-01;Section2A;campaign-01:electronicsContentCatalog:Online;Section2A-campaign-01:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-01;;Section2B for campaign-01;Section2B;campaign-01:electronicsContentCatalog:Online;Section2B-campaign-01:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-02;;Section2A for campaign-02;Section2A;campaign-02:electronicsContentCatalog:Online;Section2A-campaign-02:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-02;;Section2B for campaign-02;Section2B;campaign-02:electronicsContentCatalog:Online;Section2B-campaign-02:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-03;;Section2A for campaign-03;Section2A;campaign-03:electronicsContentCatalog:Online;Section2A-campaign-03:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-03;;Section2B for campaign-03;Section2B;campaign-03:electronicsContentCatalog:Online;Section2B-campaign-03:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-04;;Section2A for campaign-04;Section2A;campaign-04:electronicsContentCatalog:Online;Section2A-campaign-04:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-04;;Section2B for campaign-04;Section2B;campaign-04:electronicsContentCatalog:Online;Section2B-campaign-04:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-05;;Section2A for campaign-05;Section2A;campaign-05:electronicsContentCatalog:Online;Section2A-campaign-05:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-05;;Section2B for campaign-05;Section2B;campaign-05:electronicsContentCatalog:Online;Section2B-campaign-05:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-06;;Section2A for campaign-06;Section2A;campaign-06:electronicsContentCatalog:Online;Section2A-campaign-06:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-06;;Section2B for campaign-06;Section2B;campaign-06:electronicsContentCatalog:Online;Section2B-campaign-06:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-07;;Section2A for campaign-07;Section2A;campaign-07:electronicsContentCatalog:Online;Section2A-campaign-07:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-07;;Section2B for campaign-07;Section2B;campaign-07:electronicsContentCatalog:Online;Section2B-campaign-07:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-08;;Section2A for campaign-08;Section2A;campaign-08:electronicsContentCatalog:Online;Section2A-campaign-08:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-08;;Section2B for campaign-08;Section2B;campaign-08:electronicsContentCatalog:Online;Section2B-campaign-08:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-09;;Section2A for campaign-09;Section2A;campaign-09:electronicsContentCatalog:Online;Section2A-campaign-09:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-09;;Section2B for campaign-09;Section2B;campaign-09:electronicsContentCatalog:Online;Section2B-campaign-09:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-10;;Section2A for campaign-10;Section2A;campaign-10:electronicsContentCatalog:Online;Section2A-campaign-10:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-10;;Section2B for campaign-10;Section2B;campaign-10:electronicsContentCatalog:Online;Section2B-campaign-10:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-11;;Section2A for campaign-11;Section2A;campaign-11:electronicsContentCatalog:Online;Section2A-campaign-11:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-11;;Section2B for campaign-11;Section2B;campaign-11:electronicsContentCatalog:Online;Section2B-campaign-11:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-12;;Section2A for campaign-12;Section2A;campaign-12:electronicsContentCatalog:Online;Section2A-campaign-12:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-12;;Section2B for campaign-12;Section2B;campaign-12:electronicsContentCatalog:Online;Section2B-campaign-12:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-13;;Section2A for campaign-13;Section2A;campaign-13:electronicsContentCatalog:Online;Section2A-campaign-13:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-13;;Section2B for campaign-13;Section2B;campaign-13:electronicsContentCatalog:Online;Section2B-campaign-13:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-14;;Section2A for campaign-14;Section2A;campaign-14:electronicsContentCatalog:Online;Section2A-campaign-14:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-14;;Section2B for campaign-14;Section2B;campaign-14:electronicsContentCatalog:Online;Section2B-campaign-14:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-15;;Section2A for campaign-15;Section2A;campaign-15:electronicsContentCatalog:Online;Section2A-campaign-15:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-15;;Section2B for campaign-15;Section2B;campaign-15:electronicsContentCatalog:Online;Section2B-campaign-15:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-16;;Section2A for campaign-16;Section2A;campaign-16:electronicsContentCatalog:Online;Section2A-campaign-16:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-16;;Section2B for campaign-16;Section2B;campaign-16:electronicsContentCatalog:Online;Section2B-campaign-16:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-17;;Section2A for campaign-17;Section2A;campaign-17:electronicsContentCatalog:Online;Section2A-campaign-17:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-17;;Section2B for campaign-17;Section2B;campaign-17:electronicsContentCatalog:Online;Section2B-campaign-17:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-18;;Section2A for campaign-18;Section2A;campaign-18:electronicsContentCatalog:Online;Section2A-campaign-18:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-18;;Section2B for campaign-18;Section2B;campaign-18:electronicsContentCatalog:Online;Section2B-campaign-18:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-19;;Section2A for campaign-19;Section2A;campaign-19:electronicsContentCatalog:Online;Section2A-campaign-19:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-19;;Section2B for campaign-19;Section2B;campaign-19:electronicsContentCatalog:Online;Section2B-campaign-19:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-20;;Section2A for campaign-20;Section2A;campaign-20:electronicsContentCatalog:Online;Section2A-campaign-20:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-20;;Section2B for campaign-20;Section2B;campaign-20:electronicsContentCatalog:Online;Section2B-campaign-20:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-21;;Section2A for campaign-21;Section2A;campaign-21:electronicsContentCatalog:Online;Section2A-campaign-21:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-21;;Section2B for campaign-21;Section2B;campaign-21:electronicsContentCatalog:Online;Section2B-campaign-21:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-22;;Section2A for campaign-22;Section2A;campaign-22:electronicsContentCatalog:Online;Section2A-campaign-22:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-22;;Section2B for campaign-22;Section2B;campaign-22:electronicsContentCatalog:Online;Section2B-campaign-22:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-23;;Section2A for campaign-23;Section2A;campaign-23:electronicsContentCatalog:Online;Section2A-campaign-23:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-23;;Section2B for campaign-23;Section2B;campaign-23:electronicsContentCatalog:Online;Section2B-campaign-23:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-24;;Section2A for campaign-24;Section2A;campaign-24:electronicsContentCatalog:Online;Section2A-campaign-24:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-24;;Section2B for campaign-24;Section2B;campaign-24:electronicsContentCatalog:Online;Section2B-campaign-24:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-25;;Section2A for campaign-25;Section2A;campaign-25:electronicsContentCatalog:Online;Section2A-campaign-25:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-25;;Section2B for campaign-25;Section2B;campaign-25:electronicsContentCatalog:Online;Section2B-campaign-25:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-26;;Section2A for campaign-26;Section2A;campaign-26:electronicsContentCatalog:Online;Section2A-campaign-26:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-26;;Section2B for campaign-26;Section2B;campaign-26:electronicsContentCatalog:Online;Section2B-campaign-26:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-27;;Section2A for campaign-27;Section2A;campaign-27:electronicsContentCatalog:Online;Section2A-campaign-27:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-27;;Section2B for campaign-27;Section2B;campaign-27:electronicsContentCatalog:Online;Section2B-campaign-27:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-28;;Section2A for campaign-28;Section2A;campaign-28:electronicsContentCatalog:Online;Section2A-campaign-28:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-28;;Section2B for campaign-28;Section2B;campaign-28:electronicsContentCatalog:Online;Section2B-campaign-28:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-29;;Section2A for campaign-29;Section2A;campaign-29:electronicsContentCatalog:Online;Section2A-campaign-29:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-29;;Section2B for campaign-29;Section2B;campaign-29:electronicsContentCatalog:Online;Section2B-campaign-29:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-30;;Section2A for campaign-30;Section2A;campaign-30:electronicsContentCatalog:Online;Section2A-campaign-30:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-30;;Section2B for campaign-30;Section2B;campaign-30:electronicsContentCatalog:Online;Section2B-campaign-30:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-31;;Section2A for campaign-31;Section2A;campaign-31:electronicsContentCatalog:Online;Section2A-campaign-31:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-31;;Section2B for campaign-31;Section2B;campaign-31:electronicsContentCatalog:Online;Section2B-campaign-31:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-32;;Section2A for campaign-32;Section2A;campaign-32:electronicsContentCatalog:Online;Section2A-campaign-32:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-32;;Section2B for campaign-32;Section2B;campaign-32:electronicsContentCatalog:Online;Section2B-campaign-32:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-33;;Section2A for campaign-33;Section2A;campaign-33:electronicsContentCatalog:Online;Section2A-campaign-33:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-33;;Section2B for campaign-33;Section2B;campaign-33:electronicsContentCatalog:Online;Section2B-campaign-33:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-34;;Section2A for campaign-34;Section2A;campaign-34:electronicsContentCatalog:Online;Section2A-campaign-34:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-34;;Section2B for campaign-34;Section2B;campaign-34:electronicsContentCatalog:Online;Section2B-campaign-34:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-35;;Section2A for campaign-35;Section2A;campaign-35:electronicsContentCatalog:Online;Section2A-campaign-35:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-35;;Section2B for campaign-35;Section2B;campaign-35:electronicsContentCatalog:Online;Section2B-campaign-35:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-36;;Section2A for campaign-36;Section2A;campaign-36:electronicsContentCatalog:Online;Section2A-campaign-36:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-36;;Section2B for campaign-36;Section2B;campaign-36:electronicsContentCatalog:Online;Section2B-campaign-36:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-37;;Section2A for campaign-37;Section2A;campaign-37:electronicsContentCatalog:Online;Section2A-campaign-37:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-37;;Section2B for campaign-37;Section2B;campaign-37:electronicsContentCatalog:Online;Section2B-campaign-37:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-38;;Section2A for campaign-38;Section2A;campaign-38:electronicsContentCatalog:Online;Section2A-campaign-38:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-38;;Section2B for campaign-38;Section2B;campaign-38:electronicsContentCatalog:Online;Section2B-campaign-38:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-39;;Section2A for campaign-39;Section2A;campaign-39:electronicsContentCatalog:Online;Section2A-campaign-39:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-39;;Section2B for campaign-39;Section2B;campaign-39:electronicsContentCatalog:Online;Section2B-campaign-39:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-40;;Section2A for campaign-40;Section2A;campaign-40:electronicsContentCatalog:Online;Section2A-campaign-40:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-40;;Section2B for campaign-40;Section2B;campaign-40:electronicsContentCatalog:Online;Section2B-campaign-40:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-41;;Section2A for campaign-41;Section2A;campaign-41:electronicsContentCatalog:Online;Section2A-campaign-41:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-41;;Section2B for campaign-41;Section2B;campaign-41:electronicsContentCatalog:Online;Section2B-campaign-41:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-42;;Section2A for campaign-42;Section2A;campaign-42:electronicsContentCatalog:Online;Section2A-campaign-42:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-42;;Section2B for campaign-42;Section2B;campaign-42:electronicsContentCatalog:Online;Section2B-campaign-42:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-43;;Section2A for campaign-43;Section2A;campaign-43:electronicsContentCatalog:Online;Section2A-campaign-43:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-43;;Section2B for campaign-43;Section2B;campaign-43:electronicsContentCatalog:Online;Section2B-campaign-43:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-44;;Section2A for campaign-44;Section2A;campaign-44:electronicsContentCatalog:Online;Section2A-campaign-44:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-44;;Section2B for campaign-44;Section2B;campaign-44:electronicsContentCatalog:Online;Section2B-campaign-44:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-45;;Section2A for campaign-45;Section2A;campaign-45:electronicsContentCatalog:Online;Section2A-campaign-45:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-45;;Section2B for campaign-45;Section2B;campaign-45:electronicsContentCatalog:Online;Section2B-campaign-45:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-46;;Section2A for campaign-46;Section2A;campaign-46:electronicsContentCatalog:Online;Section2A-campaign-46:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-46;;Section2B for campaign-46;Section2B;campaign-46:electronicsContentCatalog:Online;Section2B-campaign-46:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-47;;Section2A for campaign-47;Section2A;campaign-47:electronicsContentCatalog:Online;Section2A-campaign-47:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-47;;Section2B for campaign-47;Section2B;campaign-47:electronicsContentCatalog:Online;Section2B-campaign-47:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-48;;Section2A for campaign-48;Section2A;campaign-48:electronicsContentCatalog:Online;Section2A-campaign-48:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-48;;Section2B for campaign-48;Section2B;campaign-48:electronicsContentCatalog:Online;Section2B-campaign-48:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-49;;Section2A for campaign-49;Section2A;campaign-49:electronicsContentCatalog:Online;Section2A-campaign-49:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-49;;Section2B for campaign-49;Section2B;campaign-49:electronicsContentCatalog:Online;Section2B-campaign-49:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-50;;Section2A for campaign-50;Section2A;campaign-50:electronicsContentCatalog:Online;Section2A-campaign-50:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-50;;Section2B for campaign-50;Section2B;campaign-50:electronicsContentCatalog:Online;Section2B-campaign-50:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-51;;Section2A for campaign-51;Section2A;campaign-51:electronicsContentCatalog:Online;Section2A-campaign-51:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-51;;Section2B for campaign-51;Section2B;campaign-51:electronicsContentCatalog:Online;Section2B-campaign-51:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-52;;Section2A for campaign-52;Section2A;campaign-52:electronicsContentCatalog:Online;Section2A-campaign-52:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-52;;Section2B for campaign-52;Section2B;campaign-52:electronicsContentCatalog:Online;Section2B-campaign-52:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-53;;Section2A for campaign-53;Section2A;campaign-53:electronicsContentCatalog:Online;Section2A-campaign-53:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-53;;Section2B for campaign-53;Section2B;campaign-53:electronicsContentCatalog:Online;Section2B-campaign-53:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-54;;Section2A for campaign-54;Section2A;campaign-54:electronicsContentCatalog:Online;Section2A-campaign-54:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-54;;Section2B for campaign-54;Section2B;campaign-54:electronicsContentCatalog:Online;Section2B-campaign-54:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-55;;Section2A for campaign-55;Section2A;campaign-55:electronicsContentCatalog:Online;Section2A-campaign-55:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-55;;Section2B for campaign-55;Section2B;campaign-55:electronicsContentCatalog:Online;Section2B-campaign-55:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-56;;Section2A for campaign-56;Section2A;campaign-56:electronicsContentCatalog:Online;Section2A-campaign-56:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-56;;Section2B for campaign-56;Section2B;campaign-56:electronicsContentCatalog:Online;Section2B-campaign-56:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-57;;Section2A for campaign-57;Section2A;campaign-57:electronicsContentCatalog:Online;Section2A-campaign-57:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-57;;Section2B for campaign-57;Section2B;campaign-57:electronicsContentCatalog:Online;Section2B-campaign-57:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-58;;Section2A for campaign-58;Section2A;campaign-58:electronicsContentCatalog:Online;Section2A-campaign-58:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-58;;Section2B for campaign-58;Section2B;campaign-58:electronicsContentCatalog:Online;Section2B-campaign-58:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-59;;Section2A for campaign-59;Section2A;campaign-59:electronicsContentCatalog:Online;Section2A-campaign-59:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-59;;Section2B for campaign-59;Section2B;campaign-59:electronicsContentCatalog:Online;Section2B-campaign-59:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-60;;Section2A for campaign-60;Section2A;campaign-60:electronicsContentCatalog:Online;Section2A-campaign-60:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-60;;Section2B for campaign-60;Section2B;campaign-60:electronicsContentCatalog:Online;Section2B-campaign-60:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-61;;Section2A for campaign-61;Section2A;campaign-61:electronicsContentCatalog:Online;Section2A-campaign-61:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-61;;Section2B for campaign-61;Section2B;campaign-61:electronicsContentCatalog:Online;Section2B-campaign-61:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-62;;Section2A for campaign-62;Section2A;campaign-62:electronicsContentCatalog:Online;Section2A-campaign-62:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-62;;Section2B for campaign-62;Section2B;campaign-62:electronicsContentCatalog:Online;Section2B-campaign-62:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-63;;Section2A for campaign-63;Section2A;campaign-63:electronicsContentCatalog:Online;Section2A-campaign-63:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-63;;Section2B for campaign-63;Section2B;campaign-63:electronicsContentCatalog:Online;Section2B-campaign-63:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-64;;Section2A for campaign-64;Section2A;campaign-64:electronicsContentCatalog:Online;Section2A-campaign-64:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-64;;Section2B for campaign-64;Section2B;campaign-64:electronicsContentCatalog:Online;Section2B-campaign-64:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-65;;Section2A for campaign-65;Section2A;campaign-65:electronicsContentCatalog:Online;Section2A-campaign-65:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-65;;Section2B for campaign-65;Section2B;campaign-65:electronicsContentCatalog:Online;Section2B-campaign-65:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-66;;Section2A for campaign-66;Section2A;campaign-66:electronicsContentCatalog:Online;Section2A-campaign-66:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-66;;Section2B for campaign-66;Section2B;campaign-66:electronicsContentCatalog:Online;Section2B-campaign-66:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-67;;Section2A for campaign-67;Section2A;campaign-67:electronicsContentCatalog:Online;Section2A-campaign-67:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-67;;Section2B for campaign-67;Section2B;campaign-67:electronicsContentCatalog:Online;Section2B-campaign-67:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-68;;Section2A for campaign-68;Section2A;campaign-68:electronicsContentCatalog:Online;Section2A-campaign-68:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-68;;Section2B for campaign-68;Section2B;campaign-68:electronicsContentCatalog:Online;Section2B-campaign-68:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-69;;Section2A for campaign-69;Section2A;campaign-69:electronicsContentCatalog:Online;Section2A-campaign-69:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-69;;Section2B for campaign-69;Section2B;campaign-69:electronicsContentCatalog:Online;Section2B-campaign-69:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-70;;Section2A for campaign-70;Section2A;campaign-70:electronicsContentCatalog:Online;Section2A-campaign-70:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-70;;Section2B for campaign-70;Section2B;campaign-70:electronicsContentCatalog:Online;Section2B-campaign-70:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-71;;Section2A for campaign-71;Section2A;campaign-71:electronicsContentCatalog:Online;Section2A-campaign-71:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-71;;Section2B for campaign-71;Section2B;campaign-71:electronicsContentCatalog:Online;Section2B-campaign-71:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-72;;Section2A for campaign-72;Section2A;campaign-72:electronicsContentCatalog:Online;Section2A-campaign-72:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-72;;Section2B for campaign-72;Section2B;campaign-72:electronicsContentCatalog:Online;Section2B-campaign-72:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-73;;Section2A for campaign-73;Section2A;campaign-73:electronicsContentCatalog:Online;Section2A-campaign-73:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-73;;Section2B for campaign-73;Section2B;campaign-73:electronicsContentCatalog:Online;Section2B-campaign-73:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-74;;Section2A for campaign-74;Section2A;campaign-74:electronicsContentCatalog:Online;Section2A-campaign-74:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-74;;Section2B for campaign-74;Section2B;campaign-74:electronicsContentCatalog:Online;Section2B-campaign-74:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-75;;Section2A for campaign-75;Section2A;campaign-75:electronicsContentCatalog:Online;Section2A-campaign-75:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-75;;Section2B for campaign-75;Section2B;campaign-75:electronicsContentCatalog:Online;Section2B-campaign-75:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-76;;Section2A for campaign-76;Section2A;campaign-76:electronicsContentCatalog:Online;Section2A-campaign-76:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-76;;Section2B for campaign-76;Section2B;campaign-76:electronicsContentCatalog:Online;Section2B-campaign-76:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-77;;Section2A for campaign-77;Section2A;campaign-77:electronicsContentCatalog:Online;Section2A-campaign-77:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-77;;Section2B for campaign-77;Section2B;campaign-77:electronicsContentCatalog:Online;Section2B-campaign-77:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-78;;Section2A for campaign-78;Section2A;campaign-78:electronicsContentCatalog:Online;Section2A-campaign-78:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-78;;Section2B for campaign-78;Section2B;campaign-78:electronicsContentCatalog:Online;Section2B-campaign-78:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-79;;Section2A for campaign-79;Section2A;campaign-79:electronicsContentCatalog:Online;Section2A-campaign-79:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-79;;Section2B for campaign-79;Section2B;campaign-79:electronicsContentCatalog:Online;Section2B-campaign-79:electronicsContentCatalog:Online
+;csfp-Section2A-campaign-80;;Section2A for campaign-80;Section2A;campaign-80:electronicsContentCatalog:Online;Section2A-campaign-80:electronicsContentCatalog:Online
+;csfp-Section2B-campaign-80;;Section2B for campaign-80;Section2B;campaign-80:electronicsContentCatalog:Online;Section2B-campaign-80:electronicsContentCatalog:Online

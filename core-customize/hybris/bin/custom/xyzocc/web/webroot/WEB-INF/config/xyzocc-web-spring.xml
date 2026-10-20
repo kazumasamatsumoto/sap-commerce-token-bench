@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  xyzocc の Web の設定。Controller は com.xyz.occ.controllers の下に置けば読み込まれる(/occ/v2 の下に出る)。
+  標準の WsDTO の fields に項目を足すときは、同じ dtoClass の fieldSetLevelMapping をここに書く(値は足される)。
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.xyz.occ.controllers"/>
+
+    <bean parent="fieldSetLevelMapping" id="xyzBrandWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="com.xyz.occ.dto.brand.BrandWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,name"/>
+                <entry key="DEFAULT" value="BASIC,tier,logo(DEFAULT)"/>
+                <entry key="FULL" value="DEFAULT,description"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 標準の ProductWsDTO に、ブランドと新着の印を足す -->
+    <bean parent="fieldSetLevelMapping" id="xyzProductWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.product.ProductWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="newArrival"/>
+                <entry key="DEFAULT" value="brand(BASIC)"/>
+                <entry key="FULL" value="brand(DEFAULT),material"/>
+            </map>
+        </property>
+    </bean>
+</beans>

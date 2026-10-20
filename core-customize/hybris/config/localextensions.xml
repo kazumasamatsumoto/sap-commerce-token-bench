@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  読み込む拡張(extension)の一覧。本物の Commerce と同じく、ここに書いた拡張だけがビルドされる。
+  platformlite は本物の platform と標準拡張(core、catalog、europe1、commerceservices、cms2、ycommercewebservices など)の代わり。
+-->
+<hybrisconfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="resources/schemas/extensions.xsd">
+    <extensions>
+        <path dir="${HYBRIS_BIN_DIR}" autoload="false"/>
+
+        <extension name="platformlite"/>
+
+        <extension name="xyzcore"/>
+        <extension name="xyzfacades"/>
+        <extension name="xyzocc"/>
+    </extensions>
+</hybrisconfig>

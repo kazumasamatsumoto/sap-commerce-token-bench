@@ -1,0 +1,74 @@
+{
+  "code": "XYZ-000005",
+  "name": "ミナト プロカメラバッグ V321",
+  "summary": "カメラバッグ。防水防じん。",
+  "description": "ミナト プロカメラバッグ V321は強化ガラスを使ったカメラバッグです。特長は、防水防じん、軽くて持ち運びやすいです。",
+  "url": "/product/XYZ-000005",
+  "manufacturer": "Minato Corporation",
+  "ean": "4900000000054",
+  "purchasable": true,
+  "price": {
+    "currencyIso": "JPY",
+    "value": 1100,
+    "formattedValue": "¥1,100",
+    "priceType": "BUY"
+  },
+  "images": [
+    {
+      "url": "/medias/img-0005-product.svg",
+      "altText": "商品画像 5",
+      "format": "product",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0005-thumbnail.svg",
+      "altText": "商品サムネイル 5",
+      "format": "thumbnail",
+      "imageType": "PRIMARY"
+    },
+    {
+      "url": "/medias/img-0042-product.svg",
+      "altText": "商品画像 42",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 0
+    },
+    {
+      "url": "/medias/img-0079-product.svg",
+      "altText": "商品画像 79",
+      "format": "product",
+      "imageType": "GALLERY",
+      "galleryIndex": 1
+    }
+  ],
+  "stock": {
+    "stockLevel": 146,
+    "stockLevelStatus": "inStock"
+  },
+  "averageRating": 2.5,
+  "numberOfReviews": 2,
+  "categories": [
+    {
+      "code": "cat-01-07",
+      "name": "カメラバッグ",
+      "url": "/category/cat-01-07",
+      "image": {
+        "url": "/medias/cat-01-07-pic.svg",
+        "altText": "カメラバッグ",
+        "format": "thumbnail"
+      }
+    }
+  ],
+  "brand": {
+    "code": "brand-29",
+    "name": "ミナト",
+    "tier": "OUTLET",
+    "logo": {
+      "url": "/medias/brand-logo-29.svg",
+      "altText": "ミナト",
+      "format": "logo"
+    }
+  },
+  "newArrival": false,
+  "material": "強化ガラス"
+}

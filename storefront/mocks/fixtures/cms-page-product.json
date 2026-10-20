@@ -1,0 +1,362 @@
+{
+  "uid": "productDetails",
+  "uuid": "8796093047293",
+  "title": "商品詳細",
+  "template": "ProductDetailsPageTemplate",
+  "typeCode": "ProductPage",
+  "name": "Product Details",
+  "contentSlots": {
+    "contentSlot": [
+      {
+        "slotId": "PreHeaderSlot",
+        "position": "PreHeader",
+        "name": "PreHeader Slot",
+        "components": {
+          "component": [
+            {
+              "uid": "PreHeaderParagraph",
+              "uuid": "8796093046485",
+              "typeCode": "CMSParagraphComponent",
+              "name": "PreHeaderParagraph",
+              "modifiedtime": "2026-10-20T13:35:19+0000",
+              "content": "5,000円以上で送料無料"
+            }
+          ]
+        }
+      },
+      {
+        "slotId": "SiteLogoSlot",
+        "position": "SiteLogo",
+        "name": "SiteLogo Slot",
+        "components": {
+          "component": [
+            {
+              "uid": "SiteLogoComponent",
+              "uuid": "8796093046973",
+              "typeCode": "CMSFlexComponent",
+              "name": "SiteLogoComponent",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "flexType": "SiteLogoComponent"
+            }
+          ]
+        }
+      },
+      {
+        "slotId": "SearchBoxSlot",
+        "position": "SearchBox",
+        "name": "SearchBox Slot",
+        "components": {
+          "component": [
+            {
+              "uid": "SearchBoxComponent",
+              "uuid": "8796093046974",
+              "typeCode": "CMSFlexComponent",
+              "name": "SearchBoxComponent",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "flexType": "SearchBox"
+            }
+          ]
+        }
+      },
+      {
+        "slotId": "MiniCartSlot",
+        "position": "MiniCart",
+        "name": "MiniCart Slot",
+        "components": {
+          "component": [
+            {
+              "uid": "MiniCartComponent",
+              "uuid": "8796093046975",
+              "typeCode": "CMSFlexComponent",
+              "name": "MiniCartComponent",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "flexType": "MiniCartComponent"
+            }
+          ]
+        }
+      },
+      {
+        "slotId": "NavigationBarSlot",
+        "position": "NavigationBar",
+        "name": "NavigationBar Slot",
+        "components": {
+          "component": [
+            {
+              "uid": "NavigationComponent",
+              "uuid": "8796093046976",
+              "typeCode": "CMSFlexComponent",
+              "name": "NavigationComponent",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "flexType": "NavigationComponent"
+            },
+            {
+              "uid": "NavLink-cat-01",
+              "uuid": "8796093046586",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-01",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "カメラ",
+              "url": "/category/cat-01"
+            },
+            {
+              "uid": "NavLink-cat-02",
+              "uuid": "8796093046587",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-02",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "オーディオ",
+              "url": "/category/cat-02"
+            },
+            {
+              "uid": "NavLink-cat-03",
+              "uuid": "8796093046588",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-03",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "パソコン",
+              "url": "/category/cat-03"
+            },
+            {
+              "uid": "NavLink-cat-04",
+              "uuid": "8796093046589",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-04",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "スマートフォン",
+              "url": "/category/cat-04"
+            },
+            {
+              "uid": "NavLink-cat-05",
+              "uuid": "8796093046590",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-05",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "テレビ",
+              "url": "/category/cat-05"
+            },
+            {
+              "uid": "NavLink-cat-06",
+              "uuid": "8796093046591",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-06",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "生活家電",
+              "url": "/category/cat-06"
+            },
+            {
+              "uid": "NavLink-cat-07",
+              "uuid": "8796093046592",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-07",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "ゲーム",
+              "url": "/category/cat-07"
+            },
+            {
+              "uid": "NavLink-cat-08",
+              "uuid": "8796093046593",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-08",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "ウェアラブル",
+              "url": "/category/cat-08"
+            },
+            {
+              "uid": "NavLink-cat-09",
+              "uuid": "8796093046594",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-09",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "ネットワーク",
+              "url": "/category/cat-09"
+            },
+            {
+              "uid": "NavLink-cat-10",
+              "uuid": "8796093046595",
+              "typeCode": "CMSLinkComponent",
+              "name": "NavLink-cat-10",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "アクセサリ",
+              "url": "/category/cat-10"
+            }
+          ]
+        }
+      },
+      {
+        "slotId": "FooterSlot",
+        "position": "Footer",
+        "name": "Footer Slot",
+        "components": {
+          "component": [
+            {
+              "uid": "FooterComponent",
+              "uuid": "8796093046977",
+              "typeCode": "CMSFlexComponent",
+              "name": "FooterComponent",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "flexType": "FooterComponent"
+            },
+            {
+              "uid": "FooterLink-faq",
+              "uuid": "8796093046596",
+              "typeCode": "CMSLinkComponent",
+              "name": "FooterLink-faq",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "よくある質問",
+              "url": "/faq"
+            },
+            {
+              "uid": "FooterLink-terms",
+              "uuid": "8796093046597",
+              "typeCode": "CMSLinkComponent",
+              "name": "FooterLink-terms",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "利用規約",
+              "url": "/terms"
+            },
+            {
+              "uid": "FooterLink-privacy",
+              "uuid": "8796093046598",
+              "typeCode": "CMSLinkComponent",
+              "name": "FooterLink-privacy",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "個人情報保護方針",
+              "url": "/privacy"
+            },
+            {
+              "uid": "FooterLink-contact",
+              "uuid": "8796093046599",
+              "typeCode": "CMSLinkComponent",
+              "name": "FooterLink-contact",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "お問い合わせ",
+              "url": "/contact"
+            },
+            {
+              "uid": "FooterLink-about",
+              "uuid": "8796093046600",
+              "typeCode": "CMSLinkComponent",
+              "name": "FooterLink-about",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "XYZ電機について",
+              "url": "/about"
+            },
+            {
+              "uid": "FooterLink-shipping",
+              "uuid": "8796093046601",
+              "typeCode": "CMSLinkComponent",
+              "name": "FooterLink-shipping",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "配送について",
+              "url": "/shipping"
+            },
+            {
+              "uid": "FooterLink-returns",
+              "uuid": "8796093046602",
+              "typeCode": "CMSLinkComponent",
+              "name": "FooterLink-returns",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "返品について",
+              "url": "/returns"
+            },
+            {
+              "uid": "FooterLink-help",
+              "uuid": "8796093046603",
+              "typeCode": "CMSLinkComponent",
+              "name": "FooterLink-help",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "linkName": "ヘルプ",
+              "url": "/help"
+            }
+          ]
+        }
+      },
+      {
+        "slotId": "Summary-productDetails",
+        "position": "Summary",
+        "name": "Summary for productDetails",
+        "components": {
+          "component": [
+            {
+              "uid": "ProductDetailsComponent",
+              "uuid": "8796093046982",
+              "typeCode": "CMSFlexComponent",
+              "name": "ProductDetailsComponent",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "flexType": "ProductDetailsComponent"
+            }
+          ]
+        }
+      },
+      {
+        "slotId": "UpSelling-productDetails",
+        "position": "UpSelling",
+        "name": "UpSelling for productDetails",
+        "components": {
+          "component": [
+            {
+              "uid": "UpSellingCarousel",
+              "uuid": "8796093046879",
+              "typeCode": "ProductCarouselComponent",
+              "name": "UpSellingCarousel",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "title": "こちらもおすすめ",
+              "productCodes": "XYZ-000781 XYZ-000359 XYZ-000126 XYZ-000727 XYZ-000850 XYZ-000674 XYZ-000238 XYZ-000866"
+            }
+          ]
+        }
+      },
+      {
+        "slotId": "CrossSelling-productDetails",
+        "position": "CrossSelling",
+        "name": "CrossSelling for productDetails",
+        "components": {
+          "component": [
+            {
+              "uid": "CrossSellingCarousel",
+              "uuid": "8796093046880",
+              "typeCode": "ProductCarouselComponent",
+              "name": "CrossSellingCarousel",
+              "modifiedtime": "2026-10-20T13:35:20+0000",
+              "title": "一緒に買われている商品",
+              "productCodes": "XYZ-000173 XYZ-000913 XYZ-000093 XYZ-000185 XYZ-000877 XYZ-000469 XYZ-000030 XYZ-000294"
+            }
+          ]
+        }
+      },
+      {
+        "slotId": "Tabs-productDetails",
+        "position": "Tabs",
+        "name": "Tabs for productDetails",
+        "components": {
+          "component": [
+            {
+              "uid": "TabDescription",
+              "uuid": "8796093046491",
+              "typeCode": "CMSParagraphComponent",
+              "name": "TabDescription",
+              "modifiedtime": "2026-10-20T13:35:19+0000",
+              "content": "商品説明"
+            },
+            {
+              "uid": "TabSpecification",
+              "uuid": "8796093046492",
+              "typeCode": "CMSParagraphComponent",
+              "name": "TabSpecification",
+              "modifiedtime": "2026-10-20T13:35:19+0000",
+              "content": "仕様"
+            },
+            {
+              "uid": "TabShipping",
+              "uuid": "8796093046493",
+              "typeCode": "CMSParagraphComponent",
+              "name": "TabShipping",
+              "modifiedtime": "2026-10-20T13:35:19+0000",
+              "content": "配送と返品"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

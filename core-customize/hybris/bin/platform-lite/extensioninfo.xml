@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  疑似プラットフォーム。本物の platform と、標準の拡張(core、catalog、europe1、basecommerce、commerceservices、
+  cms2、ycommercewebservices など)のうち、計測台で使う部分だけを小さく作り直したもの。本物の SAP のソースは含まない。
+-->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+    <extension abstractclassprefix="Generated" classprefix="PlatformLite" name="platformlite" jaloLogicFree="true">
+        <coremodule generated="true" manager="de.hybris.platform.lite.jalo.PlatformLiteManager" packageroot="de.hybris.platform"/>
+    </extension>
+</extensioninfo>
