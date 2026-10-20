@@ -80,7 +80,12 @@ public class SystemSetup
 		boolean ok = true;
 		for (final String ext : TypeSystemHolder.extensions())
 		{
-			final List<Resource> files = new ArrayList<>(Arrays.asList(resolver.getResources("classpath*:" + ext + "/import/" + folder + "/**/*.impex")));
+			// 本物と同じく、拡張のフォルダ(resources/)のファイルをディスクから読む。ImpEx を直したら ant all をしなくても効く。
+			// 拡張のフォルダが見つからないとき(jar だけを配ったとき)だけ、jar の中から読む。
+			final Path onDisk = extensionResources(ext).resolve(ext + "/import/" + folder);
+			final List<Resource> files = Files.isDirectory(onDisk)
+					? new ArrayList<>(Arrays.asList(resolver.getResources("file:" + onDisk.toAbsolutePath().toString().replace('\\', '/') + "/**/*.impex")))
+					: new ArrayList<>(Arrays.asList(resolver.getResources("classpath*:" + ext + "/import/" + folder + "/**/*.impex")));
 			files.sort(Comparator.comparing(r -> uriOf(r)));
 			for (final Resource r : files)
 			{
@@ -89,6 +94,19 @@ public class SystemSetup
 			}
 		}
 		return ok;
+	}
+
+	/** 拡張の resources/ のフォルダ。ant と hybrisserver は hybris/bin/platform で動くので、そこから探す。 */
+	private static Path extensionResources(final String ext)
+	{
+		for (final Path dir : List.of(Path.of("../custom", ext), Path.of("..", ext), Path.of("../platform-lite")))
+		{
+			if (Files.isRegularFile(dir.resolve("extensioninfo.xml")) && Files.isDirectory(dir.resolve("resources/" + ext)))
+			{
+				return dir.resolve("resources");
+			}
+		}
+		return Path.of("does-not-exist");
 	}
 
 	private static String uriOf(final Resource r)

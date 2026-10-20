@@ -2,7 +2,8 @@
 // Claude Code の会話記録(~/.claude/projects/<フォルダ>/<会話>.jsonl とサブエージェントの記録)から
 // トークン数を数え、rates.json の単価で API 料金に換算する。記録は読むだけで書き換えない。
 // 使い方: node .claude/skills/cs-cost/scripts/cost.mjs [--label "依頼の名前"] [--session <会話ID>]
-//         [--log <CSV のパス>] [--no-log] [--project-dir <パス>] [--json]
+//         [--log <CSV のパス>] [--by-agent <CSV のパス>] [--rates <単価の JSON>] [--no-log] [--project-dir <パス>] [--json]
+// --by-agent を付けると、本会話と担当 1 回ごとの行(4 種のトークン、かかった秒、金額)も別の CSV に書く。
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
@@ -107,15 +108,28 @@ if (opt("--session")) {
 }
 const sessionId = path.basename(mainFile, ".jsonl");
 
-// 担当(サブエージェント)の記録は <会話ID>/subagents/agent-*.jsonl。種類は同じ名前の .meta.json に入っている。
+// 記録の最初と最後の時刻の差(秒)。担当ごとの「かかった時間」に使う。
+function durationSeconds(file) {
+  const stamps = [];
+  for (const m of fs.readFileSync(file, "utf8").matchAll(/"timestamp":"([^"]+)"/g)) stamps.push(Date.parse(m[1]));
+  const valid = stamps.filter((t) => !Number.isNaN(t));
+  return valid.length ? Math.round((Math.max(...valid) - Math.min(...valid)) / 1000) : 0;
+}
+
+// 担当(サブエージェント)の記録は <会話ID>/subagents/agent-*.jsonl。種類と依頼の説明は同じ名前の .meta.json に入っている。
 const groups = [{ who: "本会話", sums: readUsage(mainFile) }];
 const subDir = path.join(folder, sessionId, "subagents");
 const byType = {};
+const perAgent = [];
 for (const f of jsonlFiles(subDir)) {
   let type = "(種類不明)";
+  let description = "";
   try {
-    type = JSON.parse(fs.readFileSync(f.replace(/\.jsonl$/, ".meta.json"), "utf8")).agentType || type;
+    const meta = JSON.parse(fs.readFileSync(f.replace(/\.jsonl$/, ".meta.json"), "utf8"));
+    type = meta.agentType || type;
+    description = meta.description || "";
   } catch {}
+  perAgent.push({ id: path.basename(f, ".jsonl").replace(/^agent-/, ""), type, description, sums: readUsage(f), seconds: durationSeconds(f) });
   const g = (byType[type] ??= { who: `担当 ${type}`, runs: 0, sums: {} });
   g.runs += 1;
   for (const [k, s] of Object.entries(readUsage(f))) {
@@ -158,6 +172,35 @@ if (!has("--no-log")) {
   if (!fs.existsSync(logPath)) fs.writeFileSync(logPath, "日時,会話ID,依頼,呼び出し,入力,キャッシュ書き込み,キャッシュ読み込み,出力,累計USD,今回USD\n");
   const cell = (v) => `"${String(v).replace(/"/g, '""').replace(/[\r\n]+/g, " ")}"`;
   fs.appendFileSync(logPath, [new Date().toISOString(), sessionId, cell(label), total.calls, total.input, total.cw, total.read, total.output, total.usd.toFixed(4), delta.usd.toFixed(4)].join(",") + "\n");
+}
+
+// --by-agent <CSV>: 本会話と、担当 1 回ごとの行を書く(4 種のトークン、時間、金額)。担当の行は、同じ会話の同じ担当 ID が書いてあれば書かない。
+const byAgentPath = opt("--by-agent") ? path.resolve(projectDir, opt("--by-agent")) : null;
+if (byAgentPath && !has("--no-log")) {
+  const header = "日時,会話ID,依頼,区分,担当の種類,担当の依頼,担当ID,呼び出し,入力,キャッシュ書き込み,キャッシュ読み込み,出力,秒,USD\n";
+  fs.mkdirSync(path.dirname(byAgentPath), { recursive: true });
+  if (!fs.existsSync(byAgentPath)) fs.writeFileSync(byAgentPath, header);
+  const written = new Set(
+    fs.readFileSync(byAgentPath, "utf8").trim().split("\n").slice(1).map((l) => l.split(",")).filter((c) => c[1] === sessionId).map((c) => c[6]),
+  );
+  const cell = (v) => `"${String(v).replace(/"/g, '""').replace(/[\r\n]+/g, " ")}"`;
+  const sumOf = (sums) => {
+    const t = { calls: 0, input: 0, cw: 0, read: 0, output: 0, usd: 0 };
+    for (const s of Object.values(sums)) {
+      t.calls += s.calls; t.input += s.input; t.cw += s.cw5m + s.cw1h; t.read += s.read; t.output += s.output; t.usd += usd(s) || 0;
+    }
+    return t;
+  };
+  const now = new Date().toISOString();
+  const rowsOut = [];
+  const m = sumOf(groups[0].sums);
+  rowsOut.push([now, sessionId, cell(label), "本会話", "", "", "main", m.calls, m.input, m.cw, m.read, m.output, durationSeconds(mainFile), m.usd.toFixed(4)].join(","));
+  for (const a of perAgent) {
+    if (written.has(a.id)) continue;
+    const t = sumOf(a.sums);
+    rowsOut.push([now, sessionId, cell(label), "担当", cell(a.type), cell(a.description), a.id, t.calls, t.input, t.cw, t.read, t.output, a.seconds, t.usd.toFixed(4)].join(","));
+  }
+  fs.appendFileSync(byAgentPath, rowsOut.join("\n") + "\n");
 }
 
 if (has("--json")) {

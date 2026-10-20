@@ -99,7 +99,13 @@ composable-storefront-claude-code-kit の担当(サブエージェント)に決�
    - モック: `E2E_MOCK=1 npm run e2e -- --project=mock`(@mock の 4 本)。
    - SSR の HTML のまま押した操作は取りこぼされることがある。テストは `e2e/support.ts` の `open()` で、画面が動き出すのを待ってから操作する。
 6. 自社の部品と docs(設計書 5〜10 本、ADR 数本)。`.claude/` にキットを戻し、`CLAUDE.project.md` を作る。
+   - 自社の部品は 42 個(12 の機能モジュール)。一覧は `docs/design/custom-components.md`。
+   - docs は設計書 8 本、手順書 1 本、ADR 7 本(一覧は `docs/README.md`)。書くときに見つけたコードとの食い違いは、わざと直さずに `bench/known-issues.md` に残した(S02、S07、S10 の採点の参考)。
+   - キットは計測台に合わせて 2 か所だけ変えた: (1) `settings.json` の deny に、標準のストアフロントのライブラリ(`xyz-storefront-lib`)への書き込みを入れた(本物では node_modules の中で守られているため)。(2) cs-cost に `--by-agent`(本会話と担当 1 回ごとの行を別の CSV に書く。4 種のトークン、秒、金額)を足した。
+   - キットは、このリポジトリでは `kit/.claude` に置いたままにし、**計測の作業ツリーを作るときに `.claude/` へ置く**(`bench/run.sh`)。このリポジトリの `.claude/` に戻すと、計測台を作るセッションにもキットの hooks と権限(git push の確認など)が効いてしまうため(2026-10-20 に決めた)。
 7. `bench/` のシナリオ、仕込むバグ、実行スクリプト。
+   - 使い方は `bench/README.md`。`bench/run.sh selftest` で、バグを当てると判定が通らず、戻すと通ることを確かめられる(Claude は呼ばない)。
+   - 作業ツリーはリポジトリの外(`../<リポジトリ名>-runs/`)に作る。中に作ると、親のフォルダのこの文書まで読まれるため。
 - 各段の終わりに、動くことを確かめたコマンドと結果を報告する。動かなかったことも書く。
 - 各段の終わりに、作業の時間とトークン(入力・キャッシュ書き込み・キャッシュ読み込み・出力)を `.build-log/cost-log.csv` に記録して報告する:
   `node kit/.claude/skills/cs-cost/scripts/cost.mjs --label "<段>" --log .build-log/cost-log.csv`

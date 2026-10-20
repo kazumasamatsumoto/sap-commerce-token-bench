@@ -14,6 +14,8 @@
       "Edit(**/dist/**)",
       "Edit(**/hybris/bin/platform/**)",
       "Edit(**/hybris/bin/modules/**)",
+      "Edit(**/xyz-storefront-lib/**)",
+      "Write(**/xyz-storefront-lib/**)",
       "Bash(ant initialize)",
       "Bash(ant initialize *)",
       "PowerShell(ant initialize)",
