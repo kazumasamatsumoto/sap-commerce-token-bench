@@ -21,3 +21,4 @@
 2026-10-20T18:16:46Z,S06/cs-qa/2回目,88f4813f-72ab-4412-96b6-3096ace0a18b,183,通過,0,story-r2,2.1.304,claude-opus-5-5,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
 2026-10-20T18:24:08Z,S07/cs-auditor/2回目,f444c404-928a-45f9-a201-ce1b98fc341b,442,通過,0,story-r2,2.1.304,claude-opus-5-5,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
 2026-10-20T18:35:10Z,S01/cs-architect/2回目,23ad3e6f-678e-41d2-8b41-57ff1a9c1e83,468,通過,0,S01-r2,2.1.304,claude-opus-5-5,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
+2026-10-20T18:46:52Z,S02/cs-docs/2回目,2f187472-c3a8-482d-87c1-ffcf495465e0,512,通過,0,S02-r2,2.1.304,claude-opus-5-5,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
