@@ -32,9 +32,12 @@ if (cost.length === 0) {
 }
 
 // 同じラベルの行が何回あっても、最後の行がその回の累計。
+// 「0回目」は仕組みの試し(計測に入れない)。
 const byLabel = new Map();
 for (const row of cost) {
-  byLabel.set(row['依頼'], row);
+  if (!/\/0回目$/.test(row['依頼'])) {
+    byLabel.set(row['依頼'], row);
+  }
 }
 const secondsByLabel = new Map(runs.map((r) => [r['ラベル'], { sec: Number(r['秒']), passed: r['判定'], retries: Number(r['やり直し']) }]));
 
