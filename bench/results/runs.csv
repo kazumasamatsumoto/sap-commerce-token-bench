@@ -1,2 +1,7 @@
 日時,ラベル,会話ID,秒,判定,やり直し,作業ツリー,claudeの版,モデル,引数
 2026-10-20T15:06:32Z,B04/cs-backend/0回目,0b0cdf81-f79d-48e6-b5b3-d0e03c88b3f6,542,通過,0,B04-r0,2.1.304,既定,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
+2026-10-20T15:15:05Z,S03/cs-occ-liaison/1回目,7d66ef60-435e-4448-86d3-8e9bc32c18dd,271,通過,0,story-r1,2.1.304,claude-opus-5-5,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
+2026-10-20T15:36:34Z,S04/cs-backend/1回目,1994bcd6-1f4c-4da7-b69c-88f326b6b768,1289,通過,1,story-r1,2.1.304,claude-opus-5-5,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
+2026-10-20T15:45:51Z,S05/cs-frontend/1回目,f1be3633-b67b-4c21-bc5d-1d53814cc627,555,通過,0,story-r1,2.1.304,claude-opus-5-5,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
+2026-10-20T15:51:02Z,S06/cs-qa/1回目,80cfa4b0-6ac0-4f16-8bf2-0dd947b8ad2c,311,通過,0,story-r1,2.1.304,claude-opus-5-5,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
+2026-10-20T15:56:37Z,S07/cs-auditor/1回目,3ec0a1a6-14fa-4b5b-b2a8-23e99758a6f8,334,通過,0,story-r1,2.1.304,claude-opus-5-5,"--permission-mode acceptEdits --allowedTools Bash PowerShell Read Edit Write Glob Grep --strict-mcp-config"
