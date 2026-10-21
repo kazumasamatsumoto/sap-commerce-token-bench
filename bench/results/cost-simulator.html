@@ -86,6 +86,22 @@ tr.total td { font-weight: 700; border-bottom: 0; }
 .notes { font-size: .82rem; color: var(--muted); display: flex; flex-direction: column; gap: 4px; max-width: 80ch; }
 .notes p { margin: 0; }
 .tag { font-size: .72rem; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; margin-left: 4px; color: var(--muted); white-space: nowrap; }
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.tabs button { font: inherit; font-weight: 700; font-size: .95rem; padding: 8px 16px; border: 1px solid transparent; border-bottom: 0; border-radius: 8px 8px 0 0; background: transparent; color: var(--muted); cursor: pointer; margin-bottom: -1px; }
+.tabs button[aria-selected=true] { background: var(--panel); color: var(--ink); border-color: var(--line); }
+.chip { display: inline-block; font-size: .72rem; padding: 1px 8px; border-radius: 99px; color: var(--ink); white-space: nowrap; }
+.c-env { --c: #2f6fb0; } .c-dev { --c: #1f6f5c; } .c-plan { --c: #8a8f8c; } .c-bench { --c: #7a4fa0; } .c-report { --c: #b26a12; } .c-run { --c: #b23a2a; }
+:root[data-theme="dark"] .c-env, :root[data-theme="dark"] .c-dev { --c: #6aa8e0; }
+.chip { background: color-mix(in srgb, var(--c) 18%, transparent); border: 1px solid var(--c); }
+.c-dev.chip { border-color: var(--accent); background: var(--accent-soft); }
+.timeline { overflow-x: auto; }
+.timeline svg { display: block; min-width: 640px; width: 100%; height: auto; }
+.timeline text { fill: var(--muted); font: 11px var(--font-body); }
+.timeline .gl { stroke: var(--line); }
+.proxy { border: 1px solid var(--budget); background: var(--budget-soft); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.proxy p { margin: 0; }
+.proxy button { align-self: flex-start; font: inherit; font-weight: 700; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--budget); background: var(--panel); color: var(--ink); cursor: pointer; }
+td.l { text-align: left; white-space: normal; min-width: 16em; }
 @media (max-width: 480px) { .bar { grid-template-columns: 6.5em 1fr 6.5em; } .tile .v { font-size: 1.35rem; } }
 </style>
 
@@ -95,7 +111,40 @@ tr.total td { font-weight: 700; border-bottom: 0; }
     <p>疑似の SAP Commerce + Composable Storefront の案件で、Claude Opus 5.5 に開発とバグ修正をさせて測った値(各 3 回)から、1 スプリントと 1 か月のトークン数と Bedrock の金額を出します。件数と補正は、チームで決めて入れてください。</p>
   </header>
 
-  <div class="grid">
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" id="tab-all" aria-selected="true" aria-controls="view-all">今回の作業の全体</button>
+    <button type="button" role="tab" id="tab-sim" aria-selected="false" aria-controls="view-sim">スプリントの試算</button>
+  </div>
+
+  <section id="view-all" role="tabpanel" aria-labelledby="tab-all" class="results">
+    <div class="tiles" id="allTiles"></div>
+    <div class="panel">
+      <h2>時間の流れ(日本時間 2026-10-20 〜 21)</h2>
+      <div class="legend" id="catLegend"></div>
+      <div class="timeline" id="timeline"></div>
+      <p class="notes" style="margin:0">上の段は計測台を作る会話(人とのやり取りを含む)、下の段は人のいない自動の計測。帯の幅は記録と記録の間の時間で、人が読んでいた間や待ちも入る。</p>
+    </div>
+    <div class="panel">
+      <h2>種類ごとの金額</h2>
+      <div class="bars" id="catBars"></div>
+    </div>
+    <div class="proxy">
+      <h2>環境構築の目安に使う</h2>
+      <p id="proxyText"></p>
+      <button type="button" id="useProxy">スプリントの試算に、月 1 回の環境構築として入れる</button>
+    </div>
+    <div class="panel">
+      <h2>段ごとの記録</h2>
+      <div class="tablebox"><table id="stepTable"></table></div>
+    </div>
+    <div class="notes">
+      <p>計測台を作る会話の値は `.build-log/cost-by-step.csv`(cs-cost の累計を段ごとに引き算したもの。担当の分を含む)、計測の値は `bench/results/usage-total.md` と `summary.md` から写した(実測)。</p>
+      <p>金額は Bedrock 地域指定で、キャッシュ書き込みは全部 5 分の単価(未確認)。1 時間のキャッシュを高い単価で数えると、全体で約 4% 上がる(推論)。</p>
+      <p>作る会話は 1 本の長い会話なので、後の段ほど、それまでの会話を毎回読み直す分(キャッシュ読み込み)が大きい。新しい会話で同じ作業をすると、これより少なくなる見込み(推論)。</p>
+    </div>
+  </section>
+
+  <div class="grid" id="view-sim" role="tabpanel" aria-labelledby="tab-sim" hidden>
     <form class="panel" id="form" autocomplete="off">
       <div class="example">最初に入っている件数は例です。チームの実際の数に変えてください。</div>
 
@@ -120,6 +169,9 @@ tr.total td { font-weight: 700; border-bottom: 0; }
             <option value="E01">通し(E01)</option>
             <option value="SEP">担当ごと(S03〜S07)</option>
           </select></div>
+        <h3 style="margin-top:6px">1 か月の重い作業(チーム全体の回数)</h3>
+        <div class="row"><label for="n_ENV">環境構築<small>土台づくりの規模。今回の段 0〜2、4〜5、GitHub の準備の合計</small></label><input id="n_ENV" type="number" min="0" step="1" value="0"></div>
+        <div class="row"><label for="n_BIG">大きな作り込み<small>拡張、データ、OCC 50 本を新しく作る規模。今回の段 3</small></label><input id="n_BIG" type="number" min="0" step="1" value="0"></div>
       </fieldset>
 
       <fieldset>
@@ -204,11 +256,52 @@ const RATES = { // USD / 100 万トークン(bench/rates.bedrock.json、未確�
 };
 const H1_SHARE = 0.262; // キャッシュ書き込みのうち 1 時間のもの(実測: usage-total.md)
 const PRESETS = { none: [1, 1, 1], low: [1.4, 1.5, 1.0], mid: [1.9, 2.0, 1.1], high: [2.8, 3.0, 1.2] };
+// 計測台を作る会話の段ごとの記録(.build-log/cost-by-step.csv)。[終わりの時刻, 段, 種類, 呼び出し, 入力, キャッシュ書き込み, キャッシュ読み込み, 出力]
+// 種類: env = 環境構築に近い、dev = 大きな作り込み、plan = 計画と方針、bench = 計測の仕組み、report = 集計と報告
+const BUILD_START = '2026-10-20T21:20';
+const STEPS = [
+  ['2026-10-20T21:28', '段 0: 計画を作る', 'plan', 10, 20, 44491, 663965, 7384],
+  ['2026-10-20T21:37', '段 0〜1: Angular SSR のアプリと疑似ライブラリの骨組み、SSR の起動', 'env', 34, 68, 56530, 3904782, 37227],
+  ['2026-10-20T21:41', '方針の見直し(動く疑似バックエンドにする)', 'plan', 5, 10, 6361, 730828, 6073],
+  ['2026-10-20T22:06', '段 2: Docker Compose、疑似プラットフォーム、ant', 'env', 45, 90, 165339, 10699650, 145951],
+  ['2026-10-20T22:07', '段 3 の前の報告と指示待ち', 'plan', 2, 4, 3123, 637179, 2679],
+  ['2026-10-20T22:41', '段 3: 拡張、データ、OCC 50 本、OpenAPI、テスト', 'dev', 79, 158, 496176, 27013795, 294031],
+  ['2026-10-20T22:57', '段 4〜5: ストアフロントを OCC につなぐ、MSW、Playwright', 'env', 38, 76, 88217, 24243787, 61255],
+  ['2026-10-20T23:09', 'GitHub の準備(gh を入れる、push)', 'env', 19, 42, 13975, 13041104, 10762],
+  ['2026-10-20T23:32', '段 6〜7: 自社の部品 42 個、設計書、シナリオ、バグ、run.sh', 'dev', 165, 334, 705271, 54747679, 218517],
+  ['2026-10-20T23:33', '段 6〜7: 担当ごとの記録の作り直し', 'bench', 3, 6, 5498, 2362427, 3852],
+  ['2026-10-21T00:07', '計測の準備(自己点検、run.sh の仕上げ、試しの 1 本)', 'bench', 31, 66, 35771, 25155856, 24712],
+  ['2026-10-21T05:51', '夜の計測の見守り', 'bench', 4, 8, 48005, 1776941, 1633],
+  ['2026-10-21T06:02', '通しのシナリオ E01 を足して予約', 'bench', 17, 34, 29514, 1718546, 11562],
+  ['2026-10-21T07:57', '夜の計測の集計と朝の報告', 'report', 12, 26, 131861, 1344765, 8183],
+  ['2026-10-21T08:06', '概要(OVERVIEW.md)を担当に書かせて push', 'report', 16, 34, 91138, 1598967, 14565],
+  ['2026-10-21T08:21', 'OVERVIEW の担当ごとの表を CSV に合わせる', 'report', 11, 22, 11604, 1605348, 7505],
+  ['2026-10-21T08:23', '担当ごとの CSV を詳しくする', 'report', 8, 16, 14855, 1278200, 8980],
+  ['2026-10-21T08:35', '最初から今までの時間とトークンの集計', 'report', 22, 44, 31269, 4068919, 20675],
+  ['2026-10-21T10:50', 'E01 の結果の比べ', 'report', 13, 26, 98892, 1271236, 9345],
+  ['2026-10-21T13:52', '本物との差の見積もりと試算ページ', 'report', 18, 36, 223077, 1834256, 26935],
+];
+// 人のいない自動の計測(bench/results/usage-total.md)。[始め, 終わり, 名前, 呼び出し, 入力, キャッシュ書き込み, キャッシュ読み込み, 出力, 動いた時間(時)]
+const RUNS = [
+  ['2026-10-20T23:57', '2026-10-21T00:06', '試しの 0 回目(集計に入れない)', 31, 932, 105695, 1384598, 21682, 0.14],
+  ['2026-10-21T00:10', '2026-10-21T07:53', '計測: 担当ごとの 45 本(S01〜S10、B01〜B05 を 3 回ずつ)', 1584, 3194, 5729411, 109049278, 1523283, 5.54],
+  ['2026-10-21T07:56', '2026-10-21T10:48', '計測: 通し E01 を 3 回', 732, 1468, 2288355, 62878591, 697700, 2.57],
+];
+const CATS = {
+  env: ['環境構築に近い', 'c-env'], dev: ['大きな作り込み', 'c-dev'], plan: ['計画と方針', 'c-plan'],
+  bench: ['計測の仕組み', 'c-bench'], report: ['集計と報告', 'c-report'], run: ['自動の計測', 'c-run'],
+};
+const sumTok = (rows) => rows.reduce((a, s) => [a[0] + s[4], a[1] + s[5], a[2] + s[6], a[3] + s[7]], [0, 0, 0, 0]);
+// 重い作業の 1 回分。秒は記録と記録の間の時間(人の待ちを含む)なので、試算の時間には入れない
+MEASURED.ENV = (() => { const t = sumTok(STEPS.filter((s) => s[2] === 'env')); return { med: [...t, 0], max: [...t, 0] }; })();
+MEASURED.BIG = (() => { const t = sumTok(STEPS.filter((s) => s[1].startsWith('段 3:'))); return { med: [...t, 0], max: [...t, 0] }; })();
+
 const WORK = [
   ['story', 'ストーリー'], ['bug', 'バグ修正'], ['S01', '設計と ADR'], ['S02', '設計書のレビュー'],
-  ['S08', '性能の分析'], ['S09', '障害の切り分け'], ['S10', '全体の監査'],
+  ['S08', '性能の分析'], ['S09', '障害の切り分け'], ['S10', '全体の監査'], ['ENV', '環境構築'], ['BIG', '大きな作り込み'],
 ];
-const IDS = ['people', 'weeks', 'workdays', 'n_story', 'n_bug', 'n_S01', 'n_S02', 'n_S08', 'n_S09', 'n_S10', 'storyBasis', 'm_cr', 'm_cw', 'm_out', 'region', 'h1', 'cap'];
+const MONTHLY = new Set(['ENV', 'BIG']); // 月の回数で入れるもの
+const IDS = ['people', 'weeks', 'workdays', 'n_story', 'n_bug', 'n_S01', 'n_S02', 'n_S08', 'n_S09', 'n_S10', 'n_ENV', 'n_BIG', 'storyBasis', 'm_cr', 'm_cw', 'm_out', 'region', 'h1', 'cap'];
 const $ = (id) => document.getElementById(id);
 const num = (id) => Math.max(0, Number($(id).value) || 0);
 
@@ -237,15 +330,15 @@ function render() {
   const m = [num('m_cr'), num('m_cw'), num('m_cr'), num('m_out'), 1]; // 入力(キャッシュ無し)はキャッシュ読み込みと同じ倍率
   const r = RATES[$('region').value];
   const h1 = $('h1').checked;
-  const counts = { story: num('n_story'), bug: num('n_bug'), S01: num('n_S01'), S02: num('n_S02'), S08: num('n_S08'), S09: num('n_S09'), S10: num('n_S10') };
+  const counts = { story: num('n_story'), bug: num('n_bug'), S01: num('n_S01'), S02: num('n_S02'), S08: num('n_S08'), S09: num('n_S09'), S10: num('n_S10'), ENV: num('n_ENV'), BIG: num('n_BIG') };
   const unitOf = (k) => (k === 'story' ? MEASURED[$('storyBasis').value] : k === 'bug' ? MEASURED.BUG : MEASURED[k]);
 
   const month = { med: [0, 0, 0, 0, 0], max: [0, 0, 0, 0, 0] };
   const perWork = [];
   for (const [k, name] of WORK) {
     const u = unitOf(k);
-    const n = counts[k] * sprintsPerMonth;
-    const row = { name, n: counts[k] };
+    const n = MONTHLY.has(k) ? counts[k] : counts[k] * sprintsPerMonth;
+    const row = { name, n: counts[k], unit: MONTHLY.has(k) ? '回/月' : '件' };
     for (const w of ['med', 'max']) {
       const t = u[w].map((v, i) => v * m[i] * n);
       t.forEach((v, i) => (month[w][i] += v));
@@ -278,14 +371,14 @@ function render() {
 
   const top = Math.max(...perWork.map((p) => p.max), 1);
   $('bars').innerHTML = perWork.map((p) => `
-    <div class="bar"><span>${p.name}<span class="tag">${p.n} 件</span></span>
+    <div class="bar"><span>${p.name}<span class="tag">${p.n} ${p.unit}</span></span>
       <div class="track" title="真ん中 ${usd(p.med)} / 最大 ${usd(p.max)}"><div class="fillmx" style="width:${(p.max / top) * 100}%"></div><div class="fill" style="width:${(p.med / top) * 100}%"></div></div>
       <span class="num">${usd(p.med)}<span class="mxc"> / ${usd(p.max)}</span></span></div>`).join('');
 
-  const unitRows = [['ストーリー(通し E01)', 'E01'], ['ストーリー(担当ごと S03〜S07)', 'SEP'], ['バグ修正(B01〜B05 の平均)', 'BUG'], ['設計と ADR(S01)', 'S01'], ['設計書のレビュー(S02)', 'S02'], ['性能の分析(S08)', 'S08'], ['障害の切り分け(S09)', 'S09'], ['全体の監査(S10)', 'S10']];
+  const unitRows = [['ストーリー(通し E01)', 'E01'], ['ストーリー(担当ごと S03〜S07)', 'SEP'], ['バグ修正(B01〜B05 の平均)', 'BUG'], ['設計と ADR(S01)', 'S01'], ['設計書のレビュー(S02)', 'S02'], ['性能の分析(S08)', 'S08'], ['障害の切り分け(S09)', 'S09'], ['全体の監査(S10)', 'S10'], ['環境構築(今回の段 0〜2、4〜5 など。1 回分)', 'ENV'], ['大きな作り込み(今回の段 3。1 回分)', 'BIG']];
   $('unitTable').innerHTML = `<thead><tr><th>作業</th><th>キャッシュ書き込み</th><th>キャッシュ読み込み</th><th>出力</th><th>分</th><th>金額</th></tr></thead><tbody>` +
     unitRows.map(([nm, k]) => { const u = MEASURED[k];
-      return `<tr><td>${nm}</td><td class="num">${fmtM(u.med[1])} / ${fmtM(u.max[1])}</td><td class="num">${fmtM(u.med[2])} / ${fmtM(u.max[2])}</td><td class="num">${fmtN(u.med[3])} / ${fmtN(u.max[3])}</td><td class="num">${Math.round(u.med[4] / 60)} / ${Math.round(u.max[4] / 60)}</td><td class="num">${usd(cost(u.med, r, h1))} / <span class="mxc">${usd(cost(u.max, r, h1))}</span></td></tr>`; }).join('') + '</tbody>';
+      return `<tr><td>${nm}</td><td class="num">${fmtM(u.med[1])} / ${fmtM(u.max[1])}</td><td class="num">${fmtM(u.med[2])} / ${fmtM(u.max[2])}</td><td class="num">${fmtN(u.med[3])} / ${fmtN(u.max[3])}</td><td class="num">${u.med[4] ? Math.round(u.med[4] / 60) + ' / ' + Math.round(u.max[4] / 60) : '-'}</td><td class="num">${usd(cost(u.med, r, h1))} / <span class="mxc">${usd(cost(u.max, r, h1))}</span></td></tr>`; }).join('') + '</tbody>';
 
   const cur = [num('m_cr'), num('m_cw'), num('m_out')].join(',');
   document.querySelectorAll('[data-preset]').forEach((b) => b.setAttribute('aria-pressed', String(PRESETS[b.dataset.preset].join(',') === cur)));
@@ -299,6 +392,78 @@ document.querySelectorAll('[data-preset]').forEach((b) => b.addEventListener('cl
 $('form').addEventListener('input', render);
 $('form').addEventListener('change', render);
 $('form').addEventListener('submit', (e) => e.preventDefault());
+// ---------------------------------------------------------------- 今回の作業の全体
+function renderAll() {
+  const r = RATES[$('region').value];
+  const t0 = new Date(BUILD_START).getTime();
+  const items = [];
+  let prev = t0;
+  for (const s of STEPS) { const end = new Date(s[0]).getTime(); items.push({ lane: 0, start: prev, end, name: s[1], cat: s[2], calls: s[3], tok: s.slice(4, 8) }); prev = end; }
+  for (const x of RUNS) items.push({ lane: 1, start: new Date(x[0]).getTime(), end: new Date(x[1]).getTime(), name: x[2], cat: 'run', calls: x[3], tok: x.slice(4, 8), active: x[8] });
+  items.forEach((it) => (it.usd = cost(it.tok, r, false)));
+  const t1 = Math.max(...items.map((i) => i.end));
+  const total = items.reduce((a, i) => a + i.usd, 0);
+  const tok = items.reduce((a, i) => a.map((v, k) => v + i.tok[k]), [0, 0, 0, 0]);
+  const buildUsd = items.filter((i) => i.lane === 0).reduce((a, i) => a + i.usd, 0);
+  const runUsd = total - buildUsd;
+  const env = items.filter((i) => i.cat === 'env');
+  const envUsd = env.reduce((a, i) => a + i.usd, 0);
+  const envMin = env.reduce((a, i) => a + (i.end - i.start) / 60000, 0);
+  const span = (t1 - t0) / 3600000;
+  const hhmm = (t) => new Date(t).toTimeString().slice(0, 5);
+
+  $('allTiles').innerHTML = `
+    <div class="tile"><span class="k">全体の金額</span><span class="v">${usd(total)}</span><span class="s">作る会話 ${usd(buildUsd)} + 自動の計測 ${usd(runUsd)}</span></div>
+    <div class="tile"><span class="k">期間</span><span class="v">${span.toFixed(1)} 時間</span><span class="s">10/20 21:20 〜 10/21 ${hhmm(t1)}。夜は人のいない自動の計測</span></div>
+    <div class="tile"><span class="k">キャッシュ読み込み</span><span class="v">${fmtM(tok[2])}</span><span class="s">書き込み ${fmtM(tok[1])}、出力 ${fmtM(tok[3])}、入力 ${fmtN(tok[0])}</span></div>
+    <div class="tile"><span class="k">環境構築に近い段</span><span class="v">${usd(envUsd)}</span><span class="s">4 つの段。記録の間の時間で約 ${Math.round(envMin)} 分</span></div>`;
+
+  // 時間の流れ(1 本の目盛りで、上の段 = 作る会話、下の段 = 自動の計測)
+  const W = 1000, L = 84, R = 12, laneY = [24, 66], laneH = 28, H = 120;
+  const x = (t) => L + ((t - t0) / (t1 - t0)) * (W - L - R);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="作業の時間の流れ">`;
+  const tick = new Date(t0); tick.setMinutes(0, 0, 0); tick.setHours(tick.getHours() + 1);
+  for (let t = tick.getTime(); t <= t1; t += 2 * 3600000) {
+    svg += `<line class="gl" x1="${x(t)}" x2="${x(t)}" y1="16" y2="${laneY[1] + laneH + 4}" stroke-width="1"/><text x="${x(t)}" y="${H - 4}" text-anchor="middle">${new Date(t).getHours()}:00</text>`;
+  }
+  svg += `<text x="0" y="${laneY[0] + 18}">作る会話</text><text x="0" y="${laneY[1] + 18}">自動の計測</text>`;
+  for (const it of items) {
+    const w = Math.max(1.5, x(it.end) - x(it.start));
+    svg += `<rect class="${CATS[it.cat][1]}" x="${x(it.start)}" y="${laneY[it.lane]}" width="${w}" height="${laneH}" rx="2" style="fill:var(--c);opacity:.85"><title>${it.name}: ${usd(it.usd)}</title></rect>`;
+  }
+  $('timeline').innerHTML = svg + '</svg>';
+  $('catLegend').innerHTML = Object.values(CATS).map(([n, c]) => `<span class="chip ${c}">${n}</span>`).join('');
+
+  // 種類ごとの金額
+  const byCat = Object.keys(CATS).map((k) => ({ k, usd: items.filter((i) => i.cat === k).reduce((a, i) => a + i.usd, 0) })).sort((a, b) => b.usd - a.usd);
+  const top = Math.max(...byCat.map((b) => b.usd));
+  $('catBars').innerHTML = byCat.map((b) => `<div class="bar"><span><span class="chip ${CATS[b.k][1]}">${CATS[b.k][0]}</span></span><div class="track"><div class="fill ${CATS[b.k][1]}" style="width:${(b.usd / top) * 100}%;background:var(--c)"></div></div><span class="num">${usd(b.usd)}</span></div>`).join('');
+
+  const m = [num('m_cr'), num('m_cw'), num('m_cr'), num('m_out')];
+  const envCorr = cost(MEASURED.ENV.med.slice(0, 4).map((v, i) => v * m[i]), r, $('h1').checked);
+  $('proxyText').innerHTML = `今回の「環境構築に近い」4 つの段(Angular SSR のアプリを作る、Docker と ant を動かす、ストアフロントを OCC につなぐ、GitHub の準備)を足すと <b>${usd(envUsd)}</b>(実測)。試算の補正の倍率(いまの設定)を掛けると約 <b>${usd(envCorr)}</b>(推論)。<br>本物の環境構築は SAP Commerce の展開やビルドが重く、その分は増える。一方、今回は疑似プラットフォームを書くところから始めているので、出来上がった案件に新しい人が入るときの準備はこれより軽い見込み(推論)。新しい人の準備そのものは測っていない(未確認)。`;
+
+  $('stepTable').innerHTML = `<thead><tr><th>種類</th><th>段</th><th>終わり</th><th>分</th><th>呼び出し</th><th>入力</th><th>キャッシュ書き込み</th><th>キャッシュ読み込み</th><th>出力</th><th>金額</th></tr></thead><tbody>` +
+    items.map((it) => `<tr><td><span class="chip ${CATS[it.cat][1]}">${CATS[it.cat][0]}</span></td><td class="l">${it.name}</td><td class="num">${hhmm(it.end)}</td><td class="num">${it.active ? Math.round(it.active * 60) + '<span class="tag">動いた分</span>' : Math.round((it.end - it.start) / 60000)}</td><td class="num">${fmtN(it.calls)}</td><td class="num">${fmtN(it.tok[0])}</td><td class="num">${fmtN(it.tok[1])}</td><td class="num">${fmtN(it.tok[2])}</td><td class="num">${fmtN(it.tok[3])}</td><td class="num">${usd(it.usd)}</td></tr>`).join('') +
+    `<tr class="total"><td></td><td class="l">合計</td><td></td><td></td><td class="num">${fmtN(items.reduce((a, i) => a + i.calls, 0))}</td><td class="num">${fmtN(tok[0])}</td><td class="num">${fmtN(tok[1])}</td><td class="num">${fmtN(tok[2])}</td><td class="num">${fmtN(tok[3])}</td><td class="num">${usd(total)}</td></tr></tbody>`;
+}
+
+function showTab(which) {
+  const all = which === 'all';
+  $('tab-all').setAttribute('aria-selected', String(all));
+  $('tab-sim').setAttribute('aria-selected', String(!all));
+  $('view-all').hidden = !all;
+  $('view-sim').hidden = all;
+  try { localStorage.setItem('sprint-sim-tab', which); } catch (e) {}
+}
+$('tab-all').addEventListener('click', () => showTab('all'));
+$('tab-sim').addEventListener('click', () => showTab('sim'));
+$('useProxy').addEventListener('click', () => { $('n_ENV').value = Math.max(1, num('n_ENV')); render(); renderAll(); showTab('sim'); $('n_ENV').focus(); });
+$('form').addEventListener('input', () => renderAll());
+$('form').addEventListener('change', () => renderAll());
+try { if (localStorage.getItem('sprint-sim-tab') === 'sim') showTab('sim'); } catch (e) {}
+
 restore();
 render();
+renderAll();
 </script>
