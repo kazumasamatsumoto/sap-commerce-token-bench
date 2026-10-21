@@ -135,6 +135,7 @@ td.l { text-align: left; white-space: normal; min-width: 16em; }
     </div>
     <div class="panel">
       <h2>段ごとの記録</h2>
+      <p class="notes" style="margin:0">「呼び出し」は AI が応答した回数(トークンではない)。入力・キャッシュ書き込み・キャッシュ読み込み・出力はトークン数。AI が読んだ量の合計は、入力 + キャッシュ書き込み + キャッシュ読み込み。</p>
       <div class="tablebox"><table id="stepTable"></table></div>
     </div>
     <div class="notes">
@@ -443,7 +444,7 @@ function renderAll() {
   const envCorr = cost(MEASURED.ENV.med.slice(0, 4).map((v, i) => v * m[i]), r, $('h1').checked);
   $('proxyText').innerHTML = `今回の「環境構築に近い」4 つの段(Angular SSR のアプリを作る、Docker と ant を動かす、ストアフロントを OCC につなぐ、GitHub の準備)を足すと <b>${usd(envUsd)}</b>(実測)。試算の補正の倍率(いまの設定)を掛けると約 <b>${usd(envCorr)}</b>(推論)。<br>本物の環境構築は SAP Commerce の展開やビルドが重く、その分は増える。一方、今回は疑似プラットフォームを書くところから始めているので、出来上がった案件に新しい人が入るときの準備はこれより軽い見込み(推論)。新しい人の準備そのものは測っていない(未確認)。`;
 
-  $('stepTable').innerHTML = `<thead><tr><th>種類</th><th>段</th><th>終わり</th><th>分</th><th>呼び出し</th><th>入力</th><th>キャッシュ書き込み</th><th>キャッシュ読み込み</th><th>出力</th><th>金額</th></tr></thead><tbody>` +
+  $('stepTable').innerHTML = `<thead><tr><th>種類</th><th>段</th><th>終わり</th><th>分</th><th>呼び出し(回)</th><th>入力(キャッシュ無し)</th><th>キャッシュ書き込み</th><th>キャッシュ読み込み</th><th>出力</th><th>金額</th></tr></thead><tbody>` +
     items.map((it) => `<tr><td><span class="chip ${CATS[it.cat][1]}">${CATS[it.cat][0]}</span></td><td class="l">${it.name}</td><td class="num">${hhmm(it.end)}</td><td class="num">${it.active ? Math.round(it.active * 60) + '<span class="tag">動いた分</span>' : Math.round((it.end - it.start) / 60000)}</td><td class="num">${fmtN(it.calls)}</td><td class="num">${fmtN(it.tok[0])}</td><td class="num">${fmtN(it.tok[1])}</td><td class="num">${fmtN(it.tok[2])}</td><td class="num">${fmtN(it.tok[3])}</td><td class="num">${usd(it.usd)}</td></tr>`).join('') +
     `<tr class="total"><td></td><td class="l">合計</td><td></td><td></td><td class="num">${fmtN(items.reduce((a, i) => a + i.calls, 0))}</td><td class="num">${fmtN(tok[0])}</td><td class="num">${fmtN(tok[1])}</td><td class="num">${fmtN(tok[2])}</td><td class="num">${fmtN(tok[3])}</td><td class="num">${usd(total)}</td></tr></tbody>`;
 }
