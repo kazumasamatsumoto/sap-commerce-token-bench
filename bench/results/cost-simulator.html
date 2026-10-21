@@ -1,0 +1,304 @@
+<title>スプリント費用の試算</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* 左に入力(作業の件数と補正)、右に結果(月額とトークン 4 種)。狭い画面では縦に積む */
+:root {
+  --paper: #f5f6f4;
+  --panel: #ffffff;
+  --ink: #1d2422;
+  --muted: #5f6b67;
+  --line: #d9dfdc;
+  --accent: #1f6f5c;      /* 真ん中の値 */
+  --accent-soft: #dcebe6;
+  --budget: #b26a12;      /* 最大値(予算の側) */
+  --budget-soft: #f6e8d3;
+  --ok: #2d7a3e;
+  --warn: #a86a00;
+  --bad: #b23a2a;
+  --font-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #141a18; --panel: #1c2421; --ink: #e6ece9; --muted: #9aa8a3; --line: #2f3a36;
+    --accent: #5fc0a5; --accent-soft: #1f3a33; --budget: #e8a24a; --budget-soft: #3a2c19;
+    --ok: #6fcf84; --warn: #e8b34a; --bad: #f07a68; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #141a18; --panel: #1c2421; --ink: #e6ece9; --muted: #9aa8a3; --line: #2f3a36;
+  --accent: #5fc0a5; --accent-soft: #1f3a33; --budget: #e8a24a; --budget-soft: #3a2c19;
+  --ok: #6fcf84; --warn: #e8b34a; --bad: #f07a68; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.7; padding: 28px 20px 48px; }
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+header h1 { font-size: 1.7rem; margin: 0; text-wrap: balance; letter-spacing: .02em; }
+header p { margin: 4px 0 0; color: var(--muted); max-width: 70ch; }
+.grid { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; gap: 22px; align-items: start; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+h2 { font-size: 1.02rem; margin: 0; }
+h3 { font-size: .8rem; margin: 0; color: var(--muted); letter-spacing: .08em; font-weight: 700; }
+fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.row { display: grid; grid-template-columns: 1fr 88px; gap: 10px; align-items: center; }
+.row label { display: flex; flex-direction: column; line-height: 1.35; }
+.row label small { color: var(--muted); font-size: .76rem; }
+input[type=number], select { width: 100%; font: 500 .95rem var(--font-num); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; text-align: right; }
+select { text-align: left; font-family: var(--font-body); }
+input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.seg button { flex: 1; font: inherit; font-size: .85rem; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); cursor: pointer; }
+.seg button[aria-pressed=true] { background: var(--accent-soft); border-color: var(--accent); font-weight: 700; }
+.check { display: flex; gap: 8px; align-items: flex-start; font-size: .88rem; line-height: 1.45; }
+.check input { margin-top: 4px; }
+.example { font-size: .78rem; color: var(--budget); background: var(--budget-soft); padding: 6px 10px; border-radius: 6px; }
+.results { display: flex; flex-direction: column; gap: 22px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.tile .k { font-size: .8rem; color: var(--muted); }
+.tile .v { font: 600 1.6rem/1.2 var(--font-num); font-variant-numeric: tabular-nums; }
+.tile .v .mx { color: var(--budget); }
+.tile .s { font-size: .78rem; color: var(--muted); }
+.pill { display: inline-block; font-size: .78rem; font-weight: 700; padding: 2px 10px; border-radius: 99px; align-self: flex-start; }
+.pill.ok { color: var(--ok); border: 1px solid var(--ok); }
+.pill.warn { color: var(--warn); border: 1px solid var(--warn); }
+.pill.bad { color: var(--bad); border: 1px solid var(--bad); }
+.tablebox { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { font-size: .76rem; color: var(--muted); font-weight: 700; }
+td.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+tr.total td { font-weight: 700; border-bottom: 0; }
+.mxc { color: var(--budget); }
+.bars { display: flex; flex-direction: column; gap: 8px; }
+.bar { display: grid; grid-template-columns: 9em 1fr 7.5em; gap: 10px; align-items: center; font-size: .85rem; }
+.bar .track { height: 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; position: relative; overflow: hidden; }
+.bar .fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+.bar .fillmx { position: absolute; inset: 0 auto 0 0; background: var(--budget-soft); border-right: 2px solid var(--budget); }
+.bar .num { font-family: var(--font-num); text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: .78rem; color: var(--muted); flex-wrap: wrap; }
+.legend i { display: inline-block; width: 12px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.notes { font-size: .82rem; color: var(--muted); display: flex; flex-direction: column; gap: 4px; max-width: 80ch; }
+.notes p { margin: 0; }
+.tag { font-size: .72rem; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; margin-left: 4px; color: var(--muted); white-space: nowrap; }
+@media (max-width: 480px) { .bar { grid-template-columns: 6.5em 1fr 6.5em; } .tile .v { font-size: 1.35rem; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>スプリント費用の試算</h1>
+    <p>疑似の SAP Commerce + Composable Storefront の案件で、Claude Opus 5.5 に開発とバグ修正をさせて測った値(各 3 回)から、1 スプリントと 1 か月のトークン数と Bedrock の金額を出します。件数と補正は、チームで決めて入れてください。</p>
+  </header>
+
+  <div class="grid">
+    <form class="panel" id="form" autocomplete="off">
+      <div class="example">最初に入っている件数は例です。チームの実際の数に変えてください。</div>
+
+      <fieldset>
+        <h3>チームとスプリント</h3>
+        <div class="row"><label for="people">AI を使う人数</label><input id="people" type="number" min="1" step="1" value="5"></div>
+        <div class="row"><label for="weeks">スプリントの長さ<small>週</small></label><input id="weeks" type="number" min="1" step="1" value="2"></div>
+        <div class="row"><label for="workdays">1 か月の稼働日</label><input id="workdays" type="number" min="1" step="1" value="20"></div>
+      </fieldset>
+
+      <fieldset>
+        <h3>1 スプリントのチーム全体の件数</h3>
+        <div class="row"><label for="n_story">ストーリー(追加開発)<small>要望から依頼書、実装、画面、テスト、レビューまで</small></label><input id="n_story" type="number" min="0" step="1" value="6"></div>
+        <div class="row"><label for="n_bug">バグ修正</label><input id="n_bug" type="number" min="0" step="1" value="10"></div>
+        <div class="row"><label for="n_S01">設計と ADR</label><input id="n_S01" type="number" min="0" step="1" value="1"></div>
+        <div class="row"><label for="n_S02">設計書のレビュー</label><input id="n_S02" type="number" min="0" step="1" value="2"></div>
+        <div class="row"><label for="n_S08">性能の分析</label><input id="n_S08" type="number" min="0" step="1" value="1"></div>
+        <div class="row"><label for="n_S09">障害の切り分け</label><input id="n_S09" type="number" min="0" step="1" value="1"></div>
+        <div class="row"><label for="n_S10">リポジトリ全体の監査</label><input id="n_S10" type="number" min="0" step="1" value="0"></div>
+        <div class="row"><label for="storyBasis">ストーリー 1 件の値</label>
+          <select id="storyBasis">
+            <option value="E01">通し(E01)</option>
+            <option value="SEP">担当ごと(S03〜S07)</option>
+          </select></div>
+      </fieldset>
+
+      <fieldset>
+        <h3>本物の環境との補正</h3>
+        <div class="seg" role="group" aria-label="補正の倍率">
+          <button type="button" data-preset="none">なし</button>
+          <button type="button" data-preset="low">少なめ</button>
+          <button type="button" data-preset="mid">真ん中</button>
+          <button type="button" data-preset="high">多め</button>
+        </div>
+        <div class="row"><label for="m_cr">キャッシュ読み込み・入力の倍率</label><input id="m_cr" type="number" min="0" step="0.1" value="1.9"></div>
+        <div class="row"><label for="m_cw">キャッシュ書き込みの倍率</label><input id="m_cw" type="number" min="0" step="0.1" value="2.0"></div>
+        <div class="row"><label for="m_out">出力の倍率</label><input id="m_out" type="number" min="0" step="0.1" value="1.1"></div>
+        <p class="notes" style="margin:0">倍率は推測です。疑似環境で読んだ量の約 4 割が、本物では大きくなる標準のソースとビルドのログだったこと(実測)から見立てました。本物のソースの量は測っていません。</p>
+      </fieldset>
+
+      <fieldset>
+        <h3>単価と予算</h3>
+        <div class="row"><label for="region">Bedrock の単価<small>未確認(二次情報)</small></label>
+          <select id="region">
+            <option value="regional">地域指定(1.1 倍)</option>
+            <option value="global">Global</option>
+          </select></div>
+        <label class="check"><input id="h1" type="checkbox" checked> キャッシュ書き込みの 26% を 1 時間のキャッシュとして、入力の 2 倍の単価で数える(割合は実測、単価は推論)</label>
+        <div class="row"><label for="cap">1 人 1 日の上限<small>USD</small></label><input id="cap" type="number" min="0" step="10" value="250"></div>
+      </fieldset>
+    </form>
+
+    <section class="results" aria-live="polite">
+      <div class="tiles" id="tiles"></div>
+
+      <div class="panel">
+        <h2>1 か月のトークン数(4 種は分けたまま)</h2>
+        <div class="tablebox"><table id="tokTable"></table></div>
+      </div>
+
+      <div class="panel">
+        <h2>作業の種類ごとの 1 か月の金額</h2>
+        <div class="legend"><span><i style="background:var(--accent)"></i>真ん中の値</span><span><i style="background:var(--budget-soft);border:1px solid var(--budget)"></i>最大値(予算の側)</span></div>
+        <div class="bars" id="bars"></div>
+      </div>
+
+      <div class="panel">
+        <h2>1 件あたりの元の値(補正の前・計測の真ん中 / 最大)</h2>
+        <div class="tablebox"><table id="unitTable"></table></div>
+      </div>
+
+      <div class="notes">
+        <p>元の値は、疑似環境で Claude Code 2.1.304、claude-opus-5-5 で各 3 回回した計測です(実測: bench/results/summary.md、2026-10-21)。全 51 回が判定に通りました。</p>
+        <p>金額は、4 種のトークンにそれぞれ単価を掛けてから足しています。Bedrock の単価は AWS の料金ページで確かめていません(未確認)。</p>
+        <p>最大値の列は、どの作業も 3 回の中で一番多かった回になったときの値です。予算はこちらで見てください。</p>
+        <p>AI が動く時間は計測の秒を足したものです。本物の環境ではビルドと起動が遅いので、もっと長くなります(推論)。</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+// 計測の値(bench/results/summary.md、各 3 回の 真ん中 / 最大)。[入力, キャッシュ書き込み, キャッシュ読み込み, 出力, 秒]
+const MEASURED = {
+  E01: { med: [442, 719378, 19674848, 220510, 2807], max: [614, 949979, 26566523, 296978, 4485] },
+  SEP: { med: [392, 670186, 14958454, 199980, 2900], max: [510, 921185, 22125163, 240799, 4237] },
+  B01: { med: [42, 60601, 535912, 14512, 364], max: [70, 82293, 1388592, 16735, 396] },
+  B02: { med: [32, 57867, 376787, 8012, 207], max: [34, 66279, 560556, 10012, 227] },
+  B03: { med: [48, 57693, 593424, 12092, 189], max: [52, 62191, 751254, 12544, 232] },
+  B04: { med: [54, 69030, 804961, 14013, 251], max: [54, 73336, 892365, 16844, 328] },
+  B05: { med: [52, 52068, 660987, 10258, 184], max: [58, 55173, 744824, 11144, 204] },
+  S01: { med: [50, 143077, 1423918, 43894, 432], max: [52, 152122, 1552908, 46989, 468] },
+  S02: { med: [84, 213653, 4849006, 44296, 481], max: [100, 217605, 5445019, 52771, 512] },
+  S08: { med: [108, 149804, 3244140, 53176, 720], max: [114, 155442, 3353972, 69497, 743] },
+  S09: { med: [62, 143122, 2309882, 40512, 449], max: [100, 150022, 3152105, 45285, 574] },
+  S10: { med: [100, 236835, 4742739, 56483, 527], max: [106, 245142, 5418710, 61154, 626] },
+};
+// バグ修正 1 件 = B01〜B05 の平均(どの種類のバグが来るかは決めない)
+const avg = (ks, which) => [0, 1, 2, 3, 4].map((i) => ks.reduce((a, k) => a + MEASURED[k][which][i], 0) / ks.length);
+const BUGS = ['B01', 'B02', 'B03', 'B04', 'B05'];
+MEASURED.BUG = { med: avg(BUGS, 'med'), max: avg(BUGS, 'max') };
+
+const RATES = { // USD / 100 万トークン(bench/rates.bedrock.json、未確認)
+  global: { input: 4.0, cache_write: 5.0, cache_read: 0.2, output: 20.0 },
+  regional: { input: 4.4, cache_write: 5.5, cache_read: 0.22, output: 22.0 },
+};
+const H1_SHARE = 0.262; // キャッシュ書き込みのうち 1 時間のもの(実測: usage-total.md)
+const PRESETS = { none: [1, 1, 1], low: [1.4, 1.5, 1.0], mid: [1.9, 2.0, 1.1], high: [2.8, 3.0, 1.2] };
+const WORK = [
+  ['story', 'ストーリー'], ['bug', 'バグ修正'], ['S01', '設計と ADR'], ['S02', '設計書のレビュー'],
+  ['S08', '性能の分析'], ['S09', '障害の切り分け'], ['S10', '全体の監査'],
+];
+const IDS = ['people', 'weeks', 'workdays', 'n_story', 'n_bug', 'n_S01', 'n_S02', 'n_S08', 'n_S09', 'n_S10', 'storyBasis', 'm_cr', 'm_cw', 'm_out', 'region', 'h1', 'cap'];
+const $ = (id) => document.getElementById(id);
+const num = (id) => Math.max(0, Number($(id).value) || 0);
+
+function restore() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('sprint-sim') || '{}');
+    for (const id of IDS) if (id in saved) { if ($(id).type === 'checkbox') $(id).checked = saved[id]; else $(id).value = saved[id]; }
+  } catch (e) { /* 保存できない環境では最初の値のまま */ }
+}
+function save() {
+  try { localStorage.setItem('sprint-sim', JSON.stringify(Object.fromEntries(IDS.map((id) => [id, $(id).type === 'checkbox' ? $(id).checked : $(id).value])))); } catch (e) {}
+}
+
+const fmtN = (v) => Math.round(v).toLocaleString('en-US');
+const fmtM = (v) => (v >= 1e6 ? (v / 1e6).toFixed(v >= 1e8 ? 0 : 1) + 'M' : fmtN(v));
+const usd = (v) => '$' + (v >= 1000 ? Math.round(v).toLocaleString('en-US') : v.toFixed(v >= 100 ? 0 : 2));
+
+function cost(t, r, h1) {
+  const cw1h = h1 ? t[1] * H1_SHARE : 0;
+  return (t[0] * r.input + (t[1] - cw1h) * r.cache_write + cw1h * r.input * 2 + t[2] * r.cache_read + t[3] * r.output) / 1e6;
+}
+
+function render() {
+  const people = Math.max(1, num('people'));
+  const sprintsPerMonth = 52 / 12 / Math.max(1, num('weeks'));
+  const m = [num('m_cr'), num('m_cw'), num('m_cr'), num('m_out'), 1]; // 入力(キャッシュ無し)はキャッシュ読み込みと同じ倍率
+  const r = RATES[$('region').value];
+  const h1 = $('h1').checked;
+  const counts = { story: num('n_story'), bug: num('n_bug'), S01: num('n_S01'), S02: num('n_S02'), S08: num('n_S08'), S09: num('n_S09'), S10: num('n_S10') };
+  const unitOf = (k) => (k === 'story' ? MEASURED[$('storyBasis').value] : k === 'bug' ? MEASURED.BUG : MEASURED[k]);
+
+  const month = { med: [0, 0, 0, 0, 0], max: [0, 0, 0, 0, 0] };
+  const perWork = [];
+  for (const [k, name] of WORK) {
+    const u = unitOf(k);
+    const n = counts[k] * sprintsPerMonth;
+    const row = { name, n: counts[k] };
+    for (const w of ['med', 'max']) {
+      const t = u[w].map((v, i) => v * m[i] * n);
+      t.forEach((v, i) => (month[w][i] += v));
+      row[w] = cost(t, r, h1);
+    }
+    perWork.push(row);
+  }
+  const mMed = cost(month.med, r, h1), mMax = cost(month.max, r, h1);
+  const sMed = mMed / sprintsPerMonth, sMax = mMax / sprintsPerMonth;
+  const dayMed = mMed / people / Math.max(1, num('workdays')), dayMax = mMax / people / Math.max(1, num('workdays'));
+  const cap = num('cap');
+  const state = dayMax <= cap * 0.8 ? ['ok', '上限の中に収まる'] : dayMax <= cap ? ['warn', '上限に近い'] : ['bad', '上限を超える'];
+  const hours = month.med[4] / 3600;
+
+  $('tiles').innerHTML = `
+    <div class="tile"><span class="k">1 か月(チーム全体)</span><span class="v">${usd(mMed)} <span class="mx">/ ${usd(mMax)}</span></span><span class="s">真ん中 / 最大。1 か月 ${sprintsPerMonth.toFixed(2)} スプリントで計算</span></div>
+    <div class="tile"><span class="k">1 スプリント(チーム全体)</span><span class="v">${usd(sMed)} <span class="mx">/ ${usd(sMax)}</span></span><span class="s">${num('weeks')} 週</span></div>
+    <div class="tile"><span class="k">1 人 1 か月</span><span class="v">${usd(mMed / people)} <span class="mx">/ ${usd(mMax / people)}</span></span><span class="s">${people} 人で均等に割った値</span></div>
+    <div class="tile"><span class="k">1 人 1 日(平均)</span><span class="v">${usd(dayMed)} <span class="mx">/ ${usd(dayMax)}</span></span><span class="pill ${state[0]}">${state[1]}(上限 ${usd(cap)})</span><span class="s">日によって偏るので、1 日の最大はこれより高くなる(推論)</span></div>
+    <div class="tile"><span class="k">AI が動く時間(1 か月、真ん中)</span><span class="v">${fmtN(hours)} 時間</span><span class="s">1 人あたり ${(hours / people).toFixed(1)} 時間。補正なしの計測の秒から</span></div>`;
+
+  const names = ['入力(キャッシュ無し)', 'キャッシュ書き込み', 'キャッシュ読み込み', '出力'];
+  const rateOf = [r.input, r.cache_write, r.cache_read, r.output];
+  $('tokTable').innerHTML = `<thead><tr><th>種類</th><th>真ん中</th><th>最大</th><th>単価(100 万あたり)</th><th>金額 真ん中</th><th class="mxc">金額 最大</th></tr></thead><tbody>` +
+    names.map((nm, i) => {
+      const part = (w) => { const t = [0, 0, 0, 0]; t[i] = month[w][i]; return cost(t, r, h1); };
+      return `<tr><td>${nm}</td><td class="num">${fmtN(month.med[i])}</td><td class="num">${fmtN(month.max[i])}</td><td class="num">$${rateOf[i].toFixed(2)}${i === 1 && h1 ? '<span class="tag">26% は $' + (r.input * 2).toFixed(2) + '</span>' : ''}</td><td class="num">${usd(part('med'))}</td><td class="num mxc">${usd(part('max'))}</td></tr>`;
+    }).join('') +
+    `<tr class="total"><td>合計</td><td class="num">${fmtM(month.med.slice(0, 4).reduce((a, b) => a + b, 0))}</td><td class="num">${fmtM(month.max.slice(0, 4).reduce((a, b) => a + b, 0))}</td><td></td><td class="num">${usd(mMed)}</td><td class="num mxc">${usd(mMax)}</td></tr></tbody>`;
+
+  const top = Math.max(...perWork.map((p) => p.max), 1);
+  $('bars').innerHTML = perWork.map((p) => `
+    <div class="bar"><span>${p.name}<span class="tag">${p.n} 件</span></span>
+      <div class="track" title="真ん中 ${usd(p.med)} / 最大 ${usd(p.max)}"><div class="fillmx" style="width:${(p.max / top) * 100}%"></div><div class="fill" style="width:${(p.med / top) * 100}%"></div></div>
+      <span class="num">${usd(p.med)}<span class="mxc"> / ${usd(p.max)}</span></span></div>`).join('');
+
+  const unitRows = [['ストーリー(通し E01)', 'E01'], ['ストーリー(担当ごと S03〜S07)', 'SEP'], ['バグ修正(B01〜B05 の平均)', 'BUG'], ['設計と ADR(S01)', 'S01'], ['設計書のレビュー(S02)', 'S02'], ['性能の分析(S08)', 'S08'], ['障害の切り分け(S09)', 'S09'], ['全体の監査(S10)', 'S10']];
+  $('unitTable').innerHTML = `<thead><tr><th>作業</th><th>キャッシュ書き込み</th><th>キャッシュ読み込み</th><th>出力</th><th>分</th><th>金額</th></tr></thead><tbody>` +
+    unitRows.map(([nm, k]) => { const u = MEASURED[k];
+      return `<tr><td>${nm}</td><td class="num">${fmtM(u.med[1])} / ${fmtM(u.max[1])}</td><td class="num">${fmtM(u.med[2])} / ${fmtM(u.max[2])}</td><td class="num">${fmtN(u.med[3])} / ${fmtN(u.max[3])}</td><td class="num">${Math.round(u.med[4] / 60)} / ${Math.round(u.max[4] / 60)}</td><td class="num">${usd(cost(u.med, r, h1))} / <span class="mxc">${usd(cost(u.max, r, h1))}</span></td></tr>`; }).join('') + '</tbody>';
+
+  const cur = [num('m_cr'), num('m_cw'), num('m_out')].join(',');
+  document.querySelectorAll('[data-preset]').forEach((b) => b.setAttribute('aria-pressed', String(PRESETS[b.dataset.preset].join(',') === cur)));
+  save();
+}
+
+document.querySelectorAll('[data-preset]').forEach((b) => b.addEventListener('click', () => {
+  const [cr, cw, out] = PRESETS[b.dataset.preset];
+  $('m_cr').value = cr; $('m_cw').value = cw; $('m_out').value = out; render();
+}));
+$('form').addEventListener('input', render);
+$('form').addEventListener('change', render);
+$('form').addEventListener('submit', (e) => e.preventDefault());
+restore();
+render();
+</script>

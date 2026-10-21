@@ -182,6 +182,7 @@ SAP Commerce Cloud の案件で、AI(Claude Opus 5.5)に開発とバグ修正を
 | `bench/results/cost-by-agent.csv` | cs-cost が書いた元の記録(列が少ない。上の 2 つはここから `node bench/agent-detail.mjs` で作る。計測のたびに自動で作り直す) |
 | `bench/results/usage-total.md` / `.csv` | 最初から今までの期間・動いた時間・4 種のトークン・金額(作る会話と計測を合わせたもの)と、1 日あたりの換算。`node bench/usage-total.mjs` で数え直せる |
 | `bench/results/e01-vs-separate.md` | 通し E01 と、担当ごとに別の会話 S03〜S07 の、担当ごと・合計の比べ。`node bench/compare-e01.mjs` で作る |
+| `bench/results/cost-simulator.html` | 費用の試算ページ。件数、補正の倍率、単価を入れると 1 スプリントと 1 か月のトークン 4 種と金額が出る(公開: https://claude.ai/artifact/9bA9AAj1XTYZdLSxkNzrfJ 、本人だけが見られる)|
 | `bench/results/runs.csv` | 回ごとの判定、やり直しの回数、秒 |
 | `bench/results/run-all.log` | 夜間の連続実行の記録 |
 | `bench/scenarios/` | シナリオ 1 本 1 ファイル(依頼文、やり直しの文、判定)。一覧は `README.md` |
