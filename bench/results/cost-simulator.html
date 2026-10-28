@@ -317,7 +317,7 @@ function save() {
 }
 
 const fmtN = (v) => Math.round(v).toLocaleString('en-US');
-const fmtM = (v) => (v >= 1e6 ? (v / 1e6).toFixed(v >= 1e8 ? 0 : 1) + 'M' : fmtN(v));
+const fmtM = (v) => fmtN(v); // 桁を省かずに全部出す(M で区切らない)
 const usd = (v) => '$' + (v >= 1000 ? Math.round(v).toLocaleString('en-US') : v.toFixed(v >= 100 ? 0 : 2));
 
 function cost(t, r, h1) {
