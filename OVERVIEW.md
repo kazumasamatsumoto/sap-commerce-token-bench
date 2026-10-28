@@ -175,6 +175,7 @@ SAP Commerce Cloud の案件で、AI(Claude Opus 5.5)に開発とバグ修正を
 ## 9. ファイルの案内
 | 場所 | 中身 |
 |---|---|
+| `bench/results/estimate-summary.md` | **見積もりの説明資料(サマリ)。** 実施した内容と費用、1 件あたり、月の試算と予算の推奨。共有用の文書の書き出し |
 | `bench/results/report-2026-10-21.md` | 朝の報告(45 本) |
 | `bench/results/summary.md` | シナリオごとの真ん中の値 / 最大値、1 ストーリー、回ごとの記録(Bedrock 単価) |
 | `bench/results/cost-by-agent-detail.csv` | **担当ごとの記録はまずこれを見る。** 1 回ごと・本会話と担当ごとの行に、シナリオ、回、モデル、判定、やり直し、日本時間、金額 3 種(公式単価 / Bedrock 地域指定 / Bedrock Global)を足したもの |
